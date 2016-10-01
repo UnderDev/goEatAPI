@@ -1,6 +1,23 @@
 {
-	"ImportPath": "goEat",
+	"ImportPath": "github.com/Rabhimself/goEat",
 	"GoVersion": "go1.7",
 	"GodepVersion": "v74",
-	"Deps": []
+	"Deps": [
+		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "0d8126fc6144eb5257485c59148128691e8ff849"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context/ctxhttp",
+			"Rev": "0d8126fc6144eb5257485c59148128691e8ff849"
+		},
+		{
+			"ImportPath": "googlemaps.github.io/maps",
+			"Rev": "ce8994f7a138534e9da9fd27c5424eeea20ac563"
+		},
+		{
+			"ImportPath": "googlemaps.github.io/maps/internal",
+			"Rev": "ce8994f7a138534e9da9fd27c5424eeea20ac563"
+		}
+	]
 }
