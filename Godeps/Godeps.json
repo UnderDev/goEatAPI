@@ -4,6 +4,15 @@
 	"GodepVersion": "v74",
 	"Deps": [
 		{
+			"ImportPath": "github.com/Unknwon/com",
+			"Comment": "v1",
+			"Rev": "28b053d5a2923b87ce8c5a08f3af779894a72758"
+		},
+		{
+			"ImportPath": "github.com/go-macaron/inject",
+			"Rev": "d8a0b8677191f4380287cfebd08e462217bac7ad"
+		},
+		{
 			"ImportPath": "golang.org/x/net/context",
 			"Rev": "0d8126fc6144eb5257485c59148128691e8ff849"
 		},
@@ -18,6 +27,16 @@
 		{
 			"ImportPath": "googlemaps.github.io/maps/internal",
 			"Rev": "ce8994f7a138534e9da9fd27c5424eeea20ac563"
+		},
+		{
+			"ImportPath": "gopkg.in/ini.v1",
+			"Comment": "v1.21.1",
+			"Rev": "6e4869b434bd001f6983749881c7ead3545887d8"
+		},
+		{
+			"ImportPath": "gopkg.in/macaron.v1",
+			"Comment": "v1.1.8",
+			"Rev": "4974334b10dbb6f5c0e17f4c10555ff050a16329"
 		}
 	]
 }
