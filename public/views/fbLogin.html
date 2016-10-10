@@ -12,7 +12,8 @@
 FB.login(function(response) {
   if (response.status === 'connected') {
     // Logged into your app and Facebook.
-    alert("Connected");
+    var access_token =   FB.getAuthResponse()['accessToken'];
+    alert(access_token);
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
     alert("Not Autorized");
@@ -20,7 +21,11 @@ FB.login(function(response) {
     // The person is not logged into Facebook, so we're not sure if
     // they are logged into this app or not.
   }
-});</script>
+});
+FB.api('/me', function(response) {
+  console.log(response);
+});
+</script>
 <div class="container">
     <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div>
 
