@@ -12,15 +12,17 @@
 FB.login(function(response) {
   if (response.status === 'connected') {
     // Logged into your app and Facebook.
-      console.
+    alert("Connected");
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
-  } else {
+    alert("Not Autorized");
+    
     // The person is not logged into Facebook, so we're not sure if
     // they are logged into this app or not.
   }
 });</script>
-<div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div>
-    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
+<div class="container">
+    <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div>
+
+    </div>
 </div>
