@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"fmt"
+
 	"log"
 	"net/http"
 
@@ -107,14 +107,13 @@ func nearby(res http.ResponseWriter, req *http.Request, filter maps.PlaceType) {
 		for _, plc := range psr.Results {
 			str += (plc.Name + " || ")
 		}
-		log.Print(str)
-		//https://blog.golang.org/json-and-go
-		jsonResults, err := json.Marshal(psr.Results)
 
+		places := psr.Results
 		if err != nil {
 			log.Fatalf("fatal error: %s", err)
 		} else {
-			fmt.Fprintln(res, jsonResults)
+
+			json.NewEncoder(res).Encode(places)
 		}
 	}
 
