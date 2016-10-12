@@ -96,7 +96,7 @@ func main() {
 
      
     // Insert into db
-	err = collection.Insert(&Person{Name: "Bobby O'Toole", Location: "Swinford", Fbname: "botty", Fbpass: "mypass", Email: "bot@email.com", Latitude: 32.43423, Longtitude: 45.42323)
+	err = collection.Insert(&Person{Name: "Bobby O'Toole", Location: "Swinford", Fbname: "botty", Fbpass: "mypass", Email: "bot@email.com", Latitude: 32.43423, Longtitude: 45.42323})
 
 	if err != nil {
 		panic(err)
