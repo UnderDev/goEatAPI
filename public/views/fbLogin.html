@@ -13,7 +13,14 @@ FB.login(function(response) {
   if (response.status === 'connected') {
     // Logged into your app and Facebook.
     var access_token =   FB.getAuthResponse()['accessToken'];
-    alert(access_token);
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:4000/accessKey/",
+      data: access_token,
+      success: success,
+      dataType: String      
+    });
+    //post access_token to go
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
     alert("Not Autorized");

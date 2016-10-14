@@ -33,4 +33,14 @@ func initRoutes(m *macaron.Macaron) {
 		return "Hello! Yes I still work."
 	})
 
+	m.Post("accessKey/", func(ctx *macaron.Context) {
+
+		if str, ok := ctx.Data["key"]; ok {
+			/* act on str */
+			fmt.Println(str)
+		} else {
+			/* not string */
+
+		}
+	})
 }
