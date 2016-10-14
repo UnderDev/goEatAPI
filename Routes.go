@@ -21,7 +21,12 @@ func initRoutes(m *macaron.Macaron) {
 	// })
 
 	m.Group("/maps", func() {
-		m.Get("/nearby", nearby)
+		m.Group("/nearby", func() {
+			m.Get("/restaurants", restaurants)
+			m.Get("/delivery", delivery)
+			m.Get("/takeaway", takeaway)
+		})
+
 	})
 
 	m.Get("/hello", func() string {
