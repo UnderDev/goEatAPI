@@ -1,6 +1,10 @@
 package main
 
-import "gopkg.in/macaron.v1"
+import (
+	"fmt"
+
+	"gopkg.in/macaron.v1"
+)
 
 func initRoutes(m *macaron.Macaron) {
 
