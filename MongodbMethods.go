@@ -6,7 +6,6 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"log"
-	//"sync"
 	"time"
     "fmt"
 )
@@ -14,13 +13,13 @@ import (
 const (
 	MongoDBHosts = "ds035846.mlab.com:35846"
 	AuthDatabase = "heroku_7bd4bdpc"
-	AuthUserName = "admin"
+	AuthUserName = "goteamadmin"
 	AuthPassword = "goteam1"
 	TestDatabase = "heroku_7bd4bdpc"
 )
 
 type Person struct {
-        Name string `bson:"name"`
+        Name string `bson:"name" json:"name`
         Location string `bson:"location"`
         Fbname string `bson:"fbname"`
         Fbpass string `bson:"fbpass"`
@@ -43,12 +42,6 @@ type Blacklists struct{
 	Bllatitude string
 	Bllongtitude string
 }
-
-/*type Favourites struct{
-	Favname string `bson:"favname"`
-	Favlatitude float64 `bson:"favlatitude"`
-	Favlongtitude float64 `bson:"favlongtitude"`
-}*/
 
 // main is the entry point for the application.
 func main() {
@@ -90,13 +83,35 @@ func main() {
 		return
 	}
 
-	log.Printf("Results: ", person)
+	for i:=0; i<len(person); i++{
+		fmt.Println("Person:", person[i])
+	}
     
     fmt.Println("List of all \n")
 
-     
-    // Insert into db
-	err = collection.Insert(&Person{Name: "Bobby O'Toole", Location: "Swinford", Fbname: "botty", Fbpass: "mypass", Email: "bot@email.com", Latitude: 32.43423, Longtitude: 45.42323})
+
+	//Person builder
+	name := "Rocky Flintstone"
+	location := "Outer Mongolia"
+	fbname := "didyoujustblink"
+	fbpass := "tombola"
+	email := "rockyflint@hotmail.com"
+	latitude := 43.345665
+	longitude := 54.23546
+	favname := "KFC"
+	favlat := "34.453453"
+	favlong :="23.643563"
+	myfavourites := []Favs {{Favname:favname, Favlatitude:favlat, Favlongtitude:favlong}}
+
+	
+	// Insert into db
+	err = collection.Insert(&Person{Name: name, Location: location, Fbname: fbname, Fbpass: fbpass, Email: email, Latitude: latitude, Longtitude: longitude, Favourites: myfavourites})
+
+	if err != nil {
+		panic(err)
+	}
+
+	err = collection.Insert(&Person{Name: "Bobby O'Toole", Location: "Swinford", Fbname: "botty", Fbpass: "mypass", Email: "bot@email.com", Latitude: 32.43423, Longtitude: 45.42323, Favourites: []Favs{{Favname:"McDonalds", Favlatitude:"34.453453", Favlongtitude:"23.643563"}}})
 
 	if err != nil {
 		panic(err)
@@ -127,7 +142,10 @@ func main() {
 		fmt.Println("Favourites:", result.Favourites[i].Favname)
 	}
 
-	err = collection.Find(bson.M{"name": "Bobby O'Toole"}).One(&result)
+	//find user by name
+	findName := "Rocky Flintstone"
+	
+	err = collection.Find(bson.M{"name": findName}).One(&result)
 	if err != nil {
 		panic(err)
 	}
@@ -145,8 +163,10 @@ func main() {
 	for i:=0; i<len(result.Favourites); i++{
 		fmt.Println("Favourites:", result.Favourites[i].Favname)
 	}
+
+	fmt.Println("Find user by name")
     
-    // Update entry
+    // Update user email based on searched name
 	colQuerier := bson.M{"name": "John Smith"}
 	change := bson.M{"$set": bson.M{"email": "jjsmith@email.com"}}
 	err = collection.Update(colQuerier, change)
@@ -156,8 +176,9 @@ func main() {
     
     fmt.Println("Update \n")
     
+	rmvname := "Rocky Flintstone"
     // remove entry        
-    err = collection.Remove(bson.M{"name": "Bobby O'Toole"})
+    err = collection.Remove(bson.M{"name": rmvname})
     if err != nil {
 		panic(err)
 	}
@@ -172,7 +193,13 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Results All: ", results)
+
+	for i:=0; i<len(results); i++{
+		fmt.Println("Person:", results[i])
+	}
+	//fmt.Println("Results All: ", results)
     
  
 }
+
+
