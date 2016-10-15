@@ -1,10 +1,6 @@
 package main
 
-import (
-	"fmt"
-
-	"gopkg.in/macaron.v1"
-)
+import "gopkg.in/macaron.v1"
 
 func initRoutes(m *macaron.Macaron) {
 
@@ -37,14 +33,8 @@ func initRoutes(m *macaron.Macaron) {
 		return "Hello! Yes I still work."
 	})
 
-	m.Post("accessKey/", func(ctx *macaron.Context) {
-
-		if str, ok := ctx.Data["key"]; ok {
-			/* act on str */
-			fmt.Println(str)
-		} else {
-			/* not string */
-
-		}
+	m.Get("/accessKey/:id", func(ctx *macaron.Context) string {
+		return acccessKey(ctx.Params(":id"))
+		//return "accessKey :" + ctx.Params(":id")
 	})
 }
