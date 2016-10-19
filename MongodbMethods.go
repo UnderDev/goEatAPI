@@ -1,5 +1,6 @@
 // This program provides a sample application for using MongoDB with
 // the mgo driver.
+// Adapted from https://gist.github.com/ardan-bkennedy/9198289
 package main
 
 import (
@@ -8,8 +9,9 @@ import (
 	"log"
 	"time"
     "fmt"
+	//"net/http"
 )
-
+//login stuff required to connect to mongodb
 const (
 	MongoDBHosts = "ds035846.mlab.com:35846"
 	AuthDatabase = "heroku_7bd4bdpc"
@@ -17,7 +19,7 @@ const (
 	AuthPassword = "goteam1"
 	TestDatabase = "heroku_7bd4bdpc"
 )
-
+//user struct
 type Person struct {
         Name string `bson:"name" json:"name`
         Location string `bson:"location"`
@@ -30,22 +32,21 @@ type Person struct {
 		Blacklist []Blacklists `bson: "blacklist"`
   
 }
-
+//user favourites used in user struct
 type Favs struct{
 	Favname string
 	Favlatitude string
 	Favlongtitude string
 }
-
+//user favourites used in user struct
 type Blacklists struct{
 	Blname string
 	Bllatitude string
 	Bllongtitude string
 }
-
-// main is the entry point for the application.
-func main() {
-	// We need this object to establish a session to our MongoDB.
+//opens and returns connection to Mongodb
+func getCollection() *mgo.Collection{
+	
 	mongoDBDialInfo := &mgo.DialInfo{
 		Addrs:    []string{MongoDBHosts},
 		Timeout:  60 * time.Second,
@@ -53,31 +54,31 @@ func main() {
 		Username: AuthUserName,
 		Password: AuthPassword,
 	}
-
+	
+	// We need this object to establish a session to our MongoDB.
 	// Create a session which maintains a pool of socket connections
 	// to our MongoDB.
 	mongoSession, err := mgo.DialWithInfo(mongoDBDialInfo)
 	if err != nil {
 		log.Fatalf("CreateSession: %s\n", err)
 	}
-
-	// Reads may not be entirely up-to-date, but they will always see the
-	// history of changes moving forward, the data read will be consistent
-	// across sequential queries in the same session, and modifications made
-	// within the session will be observed in following queries (read-your-writes).
-	// http://godoc.org/labix.org/v2/mgo#Session.SetMode
 	mongoSession.SetMode(mgo.Monotonic, true)
 
 	
 	sessionCopy := mongoSession.Copy()
-	defer sessionCopy.Close()
+	//defer sessionCopy.Close() <------figure out where to put this!
 
 	// Get a collection to execute the query against.
 	collection := sessionCopy.DB(TestDatabase).C("Users")
+	return collection
+}
+
+func returnAllPersons(){//return all records in collection
+    collection := getCollection()
 
 	// Retrieve the list of Persons - array object
 	var person []Person
-	err = collection.Find(nil).All(&person)
+	err := collection.Find(nil).All(&person)
 	if err != nil {
 		log.Printf("RunQuery : ERROR : %s\n", err)
 		return
@@ -89,8 +90,12 @@ func main() {
     
     fmt.Println("List of all \n")
 
+}//returnAllPersons
 
-	//Person builder
+func returnInsertPerson(){//insert person into database
+    collection := getCollection()
+
+	//Person builder - will be replaced with http request
 	name := "Rocky Flintstone"
 	location := "Outer Mongolia"
 	fbname := "didyoujustblink"
@@ -105,51 +110,27 @@ func main() {
 
 	
 	// Insert into db
-	err = collection.Insert(&Person{Name: name, Location: location, Fbname: fbname, Fbpass: fbpass, Email: email, Latitude: latitude, Longtitude: longitude, Favourites: myfavourites})
+	err := collection.Insert(&Person{Name: name, Location: location, Fbname: fbname, Fbpass: fbpass, Email: email, Latitude: latitude, Longtitude: longitude, Favourites: myfavourites})
 
 	if err != nil {
 		panic(err)
 	}
 
-	err = collection.Insert(&Person{Name: "Bobby O'Toole", Location: "Swinford", Fbname: "botty", Fbpass: "mypass", Email: "bot@email.com", Latitude: 32.43423, Longtitude: 45.42323, Favourites: []Favs{{Favname:"McDonalds", Favlatitude:"34.453453", Favlongtitude:"23.643563"}}})
+	fmt.Println("Inserted to database")
 
-	if err != nil {
-		panic(err)
-	}
-    
-    fmt.Println("Insert \n")
+}//returnInsertPerson
 
-    
-    
-   // Retrieve the specific detail - object
+func returnFindPerson(i string){//find individual person
+    collection := getCollection()
 	result := Person{}
-	err = collection.Find(bson.M{"name": "John Smith"}).One(&result)
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println("----------Person-----------")
-	fmt.Println("Name:", result.Name)
-	fmt.Println("Location:", result.Location)
-	fmt.Println("Facebook Username:", result.Fbname)
-	fmt.Println("Email:", result.Email)
-	fmt.Println("Latitude:", result.Latitude)
-	fmt.Println("Longtitude:", result.Longtitude)
-	fmt.Println("Favourites:", result.Favourites)
-	fmt.Println("Blacklist:", result.Blacklist)
-
-	for i:=0; i<len(result.Favourites); i++{
-		fmt.Println("Favourites:", result.Favourites[i].Favname)
-	}
-
 	//find user by name
-	findName := "Rocky Flintstone"
+	findName := i
 	
-	err = collection.Find(bson.M{"name": findName}).One(&result)
+	err := collection.Find(bson.M{"name": findName}).One(&result)
 	if err != nil {
 		panic(err)
 	}
-
+	//log to screen for testing - can be deleted
 	fmt.Println("----------Person-----------")
 	fmt.Println("Name:", result.Name)
 	fmt.Println("Location:", result.Location)
@@ -165,30 +146,45 @@ func main() {
 	}
 
 	fmt.Println("Find user by name")
-    
-    // Update user email based on searched name
-	colQuerier := bson.M{"name": "John Smith"}
-	change := bson.M{"$set": bson.M{"email": "jjsmith@email.com"}}
-	err = collection.Update(colQuerier, change)
+
+}//returnFindPerson
+
+func returnUpdatePerson(i string, e string){// Update user email based on searched name
+    collection := getCollection()
+
+	findName := i
+	email := e
+
+	colQuerier := bson.M{"name": findName} //find user
+	change := bson.M{"$set": bson.M{"email": email}} //set new email value
+	err := collection.Update(colQuerier, change)
 	if err != nil {
 		panic(err)
 	}
     
     fmt.Println("Update \n")
-    
-	rmvname := "Rocky Flintstone"
+
+}//returnUpdatePerson
+
+func returnRemovePerson(i string){// Remove user
+    collection := getCollection()
+	
+	rmvname := i
     // remove entry        
-    err = collection.Remove(bson.M{"name": rmvname})
+    err := collection.Remove(bson.M{"name": rmvname})
     if err != nil {
 		panic(err)
 	}
     
     fmt.Println("Remove \n")
 
- 
-	// Query All and sort
+}//returnRemovePerson
+
+func returnSortByLocation(){// Sort collection by location
+    collection := getCollection()
+	
 	var results []Person
-	err = collection.Find(bson.M(nil)).Sort("location").All(&results)
+	err := collection.Find(bson.M(nil)).Sort("location").All(&results)//find all users and sort results by location (or any attribute)
 
 	if err != nil {
 		panic(err)
@@ -197,9 +193,24 @@ func main() {
 	for i:=0; i<len(results); i++{
 		fmt.Println("Person:", results[i])
 	}
-	//fmt.Println("Results All: ", results)
-    
- 
-}
+	
+	fmt.Println("Sort by location: ", results)
+
+}//returnSortByLocation
+
+// main is the entry point for the application.
+func main() {
+
+	//uncomment to call functions
+
+	//returnAllPersons()
+	//returnInsertPerson()
+	//returnFindPerson("Rocky Flintstone")
+	//returnUpdatePerson("John Smith", "myemail@email.com")
+	//returnRemovePerson("Rocky Flintstone")
+	//returnAllPersons()
+	//returnSortByLocation()
+
+}//main
 
 
