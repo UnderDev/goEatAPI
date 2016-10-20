@@ -37,6 +37,11 @@
 			"ImportPath": "gopkg.in/macaron.v1",
 			"Comment": "v1.1.8",
 			"Rev": "4974334b10dbb6f5c0e17f4c10555ff050a16329"
+		},
+		{
+			"ImportPath": "github.com/huandu/facebook",
+			"Comment": "v1.7.1",
+			"Rev": "24ce8d1913aaad265ff4cb4af6a1d1b1801d3021"
 		}
 	]
 }
