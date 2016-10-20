@@ -19,17 +19,25 @@ const (
 	AuthPassword = "goteam1"
 	TestDatabase = "heroku_7bd4bdpc"
 )
+
+var mongoDBDialInfo = &mgo.DialInfo{
+		Addrs:    []string{MongoDBHosts},
+		Timeout:  60 * time.Second,
+		Database: AuthDatabase,
+		Username: AuthUserName,
+		Password: AuthPassword,
+	}
 //user struct
 type Person struct {
         Name string `bson:"name" json:"name`
-        Location string `bson:"location"`
-        Fbname string `bson:"fbname"`
-        Fbpass string `bson:"fbpass"`
-        Email string `bson:"email"`
-        Latitude float64 `bson:"latitude"`
-        Longtitude float64 `bson:"longitude"`
-		Favourites []Favs `bson:"favourites"`
-		Blacklist []Blacklists `bson: "blacklist"`
+        Location string `bson:"location" json:"location`
+        Fbname string `bson:"fbname" json:"fbname`
+        Fbpass string `bson:"fbpass" json:"fbpass`
+        Email string `bson:"email" json:"email`
+        Latitude float64 `bson:"latitude" json:"latitude`
+        Longtitude float64 `bson:"longitude" json:"longitude`
+		Favourites []Favs `bson:"favourites" json:"favourites`
+		Blacklist []Blacklists `bson: "blacklist" json:"blacklist`
   
 }
 //user favourites used in user struct
@@ -46,25 +54,12 @@ type Blacklists struct{
 }
 //opens and returns connection to Mongodb
 func getCollection() *mgo.Collection{
-	
-	mongoDBDialInfo := &mgo.DialInfo{
-		Addrs:    []string{MongoDBHosts},
-		Timeout:  60 * time.Second,
-		Database: AuthDatabase,
-		Username: AuthUserName,
-		Password: AuthPassword,
-	}
-	
-	// We need this object to establish a session to our MongoDB.
-	// Create a session which maintains a pool of socket connections
-	// to our MongoDB.
+
 	mongoSession, err := mgo.DialWithInfo(mongoDBDialInfo)
 	if err != nil {
 		log.Fatalf("CreateSession: %s\n", err)
 	}
 	mongoSession.SetMode(mgo.Monotonic, true)
-
-	
 	sessionCopy := mongoSession.Copy()
 	//defer sessionCopy.Close() <------figure out where to put this!
 
@@ -205,7 +200,7 @@ func main() {
 
 	//returnAllPersons()
 	//returnInsertPerson()
-	//returnFindPerson("Rocky Flintstone")
+	returnFindPerson("Sarah Figgs")
 	//returnUpdatePerson("John Smith", "myemail@email.com")
 	//returnRemovePerson("Rocky Flintstone")
 	//returnAllPersons()
