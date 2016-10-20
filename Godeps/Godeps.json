@@ -2,6 +2,9 @@
 	"ImportPath": "github.com/Rabhimself/goEat",
 	"GoVersion": "go1.7",
 	"GodepVersion": "v74",
+	"Packages": [
+		"./..."
+	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/Unknwon/com",
@@ -11,6 +14,11 @@
 		{
 			"ImportPath": "github.com/go-macaron/inject",
 			"Rev": "d8a0b8677191f4380287cfebd08e462217bac7ad"
+		},
+		{
+			"ImportPath": "github.com/huandu/facebook",
+			"Comment": "v1.7.1",
+			"Rev": "24ce8d1913aaad265ff4cb4af6a1d1b1801d3021"
 		},
 		{
 			"ImportPath": "golang.org/x/net/context",
@@ -37,11 +45,6 @@
 			"ImportPath": "gopkg.in/macaron.v1",
 			"Comment": "v1.1.8",
 			"Rev": "4974334b10dbb6f5c0e17f4c10555ff050a16329"
-		},
-		{
-			"ImportPath": "github.com/huandu/facebook",
-			"Comment": "v1.7.1",
-			"Rev": "24ce8d1913aaad265ff4cb4af6a1d1b1801d3021"
 		}
 	]
 }
