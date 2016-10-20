@@ -1,0 +1,45 @@
+<div>
+<div id="fb-root"></div>
+<script>
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8&appId=1781396188745269";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+    
+FB.login(function(response) {
+  if (response.status === 'connected') {
+    // Logged into your app and Facebook.
+    var access_token =   FB.getAuthResponse()['accessToken'];
+    var theUrl = "http://localhost:4000/accessKey/"+access_token;
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );    
+    return xmlHttp.responseText;
+    //post access_token to go
+  } else if (response.status === 'not_authorized') {
+    // The person is logged into Facebook, but not your app.
+    alert("Not Autorized");
+    
+    // The person is not logged into Facebook, so we're not sure if
+    // they are logged into this app or not.
+  }
+});
+FB.api('/me', function(response) {
+  console.log(response);
+});
+function myFunction(p1, p2) {
+    var theUrl = "http://localhost:4000/accessKey/EAANS5HMQGmMBAN58ZBRpLD1IhofOLp4BvhHVZBEGlZBzsEFkfmzgFIe1zN4AYBnoG1osl19KdhjIp643M9V4FC2RZAyJZCoOB2p62ZBiSm5Po8Rf6LvIR6yRigAA8TF3eLiFbabAiznKHS2NEprP90bcGt4NljQwC5bamZC76VjyQ6DXXRnLin9Vm5MkFIrDDEZD";
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );    
+    return xmlHttp.responseText;
+};    
+</script>
+<div class="container">
+    <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div>
+    <button onclick="myFunction()">BTN</button>
+    </div>
+</div>
