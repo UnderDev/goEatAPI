@@ -1,25 +1,41 @@
 <div ng-controller="FindCtrl">
-    <div ng-repeat="place in places track by $index">
-        <div class="card">
-            <div class="card-block">
-                <ul class="list-inline">
-                    <li class="list-inline-item">
-                        <h4 class="card-title">{{place.name}}</h4>
-                    </li>
-                    <li class="list-inline-item">
-                        <span>{{place.rating === 0 ? "Not rated" : place.rating+"/5"}}</span>
-                    </li>
-                </ul>
-                <p class="card-text">{{place.vicinity}}</p>
-                <img ng-src="{{getURL(place.photos[0].photo_reference)}}" />
-                <ul class="list-inline">
-                    <li class="list-inline-item">
-                        <a href="#" class="btn btn-primary">nomnomnom time</a>
-                    </li>
-                    <li class="list-inline-item">
-                        <p class="card-text" ng-if="place.opening_hours.open_now">Open now!</p>
-                    </li>
-                </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div ng-repeat="place in places track by $index">
+                    <div class="card">
+                        <div class="card-block bg-info">
+                            <div class="list-inline">
+                                <div class="list-inline-item">
+                                    <h4 class="card-title">{{place.name}}</h4>
+                                </div>
+                                <div class="list-inline-item">
+                                    <span>{{place.rating === 0 ? "Not rated" : place.rating+"/5"}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <div>
+
+                                <p class="card-text">{{place.vicinity}}</p>
+                            </div>
+                        </div>
+                        <div class=" text-xs-center">
+                            <img item-width="300" item-height="300px" ng-src="{{getURL(place.photos[0].photo_reference)}}" />
+                        </div>
+
+                        <div class="card-block">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <a href="#" class="btn btn-primary">Get Directions</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p class="card-text" ng-if="place.opening_hours.open_now">Open now!</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

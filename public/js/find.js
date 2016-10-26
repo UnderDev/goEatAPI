@@ -13,7 +13,6 @@ angular.module('myApp.find', ['ngRoute'])
     $scope.places = [];
 
     PlacesService.getData().then(function (data) {
-      console.log("asdfasef")
       $scope.places = data;
     }, function () {
       $scope.data = undefined;
@@ -22,6 +21,8 @@ angular.module('myApp.find', ['ngRoute'])
     $scope.getURL = function(stuff){
       if(stuff != undefined)
         return "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+stuff+"&key=AIzaSyBO90mNejVGPHPYioe2_nnLL5776iXZCX8"
+        //else return a stock image we serve that says "no image?"
+      
     }
 
   }])
