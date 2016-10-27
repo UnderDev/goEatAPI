@@ -194,18 +194,18 @@ func returnSortByLocation(){// Sort collection by location
 }//returnSortByLocation
 
 // main is the entry point for the application.
-func main() {
+// func main() {
 
-	//uncomment to call functions
+// 	//uncomment to call functions
 
-	//returnAllPersons()
-	//returnInsertPerson()
-	returnFindPerson("Sarah Figgs")
-	//returnUpdatePerson("John Smith", "myemail@email.com")
-	//returnRemovePerson("Rocky Flintstone")
-	//returnAllPersons()
-	//returnSortByLocation()
+// 	//returnAllPersons()
+// 	//returnInsertPerson()
+// 	returnFindPerson("Sarah Figgs")
+// 	//returnUpdatePerson("John Smith", "myemail@email.com")
+// 	//returnRemovePerson("Rocky Flintstone")
+// 	//returnAllPersons()
+// 	//returnSortByLocation()
 
-}//main
+// }//main
 
 
