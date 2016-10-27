@@ -9,7 +9,14 @@ angular.module('myApp.find', ['ngRoute'])
     });
   }])
 
-  .controller('FindCtrl', ['$scope', 'PlacesService', function ($scope, PlacesService) {
+  .controller('FindCtrl', ['$scope', 'PlacesService','geolocationSvc', function ($scope, PlacesService, geolocationSvc) {
+
+    $scope.getDirections = function captureUserLocation() {
+        geolocationSvc.getCurrentPosition().then(function(location){
+          console.log(location);
+        });
+      };
+    
 
     var bypassGoogle = true;
     $scope.places = [];
@@ -293,7 +300,6 @@ angular.module('myApp.find', ['ngRoute'])
       ]
     } else {
       PlacesService.getData().then(function (data) {
-        console.log("asdfasef")
         $scope.places = data;
       }, function () {
         $scope.data = undefined;
@@ -333,5 +339,28 @@ angular.module('myApp.find', ['ngRoute'])
         return deferred.promise;
       }
     }
-  });
+  }).factory('geolocationSvc', ['$q', '$window', function ($q, $window) {
+
+//adapted from http://stackoverflow.com/questions/23185619/how-can-i-use-html5-geolocation-in-angularjs
+    'use strict';
+
+    function getCurrentPosition() {
+        var deferred = $q.defer();
+        if (!$window.navigator.geolocation) {
+            deferred.reject('Geolocation not supported.');
+        } else {
+            $window.navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    deferred.resolve(position);
+                },
+                function (err) {
+                    deferred.reject(err);
+                });
+        }
+        return deferred.promise;
+    }
+    return {
+        getCurrentPosition: getCurrentPosition
+    };
+}]);
 
