@@ -309,7 +309,6 @@ angular.module('myApp.find', ['ngRoute'])
         if (stuff != undefined)
           return "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + stuff + "&key=AIzaSyBO90mNejVGPHPYioe2_nnLL5776iXZCX8"
       }
->>>>>>> origin
     }
 
 
