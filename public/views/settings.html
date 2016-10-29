@@ -1,20 +1,15 @@
 <div ng-controller="settingsCntrl">
-    <p>
-    <div class="btn-toolbar">
-  <button class="btn btn-primary collapsed" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-    History
-  </button>
-   <button class="btn btn-primary collapsed" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-    Favourites
-  </button>
-  <button class="btn btn-primary collapsed" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-    Blacklists
-  </button>
-       </div>
-</p>
-<div class="collapse" id="collapseExample">
-  <div class="card card-block">
-    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-  </div>
-</div>
+   
+    <ul class="nav nav-pills nav-stacked bg-faded col-md-1 full-height" style="height: 100vh">
+        <li>
+            <button class="list-group-item btn-block">Favourites</button>
+        </li>
+        <li>
+            <button class="list-group-item btn-block">History</button>
+        </li>
+        <li>
+            <button class="list-group-item btn-block">Blacklist</button>
+        </li>
+    </ul>
+    <div ng-include src="'views/find.html'" /></div>
 </div>
