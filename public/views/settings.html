@@ -1,15 +1,25 @@
 <div ng-controller="settingsCntrl">
-   
     <ul class="nav nav-pills nav-stacked bg-faded col-md-1 full-height" style="height: 100vh">
         <li>
-            <button class="list-group-item btn-block">Favourites</button>
+            <button class="list-group-item btn-block" ng-click="page='favs'">Favourites</button>
         </li>
         <li>
-            <button class="list-group-item btn-block">History</button>
+            <button class="list-group-item btn-block" ng-click="page='history'">History</button>
         </li>
         <li>
-            <button class="list-group-item btn-block">Blacklist</button>
+            <button class="list-group-item btn-block" ng-click="page='blacklist'">Blacklist</button>
         </li>
     </ul>
-    <div ng-include src="'views/find.html'" /></div>
+    <div ng-switch="page">
+        <div ng-switch-when="favs">
+            <h1>favs Div</h1> </div>
+        <div ng-switch-when="history">
+            <h1>hist Div</h1>
+            <div ng-include src="'views/find.html'" /> </div>
+        <div ng-switch-when="blacklist">
+            <p>dsadasdasd</p>
+        </div>
+        <div ng-switch-default>
+            <div ng-include src="'views/find.html'" /> </div>
+    </div>
 </div>
