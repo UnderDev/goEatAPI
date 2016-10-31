@@ -1,7 +1,7 @@
-<div ng-controller="FindCtrl">
+<div ng-controller="FavoritesCtrl">
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-8">
+			<div class="col-sm-8">               
 				<div ng-repeat="place in places track by $index">
 					<div class="card">
 						<div class="card-block bg-info">
@@ -25,14 +25,13 @@
 							</div>
 						</div>
 						<div class=" text-xs-center">
-							<img item-width="300" item-height="300px" ng-src="{{getURL(place.photos[0].photo_reference)}}" />
+							<img item-width="300" item-height="300px" ng-src="http://placehold.it/300" />
 						</div>
 						<div class="card-block">
 							<ul class="list-inline">
 								<li class="list-inline-item">
-									<button class="btn btn-primary" ng-click="getDirections()">Get Directions</button>
+									<button class="btn btn-primary">Get Directions</button>
 								</li>
-
 							</ul>
 						</div>
 					</div>
