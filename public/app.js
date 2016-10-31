@@ -3,7 +3,7 @@
 angular.module('myApp', [
   'ngRoute',
   'myApp.find',
-  'myApp.view1',
+  'myApp.fb',
   'myApp.favorites'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {

@@ -1,1 +1,1 @@
-web: goEat
+web: goEatAPI
