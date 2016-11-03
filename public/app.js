@@ -1,7 +1,7 @@
 'use strict';
 angular.module('myApp', [
     'ngRoute',
-    'myApp.find'
+    'myApp.find',
     'myApp.settings',
     'myApp.fb',
     'myApp.favorites'
