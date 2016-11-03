@@ -333,7 +333,6 @@ angular.module('myApp.find', ['ngRoute'])
         var lon = location.coords.longitude;
         $http.get('/maps/nearby/restaurants/'+lat+','+lon)
           .success(function (data) {
-            console.log(data);
             myData = data;
             deferred.resolve(myData);
             // update angular's scopes

@@ -9,7 +9,10 @@ import (
 	"log"
 	"time"
     "fmt"
-	//"net/http"
+	"net/http"
+	//"context"
+	"encoding/json"
+	"gopkg.in/macaron.v1"
 )
 //login stuff required to connect to mongodb
 const (
@@ -68,22 +71,31 @@ func getCollection() *mgo.Collection{
 	return collection
 }
 
-func returnAllPersons(){//return all records in collection
+func returnAllPersons(res http.ResponseWriter, req *http.Request){//return all records in collection
     collection := getCollection()
 
 	// Retrieve the list of Persons - array object
-	var person []Person
-	err := collection.Find(nil).All(&person)
+	var result []Person
+	err := collection.Find(nil).All(&result)
 	if err != nil {
 		log.Printf("RunQuery : ERROR : %s\n", err)
 		return
 	}
 
+	//fmt.Println(result)
+/*
 	for i:=0; i<len(person); i++{
 		fmt.Println("Person:", person[i])
 	}
-    
-    fmt.Println("List of all \n")
+  */  
+  	places := result
+	  if err != nil {
+			log.Fatalf("fatal error: %s", err)
+		} else {
+
+			json.NewEncoder(res).Encode(places)
+		}
+    //fmt.Println("List of all \n")
 
 }//returnAllPersons
 
@@ -115,16 +127,18 @@ func returnInsertPerson(){//insert person into database
 
 }//returnInsertPerson
 
-func returnFindPerson(i string){//find individual person
+func returnFindPerson(res http.ResponseWriter, req *http.Request, ctx *macaron.Context){//find individual person
     collection := getCollection()
 	result := Person{}
+	//var result []Person
 	//find user by name
-	findName := i
+	findName := ctx.Params("id")
 	
 	err := collection.Find(bson.M{"name": findName}).One(&result)
 	if err != nil {
 		panic(err)
 	}
+	/*
 	//log to screen for testing - can be deleted
 	fmt.Println("----------Person-----------")
 	fmt.Println("Name:", result.Name)
@@ -139,8 +153,16 @@ func returnFindPerson(i string){//find individual person
 	for i:=0; i<len(result.Favourites); i++{
 		fmt.Println("Favourites:", result.Favourites[i].Favname)
 	}
-
+*/
 	fmt.Println("Find user by name")
+
+	places := result
+	  if err != nil {
+			log.Fatalf("fatal error: %s", err)
+		} else {
+
+			json.NewEncoder(res).Encode(places)
+		}
 
 }//returnFindPerson
 
@@ -198,7 +220,7 @@ func returnSortByLocation(){// Sort collection by location
 
 // 	//uncomment to call functions
 
-// 	//returnAllPersons()
+//returnAllPersons()
 // 	//returnInsertPerson()
 // 	returnFindPerson("Sarah Figgs")
 // 	//returnUpdatePerson("John Smith", "myemail@email.com")
@@ -206,6 +228,6 @@ func returnSortByLocation(){// Sort collection by location
 // 	//returnAllPersons()
 // 	//returnSortByLocation()
 
-// }//main
+ //}//main
 
 
