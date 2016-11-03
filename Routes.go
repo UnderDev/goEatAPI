@@ -37,4 +37,8 @@ func initRoutes(m *macaron.Macaron) {
 		return acccessKey(ctx.Params(":id"))
 		//return "accessKey :" + ctx.Params(":id")
 	})
+
+	m.Get("/returnAllPersons", returnAllPersons)
+
+	m.Get("/returnFindPerson/:id", returnFindPerson)
 }
