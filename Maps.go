@@ -3,9 +3,12 @@ package main
 import (
 	"context"
 	"encoding/json"
-
 	"log"
 	"net/http"
+	"strconv"
+	"strings"
+
+	"gopkg.in/macaron.v1"
 
 	"googlemaps.github.io/maps"
 )
@@ -14,25 +17,37 @@ import (
 // docs @ https://godoc.org/googlemaps.github.io/maps
 // for specific place types (to filter the places returned) see https://developers.google.com/places/supported_types
 
-func restaurants(res http.ResponseWriter, req *http.Request) {
-	nearby(res, req, maps.PlaceTypeRestaurant)
+func restaurants(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) {
+	nearby(res, req, ctx, maps.PlaceTypeRestaurant)
 }
-func delivery(res http.ResponseWriter, req *http.Request) {
-	nearby(res, req, maps.PlaceTypeMealDelivery)
+func delivery(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) {
+	nearby(res, req, ctx, maps.PlaceTypeMealDelivery)
 }
-func takeaway(res http.ResponseWriter, req *http.Request) {
-	nearby(res, req, maps.PlaceTypeMealTakeaway)
+func takeaway(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) {
+	nearby(res, req, ctx, maps.PlaceTypeMealTakeaway)
 }
 
-func nearby(res http.ResponseWriter, req *http.Request, filter maps.PlaceType) {
+func nearby(res http.ResponseWriter, req *http.Request, ctx *macaron.Context, filter maps.PlaceType) {
 	//c is the pointer to the maps client that is generated using the api key
 	c, err := maps.NewClient(maps.WithAPIKey("AIzaSyBO90mNejVGPHPYioe2_nnLL5776iXZCX8"))
-
 	if err != nil {
 		log.Fatalf("fatal error: %s", err)
 	}
+	str := ctx.Params("pos")
+	pos := strings.Split(str, ",")
+	lat, err := strconv.ParseFloat(pos[0], 16)
+	if err != nil {
+
+	}
+	lon, err := strconv.ParseFloat(pos[1], 16)
+	if err != nil {
+
+	}
+
+	location := maps.LatLng{
+		Lat: lat,
+		Lng: lon}
 	//sort out getting latlong from browser and replace this hardcoded stuff
-	location := maps.LatLng{Lat: 53.274447, Lng: -9.049249}
 
 	//	type NearbySearchRequest struct {
 	//    // Location is the latitude/longitude around which to retrieve place information. If you specify a location parameter, you must also specify a radius parameter.
@@ -59,14 +74,14 @@ func nearby(res http.ResponseWriter, req *http.Request, filter maps.PlaceType) {
 	//    PageToken string
 	//}
 	r := &maps.NearbySearchRequest{
-		Location: &location, // the latlong is hardcoded to eir square w/ radius of 10km until loc data from the user is sorted
-		Radius:   10000,     //in meters
+		Location: &location,
+		Radius:   10000, //in meters
 		OpenNow:  true,
 		Type:     filter,
 	}
 	//Change the context later, needs proper args
-	ctx := context.Background()
-	psr, err := c.NearbySearch(ctx, r)
+	contx := context.Background()
+	psr, err := c.NearbySearch(contx, r)
 	//loop over results and send it back
 	if err != nil {
 		log.Fatalf("fatal error: %s", err)

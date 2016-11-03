@@ -22,9 +22,9 @@ func initRoutes(m *macaron.Macaron) {
 
 	m.Group("/maps", func() {
 		m.Group("/nearby", func() {
-			m.Get("/restaurants", restaurants)
-			m.Get("/delivery", delivery)
-			m.Get("/takeaway", takeaway)
+			m.Get("/restaurants/:pos", restaurants)
+			m.Get("/delivery/:pos", delivery)
+			m.Get("/takeaway/:pos", takeaway)
 		})
 
 	})
@@ -37,4 +37,8 @@ func initRoutes(m *macaron.Macaron) {
 		return acccessKey(ctx.Params(":id"))
 		//return "accessKey :" + ctx.Params(":id")
 	})
+
+	m.Get("/returnAllPersons", returnAllPersons)
+
+	m.Get("/returnFindPerson/:id", returnFindPerson)
 }
