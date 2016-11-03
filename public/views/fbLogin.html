@@ -13,7 +13,7 @@ FB.login(function(response) {
   if (response.status === 'connected') {
     // Logged into your app and Facebook.
     var access_token =   FB.getAuthResponse()['accessToken'];
-    var theUrl = "http://localhost:4000/accessKey/"+access_token;
+    var theUrl = "http://goeatapi.herokuapp.com/accessKey/"+access_token;
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
     xmlHttp.send( null );    
@@ -31,7 +31,7 @@ FB.api('/me', function(response) {
   console.log(response);
 });
 function myFunction(p1, p2) {
-    var theUrl = "http://localhost:4000/accessKey/EAANS5HMQGmMBAN58ZBRpLD1IhofOLp4BvhHVZBEGlZBzsEFkfmzgFIe1zN4AYBnoG1osl19KdhjIp643M9V4FC2RZAyJZCoOB2p62ZBiSm5Po8Rf6LvIR6yRigAA8TF3eLiFbabAiznKHS2NEprP90bcGt4NljQwC5bamZC76VjyQ6DXXRnLin9Vm5MkFIrDDEZD";
+    var theUrl = "http://goeatapi.herokuapp.com/accessKey/EAANS5HMQGmMBAN58ZBRpLD1IhofOLp4BvhHVZBEGlZBzsEFkfmzgFIe1zN4AYBnoG1osl19KdhjIp643M9V4FC2RZAyJZCoOB2p62ZBiSm5Po8Rf6LvIR6yRigAA8TF3eLiFbabAiznKHS2NEprP90bcGt4NljQwC5bamZC76VjyQ6DXXRnLin9Vm5MkFIrDDEZD";
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
     xmlHttp.send( null );    
@@ -40,6 +40,5 @@ function myFunction(p1, p2) {
 </script>
 <div class="container">
     <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div>
-    <button onclick="myFunction()">BTN</button>
     </div>
 </div>

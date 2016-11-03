@@ -9,9 +9,15 @@ angular.module('myApp.find', ['ngRoute'])
     });
   }])
 
-  .controller('FindCtrl', ['$scope', 'PlacesService', function ($scope, PlacesService) {
+  .controller('FindCtrl', ['$scope', 'PlacesService','geolocationSvc', function ($scope, PlacesService, geolocationSvc) {
 
-    var bypassGoogle = true;
+    $scope.getDirections = function() {
+      //scott magic here  
+    };
+      
+    
+
+    var bypassGoogle = false;
     $scope.places = [];
 
     if (bypassGoogle == true) {
@@ -292,12 +298,14 @@ angular.module('myApp.find', ['ngRoute'])
         }
       ]
     } else {
-      PlacesService.getData().then(function (data) {
-        console.log("asdfasef")
+      geolocationSvc.getCurrentPosition().then(function(location){
+        PlacesService.getData(location).then(function (data) {
         $scope.places = data;
       }, function () {
         $scope.data = undefined;
       });
+      })
+      
     }
 
 
@@ -319,12 +327,12 @@ angular.module('myApp.find', ['ngRoute'])
     var myData = {};
 
     return {
-      getData: function () {
+      getData: function (location) {
         var deferred = $q.defer();
-
-        $http.get('/maps/nearby/restaurants')
+        var lat = location.coords.latitude;
+        var lon = location.coords.longitude;
+        $http.get('/maps/nearby/restaurants/'+lat+','+lon)
           .success(function (data) {
-            console.log(data);
             myData = data;
             deferred.resolve(myData);
             // update angular's scopes
@@ -333,5 +341,28 @@ angular.module('myApp.find', ['ngRoute'])
         return deferred.promise;
       }
     }
-  });
+  }).factory('geolocationSvc', ['$q', '$window', function ($q, $window) {
+
+//adapted from http://stackoverflow.com/questions/23185619/how-can-i-use-html5-geolocation-in-angularjs
+    'use strict';
+
+    function getCurrentPosition() {
+        var deferred = $q.defer();
+        if (!$window.navigator.geolocation) {
+            deferred.reject('Geolocation not supported.');
+        } else {
+            $window.navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    deferred.resolve(position);
+                },
+                function (err) {
+                    deferred.reject(err);
+                });
+        }
+        return deferred.promise;
+    }
+    return {
+        getCurrentPosition: getCurrentPosition
+    };
+}]);
 
