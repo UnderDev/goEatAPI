@@ -4,16 +4,19 @@
 package main
 
 import (
+	"fmt"
+	"log"
+	"net/http"
+	"time"
+
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"log"
-	"time"
-    "fmt"
-	"net/http"
 	//"context"
 	"encoding/json"
+
 	"gopkg.in/macaron.v1"
 )
+
 //login stuff required to connect to mongodb
 const (
 	MongoDBHosts = "ds035846.mlab.com:35846"
@@ -24,35 +27,38 @@ const (
 )
 
 var mongoDBDialInfo = &mgo.DialInfo{
-		Addrs:    []string{MongoDBHosts},
-		Timeout:  60 * time.Second,
-		Database: AuthDatabase,
-		Username: AuthUserName,
-		Password: AuthPassword,
-	}
+	Addrs:    []string{MongoDBHosts},
+	Timeout:  60 * time.Second,
+	Database: AuthDatabase,
+	Username: AuthUserName,
+	Password: AuthPassword,
+}
+
 //user struct
 type Person struct {
-        Name string `bson:"name" json:"name`
-        Fbpass string `bson:"fbpass" json:"fbpass`
-		Photo string `bson:"photo" json:"photo"`
-		Favourites []Favs `bson:"favourites" json:"favourites`
-		Blacklist []Blacklists `bson: "blacklist" json:"blacklist`
-  
+	Name       string       `bson:"name" json:"name`
+	Fbpass     string       `bson:"fbpass" json:"fbpass`
+	Photo      string       `bson:"photo" json:"photo"`
+	Favourites []Favs       `bson:"favourites" json:"favourites`
+	Blacklist  []Blacklists `bson: "blacklist" json:"blacklist`
 }
+
 //user favourites used in user struct
-type Favs struct{
-	Favname string
-	Favlatitude string
+type Favs struct {
+	Favname       string
+	Favlatitude   string
 	Favlongtitude string
 }
+
 //user favourites used in user struct
-type Blacklists struct{
-	Blname string
-	Bllatitude string
+type Blacklists struct {
+	Blname       string
+	Bllatitude   string
 	Bllongtitude string
 }
+
 //opens and returns connection to Mongodb
-func getCollection() *mgo.Collection{
+func getCollection() *mgo.Collection {
 
 	mongoSession, err := mgo.DialWithInfo(mongoDBDialInfo)
 	if err != nil {
@@ -67,8 +73,8 @@ func getCollection() *mgo.Collection{
 	return collection
 }
 
-func returnAllPersons(res http.ResponseWriter, req *http.Request){//return all records in collection
-    collection := getCollection()
+func returnAllPersons(res http.ResponseWriter, req *http.Request) { //return all records in collection
+	collection := getCollection()
 
 	// Retrieve the list of Persons - array object
 	var result []Person
@@ -79,35 +85,34 @@ func returnAllPersons(res http.ResponseWriter, req *http.Request){//return all r
 	}
 
 	//fmt.Println(result)
-/*
-	for i:=0; i<len(person); i++{
-		fmt.Println("Person:", person[i])
-	}
-  */  
-  	places := result
-	  if err != nil {
-			log.Fatalf("fatal error: %s", err)
-		} else {
-
-			json.NewEncoder(res).Encode(places)
+	/*
+		for i:=0; i<len(person); i++{
+			fmt.Println("Person:", person[i])
 		}
-    //fmt.Println("List of all \n")
+	*/
+	places := result
+	if err != nil {
+		log.Fatalf("fatal error: %s", err)
+	} else {
 
-}//returnAllPersons
+		json.NewEncoder(res).Encode(places)
+	}
+	//fmt.Println("List of all \n")
 
-func returnInsertPerson(){//insert person into database
-    collection := getCollection()
+} //returnAllPersons
+
+func returnInsertPerson(fbId string, fbName string) { //insert person into database
+	collection := getCollection()
 
 	//Person builder - will be replaced with http request
-	name := "Rocky Flintstone"
-	fbpass := "tombola"
+	name := fbName
+	fbpass := fbId
 	photo := "https://images-na.ssl-images-amazon.com/images/I/71vYbOepKWL._UX250_.jpg"
 	favname := "KFC"
 	favlat := "34.453453"
-	favlong :="23.643563"
-	myfavourites := []Favs {{Favname:favname, Favlatitude:favlat, Favlongtitude:favlong}}
+	favlong := "23.643563"
+	myfavourites := []Favs{{Favname: favname, Favlatitude: favlat, Favlongtitude: favlong}}
 
-	
 	// Insert into db
 	err := collection.Insert(&Person{Name: name, Fbpass: fbpass, Photo: photo, Favourites: myfavourites})
 
@@ -117,84 +122,85 @@ func returnInsertPerson(){//insert person into database
 
 	fmt.Println("Inserted to database")
 
-}//returnInsertPerson
+} //returnInsertPerson
 
-func returnFindPerson(res http.ResponseWriter, req *http.Request, ctx *macaron.Context){//find individual person
-    collection := getCollection()
-	result := Person{}
+func returnFindPerson(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) { //find individual person
 
 	//find user by unique id
 	findId := ctx.Params("id")
-	
+	json.NewEncoder(res).Encode(goFind(findId))
+
+} //returnFindPerson
+func goFind(findId string) Person {
+	collection := getCollection()
+	result := Person{}
+
 	err := collection.Find(bson.M{"fbpass": findId}).One(&result)
 	if err != nil {
 		//panic("err")
-		return
 	}
-	
+
 	fmt.Println("Find user by id")
-
+	fmt.Println("passs :" + result.Fbpass + "name :" + result.Name + "photo :" + result.Photo)
 	places := result
-	  if err != nil {
-			log.Fatalf("fatal error: %s", err)
-		} else {
+	fmt.Println("passs :" + places.Fbpass + "name :" + places.Name + "photo :" + places.Photo)
+	if err == nil {
+		fmt.Println("returning real json")
+	}
+	return places
+}
 
-			json.NewEncoder(res).Encode(places)
-		}
-
-}//returnFindPerson
-
-func returnUpdatePerson(res http.ResponseWriter, req *http.Request, ctx *macaron.Context){// Update user email based on searched name
-    collection := getCollection()
+func returnUpdatePerson(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) { // Update user email based on searched name
+	collection := getCollection()
 
 	findName := ctx.Params("id")
 	email := ctx.Params("email")
 
-	colQuerier := bson.M{"name": findName} //find user
+	colQuerier := bson.M{"name": findName}           //find user
 	change := bson.M{"$set": bson.M{"email": email}} //set new email value
 	err := collection.Update(colQuerier, change)
 	if err != nil {
 		panic(err)
 	}
-    
-    fmt.Println("Update \n")
 
-}//returnUpdatePerson
+	fmt.Println("Update \n")
 
-func returnRemovePerson(i string){// Remove user
-    collection := getCollection()
-	
+} //returnUpdatePerson
+
+func returnRemovePerson(i string) { // Remove user
+	collection := getCollection()
+
 	rmvname := i
-    // remove entry        
-    err := collection.Remove(bson.M{"name": rmvname})
-    if err != nil {
+	// remove entry
+	err := collection.Remove(bson.M{"name": rmvname})
+	if err != nil {
 		panic(err)
 	}
-    
-    fmt.Println("Remove \n")
 
-}//returnRemovePerson
+	fmt.Println("Remove \n")
 
-func returnSortByLocation(){// Sort collection by location
-    collection := getCollection()
-	
+} //returnRemovePerson
+
+func returnSortByLocation() { // Sort collection by location
+	collection := getCollection()
+
 	var results []Person
-	err := collection.Find(bson.M(nil)).Sort("location").All(&results)//find all users and sort results by location (or any attribute)
+	err := collection.Find(bson.M(nil)).Sort("location").All(&results) //find all users and sort results by location (or any attribute)
 
 	if err != nil {
 		panic(err)
 	}
 
-	for i:=0; i<len(results); i++{
+	for i := 0; i < len(results); i++ {
 		fmt.Println("Person:", results[i])
 	}
-	
+
 	fmt.Println("Sort by location: ", results)
 
-}//returnSortByLocation
+} //returnSortByLocation
 
 // main is the entry point for the application.
- //func main() {
+//func main() {
 
 // 	//uncomment to call functions
 
@@ -206,6 +212,4 @@ func returnSortByLocation(){// Sort collection by location
 // 	//returnAllPersons()
 // 	//returnSortByLocation()
 
- //}//main
-
-
+//}//main
