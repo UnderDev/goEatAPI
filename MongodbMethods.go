@@ -33,12 +33,8 @@ var mongoDBDialInfo = &mgo.DialInfo{
 //user struct
 type Person struct {
         Name string `bson:"name" json:"name`
-        Location string `bson:"location" json:"location`
-        Fbname string `bson:"fbname" json:"fbname`
         Fbpass string `bson:"fbpass" json:"fbpass`
-        Email string `bson:"email" json:"email`
-        Latitude float64 `bson:"latitude" json:"latitude`
-        Longtitude float64 `bson:"longitude" json:"longitude`
+		Photo string `bson:"photo" json:"photo"`
 		Favourites []Favs `bson:"favourites" json:"favourites`
 		Blacklist []Blacklists `bson: "blacklist" json:"blacklist`
   
@@ -104,12 +100,8 @@ func returnInsertPerson(){//insert person into database
 
 	//Person builder - will be replaced with http request
 	name := "Rocky Flintstone"
-	location := "Outer Mongolia"
-	fbname := "didyoujustblink"
 	fbpass := "tombola"
-	email := "rockyflint@hotmail.com"
-	latitude := 43.345665
-	longitude := 54.23546
+	photo := "https://images-na.ssl-images-amazon.com/images/I/71vYbOepKWL._UX250_.jpg"
 	favname := "KFC"
 	favlat := "34.453453"
 	favlong :="23.643563"
@@ -117,7 +109,7 @@ func returnInsertPerson(){//insert person into database
 
 	
 	// Insert into db
-	err := collection.Insert(&Person{Name: name, Location: location, Fbname: fbname, Fbpass: fbpass, Email: email, Latitude: latitude, Longtitude: longitude, Favourites: myfavourites})
+	err := collection.Insert(&Person{Name: name, Fbpass: fbpass, Photo: photo, Favourites: myfavourites})
 
 	if err != nil {
 		panic(err)
@@ -130,31 +122,17 @@ func returnInsertPerson(){//insert person into database
 func returnFindPerson(res http.ResponseWriter, req *http.Request, ctx *macaron.Context){//find individual person
     collection := getCollection()
 	result := Person{}
-	//var result []Person
-	//find user by name
-	findName := ctx.Params("id")
-	
-	err := collection.Find(bson.M{"name": findName}).One(&result)
-	if err != nil {
-		panic(err)
-	}
-	/*
-	//log to screen for testing - can be deleted
-	fmt.Println("----------Person-----------")
-	fmt.Println("Name:", result.Name)
-	fmt.Println("Location:", result.Location)
-	fmt.Println("Facebook Username:", result.Fbname)
-	fmt.Println("Email:", result.Email)
-	fmt.Println("Latitude:", result.Latitude)
-	fmt.Println("Longtitude:", result.Longtitude)
-	fmt.Println("Favourites:", result.Favourites)
-	fmt.Println("Blacklist:", result.Blacklist)
 
-	for i:=0; i<len(result.Favourites); i++{
-		fmt.Println("Favourites:", result.Favourites[i].Favname)
+	//find user by unique id
+	findId := ctx.Params("id")
+	
+	err := collection.Find(bson.M{"fbpass": findId}).One(&result)
+	if err != nil {
+		//panic("err")
+		return
 	}
-*/
-	fmt.Println("Find user by name")
+	
+	fmt.Println("Find user by id")
 
 	places := result
 	  if err != nil {
@@ -166,11 +144,11 @@ func returnFindPerson(res http.ResponseWriter, req *http.Request, ctx *macaron.C
 
 }//returnFindPerson
 
-func returnUpdatePerson(i string, e string){// Update user email based on searched name
+func returnUpdatePerson(res http.ResponseWriter, req *http.Request, ctx *macaron.Context){// Update user email based on searched name
     collection := getCollection()
 
-	findName := i
-	email := e
+	findName := ctx.Params("id")
+	email := ctx.Params("email")
 
 	colQuerier := bson.M{"name": findName} //find user
 	change := bson.M{"$set": bson.M{"email": email}} //set new email value
@@ -216,12 +194,12 @@ func returnSortByLocation(){// Sort collection by location
 }//returnSortByLocation
 
 // main is the entry point for the application.
-// func main() {
+ //func main() {
 
 // 	//uncomment to call functions
 
 //returnAllPersons()
-// 	//returnInsertPerson()
+//returnInsertPerson()
 // 	returnFindPerson("Sarah Figgs")
 // 	//returnUpdatePerson("John Smith", "myemail@email.com")
 // 	//returnRemovePerson("Rocky Flintstone")
