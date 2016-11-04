@@ -32,7 +32,7 @@ angular.module('myApp.favorites', ['ngRoute'])
     return {
       getData: function () {
         var deferred = $q.defer();
-        $http.get('/returnFindPerson/' + "Anna Bloggs") //will need unique id - not name
+        $http.get('/returnFindPerson/' + "tombola") //will need unique id - not name
           .success(function (data) {
             //console.log(data);
             myData = data;
