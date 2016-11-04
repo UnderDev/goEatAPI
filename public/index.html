@@ -3,34 +3,36 @@
 <!-- https://github.com/angular/angular-seed -->
 
 <head>
-  <title>goEat!</title>
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.3.1/js/tether.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj"
-    crossorigin="anonymous">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="sha384-VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU"
-    crossorigin="anonymous"></script>
-  <script src="https://use.fontawesome.com/8153b7cffb.js"></script>
-  <script src="app.js"></script>
-  <script src="js/fb.js"></script>
-  <script src="js/find.js"></script>
-  <script src="js/favorites.js"></script>
+	<title>goEat!</title>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.3.1/js/tether.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj"
+		crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="sha384-VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU"
+		crossorigin="anonymous"></script>
+	<script src="https://use.fontawesome.com/8153b7cffb.js"></script>
+	<script src="app.js"></script>
+	<script src="js/fb.js"></script>
+	<script src="js/find.js"></script>
+	<script src="js/favorites.js"></script>
+	
+
 
 </head>
 
 <body>
-  <nav class="navbar navbar-light bg-faded">
-    <div class="nav navbar-nav">
-      <a class="navbar-brand" href="#">goEat!</a>
-      <a class="nav-item nav-link" href="#!/find"><i class="fa fa-cutlery" aria-hidden="true"></i></a>
-      <a class="nav-item nav-link" href="#!"><i class="fa fa-history" aria-hidden="true"></i></a>
-       <a class="nav-item nav-link" href="#!/favorites"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-  <div ng-include src="'views/fbLogin.html'"></div>
-    </div>
-  </nav>
-  <div ng-view></div>
+	<nav class="navbar navbar-light bg-faded">
+		<div class="nav navbar-nav">
+			<a class="navbar-brand" href="#">goEat!</a>
+			<a class="nav-item nav-link" href="#!/find"><i class="fa fa-cutlery" aria-hidden="true"></i></a>
+			<a class="nav-item nav-link" href="#!"><i class="fa fa-history" aria-hidden="true"></i></a>
+			<a class="nav-item nav-link" href="#!/favorites"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+			<a class="nav-item nav-link" href="#!/directions"><i class="glyphicon glyphicon-road" aria-hidden="true"></i></a>			
+		</div>
+	</nav>
+	<div ng-view></div>
 
 </body>
 

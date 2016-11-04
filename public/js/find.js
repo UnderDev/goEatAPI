@@ -9,10 +9,22 @@ angular.module('myApp.find', ['ngRoute'])
     });
   }])
 
-  .controller('FindCtrl', ['$scope', 'PlacesService','geolocationSvc', function ($scope, PlacesService, geolocationSvc) {
+  .controller('FindCtrl', ['$scope', 'PlacesService','geolocationSvc','DirectionService', function ($scope, PlacesService, geolocationSvc,DirectionService) {
 
-    $scope.getDirections = function() {
-      //scott magic here  
+    var loc;
+    $scope.directionsArr;
+    $scope.getDirections = function(place_id) {
+      //scott magic here 
+      console.log(place_id);
+      console.log(loc)
+      DirectionService.getData(loc, place_id).then(function (data) {
+      
+        $scope.directionsArr = data;
+        console.log(data);
+      }, function () {
+        $scope.data = undefined;
+      });
+
     };
       
     
@@ -299,13 +311,13 @@ angular.module('myApp.find', ['ngRoute'])
       ]
     } else {
       geolocationSvc.getCurrentPosition().then(function(location){
+           loc = location;
         PlacesService.getData(location).then(function (data) {
         $scope.places = data;
       }, function () {
         $scope.data = undefined;
       });
-      })
-      
+      })     
     }
 
 
@@ -341,7 +353,30 @@ angular.module('myApp.find', ['ngRoute'])
         return deferred.promise;
       }
     }
+  })
+
+
+  //http://stackoverflow.com/questions/14947478/angularjs-ng-repeat-with-data-from-service
+  .factory('DirectionService', function ($q, $http, $rootScope) {
+    var myData = {};
+
+    return {
+      getData: function (location,destination) {
+        var deferred = $q.defer();
+        var lat = location.coords.latitude;
+        var lon = location.coords.longitude;
+        $http.get('/direction/'+lat+','+lon+","+destination)
+          .success(function (data) {
+            myData = data;
+            deferred.resolve(myData);
+            // update angular's scopes
+            $rootScope.$$phase || $rootScope.$apply();
+          });
+        return deferred.promise;
+      }
+    }
   }).factory('geolocationSvc', ['$q', '$window', function ($q, $window) {
+
 
 //adapted from http://stackoverflow.com/questions/23185619/how-can-i-use-html5-geolocation-in-angularjs
     'use strict';

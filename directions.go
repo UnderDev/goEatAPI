@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strings"
 
 	macaron "gopkg.in/macaron.v1"
 
@@ -11,33 +12,27 @@ import (
 	"googlemaps.github.io/maps"
 )
 
-//
-func main() {
-	m := macaron.Classic()
-	initRoutes(m)
-	m.Run()
-}
-
 /*https://github.com/googlemaps/google-maps-services-go*/
-func getRoutes(res http.ResponseWriter, req *http.Request, filter maps.Step) {
+func getDirections(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) { //FILTER NOT WORKING
 	c, err := maps.NewClient(maps.WithAPIKey("AIzaSyB5ZgNt2r2S-v7LI-SQdMpsORxPTpgPoAY"))
 	if err != nil {
 		log.Fatalf("fatal error: %s", err)
 	}
 
+	str := ctx.Params("stuff")
+	pos := strings.Split(str, ",")
+	lat := pos[0]
+	lon := pos[1]
+	dest := pos[2]
+
 	r := &maps.DirectionsRequest{
-		Origin:      "place_id:ChIJ4VVLVC2RW0gRrVl2c9mLeCs", //place id/lat,long OR address  GMIT, Galway City, Ireland
-		Destination: "place_id:ChIJL6wn6oAOZ0gRoHExl6nHAAo",
+		Origin:      lat + "," + lon,
+		Destination: "place_id:" + dest + "", //ChIJL6wn6oAOZ0gRoHExl6nHAAo
 	}
 
 	routes, _, err := c.Directions(context.Background(), r)
 	if err != nil {
 		log.Fatalf("fatal error: %s", err)
 	}
-	json.NewEncoder(res).Encode(routes) //should work
-}
-
-func initRoutes(m *macaron.Macaron) {
-
-	m.Get("/routes", getRoutes)
+	json.NewEncoder(res).Encode(routes)
 }
