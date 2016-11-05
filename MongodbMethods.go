@@ -141,9 +141,7 @@ func goFind(findId string) Person {
 	}
 
 	fmt.Println("Find user by id")
-	fmt.Println("passs :" + result.Fbpass + "name :" + result.Name + "photo :" + result.Photo)
 	places := result
-	fmt.Println("passs :" + places.Fbpass + "name :" + places.Name + "photo :" + places.Photo)
 	if err == nil {
 		fmt.Println("returning real json")
 	}
