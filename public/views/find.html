@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-8">
-				<div ng-repeat="place in places track by $index">
+				<div ng-repeat="place in places track by $index" ng-show="showMap">
 					<div class="card">
 						<div class="card-block bg-info">
 							<div class="list-inline">
@@ -31,10 +31,18 @@
 							<ul class="list-inline">
 								<li class="list-inline-item">
 									<button class="btn btn-primary" ng-click="getDirections(place.place_id)">Get Directions</button>
+									<button class="btn btn-primary" ng-click="showMe(place.place_id)">Show Map</button>
 								</li>
-
 							</ul>
 						</div>
+					</div>
+				</div>
+				<div ng-hide="showMap" >
+					<!--https://developers.google.com/maps/documentation/embed/start-->
+					<iframe width="730" height="450" frameborder="1" style="border:4" ng-src="{{placeID}}" allowfullscreen></iframe>
+					<div class="container">
+						<button class="btn btn-primary" ng-click="hideMe()">Hide Map</button>
+						<span>{{placeID}}</span>
 					</div>
 				</div>
 			</div>

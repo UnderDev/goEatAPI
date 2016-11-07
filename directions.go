@@ -13,7 +13,7 @@ import (
 )
 
 /*https://github.com/googlemaps/google-maps-services-go*/
-func getDirections(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) { //FILTER NOT WORKING
+func getDirections(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) {
 	c, err := maps.NewClient(maps.WithAPIKey("AIzaSyB5ZgNt2r2S-v7LI-SQdMpsORxPTpgPoAY"))
 	if err != nil {
 		log.Fatalf("fatal error: %s", err)
@@ -27,7 +27,7 @@ func getDirections(res http.ResponseWriter, req *http.Request, ctx *macaron.Cont
 
 	r := &maps.DirectionsRequest{
 		Origin:      lat + "," + lon,
-		Destination: "place_id:" + dest + "", //ChIJL6wn6oAOZ0gRoHExl6nHAAo
+		Destination: "place_id:" + dest + "",
 	}
 
 	routes, _, err := c.Directions(context.Background(), r)

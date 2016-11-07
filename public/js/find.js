@@ -9,16 +9,16 @@ angular.module('myApp.find', ['ngRoute'])
     });
   }])
 
-  .controller('FindCtrl', ['$scope', 'PlacesService','geolocationSvc','DirectionService', function ($scope, PlacesService, geolocationSvc,DirectionService) {
+  .controller('FindCtrl', ['$scope','$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', function ($scope,$sce, PlacesService, geolocationSvc, DirectionService) {
 
     var loc;
     $scope.directionsArr;
-    $scope.getDirections = function(place_id) {
-      //scott magic here 
+
+    $scope.getDirections = function (place_id) {
       console.log(place_id);
       console.log(loc)
       DirectionService.getData(loc, place_id).then(function (data) {
-      
+
         $scope.directionsArr = data;
         console.log(data);
       }, function () {
@@ -26,8 +26,23 @@ angular.module('myApp.find', ['ngRoute'])
       });
 
     };
-      
-    
+
+
+    $scope.showMap = true;
+
+    $scope.showMe = function (placeID) {
+      $scope.showMap = false;
+      //http://stackoverflow.com/questions/29444132/angular-interpolation-error-for-src-attribute 
+      var loc =  geolocationSvc.getCurrentPosition();
+      console.log(loc.lat);
+      $scope.placeID = $sce.trustAsResourceUrl("https://www.google.com/maps/embed/v1/directions?origin=53.2774252,-9.0110627&destination=place_id:"+placeID+"&key=AIzaSyB5ZgNt2r2S-v7LI-SQdMpsORxPTpgPoAY");   
+    }
+    $scope.hideMe = function () {
+      $scope.showMap = true;
+    }
+
+
+
 
     var bypassGoogle = false;
     $scope.places = [];
@@ -310,14 +325,14 @@ angular.module('myApp.find', ['ngRoute'])
         }
       ]
     } else {
-      geolocationSvc.getCurrentPosition().then(function(location){
-           loc = location;
+      geolocationSvc.getCurrentPosition().then(function (location) {
+        loc = location;
         PlacesService.getData(location).then(function (data) {
-        $scope.places = data;
-      }, function () {
-        $scope.data = undefined;
-      });
-      })     
+          $scope.places = data;
+        }, function () {
+          $scope.data = undefined;
+        });
+      })
     }
 
 
@@ -343,7 +358,7 @@ angular.module('myApp.find', ['ngRoute'])
         var deferred = $q.defer();
         var lat = location.coords.latitude;
         var lon = location.coords.longitude;
-        $http.get('/maps/nearby/restaurants/'+lat+','+lon)
+        $http.get('/maps/nearby/restaurants/' + lat + ',' + lon)
           .success(function (data) {
             myData = data;
             deferred.resolve(myData);
@@ -361,15 +376,14 @@ angular.module('myApp.find', ['ngRoute'])
     var myData = {};
 
     return {
-      getData: function (location,destination) {
+      getData: function (location, destination) {
         var deferred = $q.defer();
         var lat = location.coords.latitude;
         var lon = location.coords.longitude;
-        $http.get('/direction/'+lat+','+lon+","+destination)
+        $http.get('/direction/' + lat + ',' + lon + "," + destination)
           .success(function (data) {
             myData = data;
             deferred.resolve(myData);
-            // update angular's scopes
             $rootScope.$$phase || $rootScope.$apply();
           });
         return deferred.promise;
@@ -378,26 +392,26 @@ angular.module('myApp.find', ['ngRoute'])
   }).factory('geolocationSvc', ['$q', '$window', function ($q, $window) {
 
 
-//adapted from http://stackoverflow.com/questions/23185619/how-can-i-use-html5-geolocation-in-angularjs
+    //adapted from http://stackoverflow.com/questions/23185619/how-can-i-use-html5-geolocation-in-angularjs
     'use strict';
 
     function getCurrentPosition() {
-        var deferred = $q.defer();
-        if (!$window.navigator.geolocation) {
-            deferred.reject('Geolocation not supported.');
-        } else {
-            $window.navigator.geolocation.getCurrentPosition(
-                function (position) {
-                    deferred.resolve(position);
-                },
-                function (err) {
-                    deferred.reject(err);
-                });
-        }
-        return deferred.promise;
+      var deferred = $q.defer();
+      if (!$window.navigator.geolocation) {
+        deferred.reject('Geolocation not supported.');
+      } else {
+        $window.navigator.geolocation.getCurrentPosition(
+          function (position) {
+            deferred.resolve(position);
+          },
+          function (err) {
+            deferred.reject(err);
+          });
+      }
+      return deferred.promise;
     }
     return {
-        getCurrentPosition: getCurrentPosition
+      getCurrentPosition: getCurrentPosition
     };
-}]);
+  }]);
 
