@@ -29,7 +29,7 @@ func takeaway(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) 
 
 func nearby(res http.ResponseWriter, req *http.Request, ctx *macaron.Context, filter maps.PlaceType) {
 	//c is the pointer to the maps client that is generated using the api key
-	c, err := maps.NewClient(maps.WithAPIKey("AIzaSyBO90mNejVGPHPYioe2_nnLL5776iXZCX8"))
+	c, err := maps.NewClient(maps.WithAPIKey("AIzaSyB5ZgNt2r2S-v7LI-SQdMpsORxPTpgPoAY"))
 	if err != nil {
 		log.Fatalf("fatal error: %s", err)
 	}

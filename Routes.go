@@ -26,8 +26,9 @@ func initRoutes(m *macaron.Macaron) {
 			m.Get("/delivery/:pos", delivery)
 			m.Get("/takeaway/:pos", takeaway)
 		})
-
 	})
+
+	m.Get("/direction/:stuff", getDirections)
 
 	m.Get("/hello", func() string {
 		return "Hello! Yes I still work."
