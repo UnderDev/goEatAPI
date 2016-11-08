@@ -6,19 +6,30 @@ import (
 	fb "github.com/huandu/facebook"
 )
 
-type Foo struct {
-	Bar string
-}
-
 func acccessKey(key string) string {
 	res, err := fb.Get("/me", fb.Params{
-		"fields":       "id,name,email",
+		"fields":       "id,name,email,picture",
 		"access_token": key,
 	})
-	fmt.Println("here is my facebook first name:", res["name"])
+	if err == nil {
+		var items []fb.Result
+		err := res.DecodeField("data", &items)
+		if err != nil {
+			fmt.Println("An error has happened %v", err)
+			return ""
+		}
 
-	if err != nil {
-		fmt.Println("Break")
+		for _, item := range items {
+			fmt.Println(item["id"])
+		}
+		var id string = res["id"].(string)
+		var p Person = goFind(id)
+		fmt.Println("passs :" + p.Fbpass + "name :" + p.Name + "photo :" + p.Photo)
+		if p.Name == "" {
+			//create account
+			returnInsertPerson(res["id"].(string), res["name"].(string))
+		}
+		return id
 	}
-	return "hello" //res["first_name"]
+	return "nil"
 }
