@@ -9,7 +9,7 @@ angular.module('myApp.find', ['ngRoute'])
     });
   }])
 
-  .controller('FindCtrl', ['$scope','$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', function ($scope,$sce, PlacesService, geolocationSvc, DirectionService) {
+  .controller('FindCtrl', ['$scope', '$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', function ($scope, $sce, PlacesService, geolocationSvc, DirectionService) {
 
     var loc;
     $scope.directionsArr;
@@ -29,13 +29,13 @@ angular.module('myApp.find', ['ngRoute'])
 
 
     $scope.showMap = true;
-
     $scope.showMe = function (placeID) {
       $scope.showMap = false;
-      //http://stackoverflow.com/questions/29444132/angular-interpolation-error-for-src-attribute 
-      var loc =  geolocationSvc.getCurrentPosition();
-      console.log(loc.lat);
-      $scope.placeID = $sce.trustAsResourceUrl("https://www.google.com/maps/embed/v1/directions?origin=53.2774252,-9.0110627&destination=place_id:"+placeID+"&key=AIzaSyB5ZgNt2r2S-v7LI-SQdMpsORxPTpgPoAY");   
+      geolocationSvc.getCurrentPosition().then(function (location) {    
+        var latLong = location.coords.latitude+","+location.coords.longitude;
+         //http://stackoverflow.com/questions/29444132/angular-interpolation-error-for-src-attribute 
+          $scope.placeID = $sce.trustAsResourceUrl("https://www.google.com/maps/embed/v1/directions?origin=" + latLong + "&destination=place_id:" + placeID + "&key=AIzaSyB5ZgNt2r2S-v7LI-SQdMpsORxPTpgPoAY");
+      })      
     }
     $scope.hideMe = function () {
       $scope.showMap = true;
