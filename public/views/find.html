@@ -12,6 +12,9 @@
 								<div class="list-inline-item">
 									<span>{{place.rating === 0 ? "Not rated" : place.rating+"/5"}}</span>
 								</div>
+								<div class="list-inline-item" style="float: right">
+									<a class="btn" ng-click="addFav(place)"><i class="fa fa-star-o" aria-hidden="false"></i></a>
+								</div>
 							</div>
 						</div>
 						<div class="card-block">

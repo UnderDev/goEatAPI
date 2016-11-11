@@ -9,7 +9,7 @@ angular.module('myApp.find', ['ngRoute'])
     });
   }])
 
-  .controller('FindCtrl', ['$scope', '$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', function ($scope, $sce, PlacesService, geolocationSvc, DirectionService) {
+  .controller('FindCtrl', ['$scope', '$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', 'FavService', function ($scope, $sce, PlacesService, geolocationSvc, DirectionService, FavService) {
 
     var loc;
     $scope.directionsArr;
@@ -41,8 +41,17 @@ angular.module('myApp.find', ['ngRoute'])
       $scope.showMap = true;
     }
 
+    $scope.addFav = function (place) {
 
+      var favs=place;
+      
+      FavService.updateFavs(favs).then(function () {
 
+        console.log("Updated favourites");
+      }, function () {
+        console.log("Unable to update");
+      });
+    }
 
     var bypassGoogle = false;
     $scope.places = [];
@@ -368,6 +377,22 @@ angular.module('myApp.find', ['ngRoute'])
         return deferred.promise;
       }
     }
+  })
+
+  .factory('FavService', function ($http, $rootScope) {
+
+    return {
+     updateFavs: function (favs){
+          var id = favs.place_id;
+          var name = favs.name;
+          var photo = favs.photos[0].photo_reference;
+          var lat = favs.geometry.location.lat;
+          var lon = favs.geometry.location.long;
+          return $http.put('/returnUpdateFavourites/' + id + name + photo + lat + ',' + lon);
+      }
+    }
+        
+        
   })
 
 
