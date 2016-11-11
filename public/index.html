@@ -38,17 +38,28 @@
 </style>
 
 <body>
-  <nav class="navbar  navbar-dark bg-inverse navbar-fixed-top">
-    <div class="nav navbar-nav">
-      <h1 class="navbar-brand pull-left" href="#">GoEat!</h1>
-      <div class="text-xs-center">
-        <a class="nav-item nav-link" href="#!/find"><i class="fa fa-cutlery " aria-hidden="true"></i></a>
-        <a class="nav-item nav-link" href="#!"><i class="fa fa-history" aria-hidden="true"></i></a>
-        <a class="nav-item nav-link" href="#!/favorites"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+
+  <nav class="navbar  navbar-dark bg-inverse navbar-fixed-top  text-xs-center">
+    <div class="container">
+      <div class="row">
+        <div class="nav navbar-nav  text-xs-center">
+          <div class="col-sm-4">
+            <a class="nav-item nav-link" href="#!/find"><i class="fa fa-cutlery " aria-hidden="true"></i></a>
+            <a class="nav-item nav-link" href="#!"><i class="fa fa-history" aria-hidden="true"></i></a>
+            <a class="nav-item nav-link" href="#!/favorites"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+          </div>
+          <div class="col-sm-4">
+            <h1 class="col-sm-12 navbar-brand">GoEat!</h1>
+          </div>
+          <div class="col-sm-4">
+            <div ng-include src="'views/fbLogin.html'" class="pull-right"></div>
+          </div>
+        </div>
       </div>
-      <div ng-include src="'views/fbLogin.html'" class="pull-right"></div>
-    </div>
   </nav>
+
+
+
   <div ng-view></div>
 </body>
 

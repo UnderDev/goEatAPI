@@ -44,7 +44,7 @@ angular.module('myApp.find', ['ngRoute'])
 
 
 
-    var bypassGoogle = true;
+    var bypassGoogle = false;
     $scope.places = [];
 
     if (bypassGoogle == true) {
