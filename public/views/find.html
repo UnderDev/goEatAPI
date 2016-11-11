@@ -1,50 +1,53 @@
 <div ng-controller="FindCtrl">
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-8">
-				<div ng-repeat="place in places track by $index" ng-show="showMap">
-					<div class="card">
-						<div class="card-block bg-info">
-							<div class="list-inline">
-								<div class="list-inline-item">
-									<h4 class="card-title">{{place.name}}</h4>
-								</div>
-								<div class="list-inline-item">
-									<span>{{place.rating === 0 ? "Not rated" : place.rating+"/5"}}</span>
-								</div>
+
+	<div class="bgColour">
+		<div class="bgLayout card-columns" style="text-xs-center">
+			<div ng-repeat="place in places track by $index" ng-show="showMap">
+				<div class="card " style="display:inline-block">
+					<div class="card-block bg-info">
+						<div class="list-inline text-xs-center">
+							<div class="list-inline-item ">
+								<h4 class="card-title">{{place.name}}</h4>
+							</div>
+							<div class="list-inline-item">
+								<span>{{place.rating === 0 ? "Not rated" : place.rating+"/5"}}</span>
 							</div>
 						</div>
-						<div class="card-block">
-							<div class="container">
-								<div class="col-sm-8">
-									<p class="card-text">{{place.vicinity}}</p>
-								</div>
-								<div class="col-sm-2 bg-success">
-									<p class="card-text text-xs-right" ng-if="place.opening_hours.open_now">Open now!</p>
-								</div>
+						<div class="list-inline text-xs-center">
+							<div class="list-inline-item bg-success">
+								<div class="card-text" ng-if="place.opening_hours.open_now">Open now!</div>
 							</div>
-						</div>
-						<div class=" text-xs-center">
-							<img item-width="300" item-height="300px" ng-src="{{getURL(place.photos[0].photo_reference)}}" />
-						</div>
-						<div class="card-block">
-							<ul class="list-inline">
-								<li class="list-inline-item">
-									<button class="btn btn-primary" ng-click="getDirections(place.place_id)">Get Directions</button>
-									<button class="btn btn-primary" ng-click="showMe(place.place_id)">Show Map</button>
-								</li>
-							</ul>
 						</div>
 					</div>
-				</div>
-				<div ng-hide="showMap" >
-					<!--https://developers.google.com/maps/documentation/embed/start-->
-					<iframe width="730" height="450" frameborder="1" style="border:4" ng-src="{{placeID}}" allowfullscreen></iframe>
-					<div class="container">
-						<button class="btn btn-primary" ng-click="hideMe()">Hide Map</button>
+					<div class="card-block">
+						<div class="list-inline text-xs-center">
+							<p class="card-text">{{place.vicinity}}</p>
+						</div>
+					</div>
+					<div class="card-block list-inline text-xs-center">
+						<img width="150" height="150" ng-src="{{getURL(place.photos[0].photo_reference)}}" />
+					</div>
+					<div class="card-footer">
+						<ul class="list-inline text-xs-center">
+							<li>
+								<button class="btn btn-primary" ng-click="getDirections(place.place_id)">Directions</button>
+								<button class="btn btn-primary" ng-click="showMe(place.place_id)">Google Map</button>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
+
+
+
+		<div ng-hide="showMap" class="text-xs-center">
+			<!--https://developers.google.com/maps/documentation/embed/start-->
+			<iframe width="730" height="450" frameborder="1" style="border:4" ng-src="{{placeID}}" allowfullscreen></iframe>
+			<div class="container">
+				<button class="btn btn-primary" ng-click="hideMe()">Hide Map</button>
+			</div>
+		</div>
+
 	</div>
 </div>

@@ -20,14 +20,33 @@
   <script src="js/favorites.js"></script>
 </head>
 
+<style>
+  .bgColour {
+    background-color: #EBF5FB
+  }
+  
+  .bgLayout {
+    margin: 20px;
+    padding-top: 55px;
+  }
+  
+  .card {
+    min-width: 300px;
+    min-height: 300px;
+    border: 0.5px solid darkgray;
+  }
+</style>
+
 <body>
-  <nav class="navbar navbar-light bg-faded">
+  <nav class="navbar  navbar-dark bg-inverse navbar-fixed-top">
     <div class="nav navbar-nav">
-      <a class="navbar-brand" href="#">goEat!</a>
-      <a class="nav-item nav-link" href="#!/find"><i class="fa fa-cutlery" aria-hidden="true"></i></a>
-      <a class="nav-item nav-link" href="#!"><i class="fa fa-history" aria-hidden="true"></i></a>
-      <a class="nav-item nav-link" href="#!/favorites"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-      <div ng-include src="'views/fbLogin.html'"></div>
+      <h1 class="navbar-brand pull-left" href="#">GoEat!</h1>
+      <div class="text-xs-center">
+        <a class="nav-item nav-link" href="#!/find"><i class="fa fa-cutlery " aria-hidden="true"></i></a>
+        <a class="nav-item nav-link" href="#!"><i class="fa fa-history" aria-hidden="true"></i></a>
+        <a class="nav-item nav-link" href="#!/favorites"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+      </div>
+      <div ng-include src="'views/fbLogin.html'" class="pull-right"></div>
     </div>
   </nav>
   <div ng-view></div>
