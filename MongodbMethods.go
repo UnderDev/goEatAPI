@@ -101,13 +101,13 @@ func returnAllPersons(res http.ResponseWriter, req *http.Request) { //return all
 
 } //returnAllPersons
 
-func returnInsertPerson(fbId string, fbName string) { //insert person into database
+func returnInsertPerson(fbId string, fbName string, fbPhoto string) { //insert person into database
 	collection := getCollection()
 
 	//Person builder - will be replaced with http request
 	name := fbName
 	fbpass := fbId
-	photo := "https://images-na.ssl-images-amazon.com/images/I/71vYbOepKWL._UX250_.jpg"
+	photo := fbPhoto
 	favname := "KFC"
 	favlat := "34.453453"
 	favlong := "23.643563"
