@@ -43,5 +43,5 @@ func initRoutes(m *macaron.Macaron) {
 
 	m.Get("/returnFindPerson/:id", returnFindPerson)
 
-	m.Put("/returnUpdateFavourites/:id/:name/:latitude/:longtitude", returnUpdateFavourites)
+	m.Get("/returnUpdateFavourites/:id/:name/:photo/:latitude/:longtitude", returnUpdateFavourites)
 }
