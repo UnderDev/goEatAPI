@@ -49,7 +49,9 @@
                 var xmlHttp = new XMLHttpRequest();
                 xmlHttp.open("GET", theUrl, false); // false for synchronous request
                 xmlHttp.send(null);
-                return xmlHttp.responseText;
+                var t = xmlHttp.responseText;
+                console.log(t);
+                return t;
             } else if (response.status === 'not_authorized') {
                 // The person is logged into Facebook, but not your app.
                 document.getElementById('status').innerHTML = 'Please log ' +
