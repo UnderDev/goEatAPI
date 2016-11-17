@@ -49,7 +49,7 @@
                 var xmlHttp = new XMLHttpRequest();
                 xmlHttp.open("GET", theUrl, false); // false for synchronous request
                 xmlHttp.send(null);
-                var User = $resource('https://goeatapi.herokuapp.com/accessKey/'+access_token);
+                var User = $resource('https://goeatapi.herokuapp.com/accessKey/'+access_token, {});
                 var t = xmlHttp.responseText;
                 console.log(t);
                 console.log(user);
