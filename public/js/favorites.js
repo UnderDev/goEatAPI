@@ -11,8 +11,6 @@ angular.module('myApp.favorites', ['ngRoute'])
 
   .controller('FavoritesCtrl', ['$scope', 'PeopleService', function ($scope, PeopleService) {
 
-//this is all placeholder garbage, get the places from mongo here and then fix the view to show the info we store
-
     $scope.places = [];
 
     PeopleService.getData().then(function (data) {
