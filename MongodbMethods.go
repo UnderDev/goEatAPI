@@ -48,6 +48,8 @@ type Favs struct {
 	Favname       string
 	Favlatitude   string
 	Favlongtitude string
+	Favphoto	  string
+	Favid		  string
 }
 
 //user favourites used in user struct
@@ -163,12 +165,14 @@ func returnUpdateFavourites(res http.ResponseWriter, req *http.Request, ctx *mac
 	fmt.Println("--------->>>>>booo")
 	collection := getCollection()
 
-	findName := ctx.Params("id")
+	findName := "Oliver Arnold"
+	//findName := ctx.Params("fbpass")
 	favname := ctx.Params("name")
+	favid := ctx.Params("id")
 	photo := ctx.Params("photo")
 	favlat := ctx.Params("latitude")
 	favlong := ctx.Params("longtitude")
-	myfavourites := []Favs{{Favname: favname, Favlatitude: favlat, Favlongtitude: favlong}}
+	myfavourites := Favs{Favname: favname, Favid: favid, Favlatitude: favlat, Favlongtitude: favlong, Favphoto: photo}
 
 	query := bson.M{"name": findName}                             //find user
 	update := bson.M{"$push": bson.M{"favourites": myfavourites}} //set new email value
