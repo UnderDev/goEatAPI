@@ -45,14 +45,20 @@
             // for FB.getLoginStatus().
             if (response.status === 'connected') {
                 var access_token = FB.getAuthResponse()['accessToken'];
+                
+                $http.get("https://goeatapi.herokuapp.com/accessKey/" + access_token)
+                .success(function (data) {
+                    myData = data;
+                    console.log(data);
+                    deferred.resolve(myData);
+                    console.log(myData);
+                });
                 var theUrl = "https://goeatapi.herokuapp.com/accessKey/" + access_token;
                 var xmlHttp = new XMLHttpRequest();
                 xmlHttp.open("GET", theUrl, false); // false for synchronous request
                 xmlHttp.send(null);
-                var User = $resource('https://goeatapi.herokuapp.com/accessKey/'+access_token, {});
                 var t = xmlHttp.responseText;
                 console.log(t);
-                console.log(user);
                 return t;
             } else if (response.status === 'not_authorized') {
                 // The person is logged into Facebook, but not your app.
