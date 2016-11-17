@@ -30,10 +30,33 @@
     padding-top: 55px;
   }
   
-  .card {
-    min-width: 300px;
-    min-height: 300px;
-    border: 0.5px solid darkgray;
+  @media (min-width: 544px) {
+    .card-columns .card {
+      min-width: 300px;
+      min-height: 400px;
+      max-width: 400px;
+      max-height: 500px;
+      border: 0.5px solid darkgray;
+    }
+  }
+  
+  @media (min-width: 544px) {
+    .cardCol {
+      -webkit-column-count: 2;
+      -moz-column-count: 2;
+      column-count: 2;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .cardCol {
+      -webkit-column-count: 3;
+      -moz-column-count: 3;
+      column-count: 3;
+    }
+  }
+  .fa-star{
+     color: goldenrod;
   }
 </style>
 

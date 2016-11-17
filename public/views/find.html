@@ -1,39 +1,33 @@
 <div ng-controller="FindCtrl">
 
 	<div class="bgColour">
-		<div class="bgLayout card-columns" style="text-xs-center">
-			<div ng-repeat="place in places track by $index" ng-show="showMap">
-				<div class="card " style="display:inline-block">
-					<div class="card-block bg-info">
-						<div class="list-inline text-xs-center">
-							<div class="list-inline-item ">
-								<h6 class="card-title">{{place.name}}</h6>
-							</div>
-							<div class="list-inline-item">
-								<span>{{place.rating === 0 ? "Not rated" : place.rating+"/5"}}</span>
-							</div>
-						</div>
-						<div class="list-inline text-xs-center">
-							<div class="list-inline-item bg-success">
-								<div class="card-text" ng-if="place.opening_hours.open_now">Open now!</div>
-							</div>
-						</div>
+		<div class="bgLayout card-columns cardCol" style="text-xs-center">
+			<div ng-repeat="place in places track by $index" ng-show="showMap" class="cardSize">
+				<div class="card text-xs-center list-inline  " style="display:inline-block">
+
+					<div class="card-title card-block bg-info ">
+						<h6>{{place.name}}</h6>
 					</div>
-					<div class="card-block">
-						<div class="list-inline text-xs-center font-weight-bold ">
-							<p class="card-text">{{place.vicinity}}</p>
-						</div>
+					<!--<span>{{place.rating === 0 ? "Not rated" : place.rating+"/5"}}</span>-->
+					<jk-rating-stars max-rating="8" rating="ctrl.rating" read-only="ctrl.readOnly" on-rating="ctrl.onRating(rating)">
+					</jk-rating-stars>
+
+					<div class=" font-weight-bold ">
+						<p class="card-text">{{place.vicinity}}</p>
 					</div>
-					<div class="card-block list-inline text-xs-center">
-						<img width="150" height="150" ng-src="{{getURL(place.photos[0].photo_reference)}}" />
+
+					<div class=" card-block  ">
+						<img width="200" height="150" ng-src="{{getURL(place.photos[0].photo_reference)}}" />
 					</div>
+
+					<div class=" bg-success ">
+						<div class="card-text" ng-if="place.opening_hours.open_now">Open now!</div>
+					</div>
+
 					<div class="card-footer">
-						<ul class="list-inline text-xs-center">
-							<li>
-								<button class="btn btn-primary" ng-click="getDirections(place.place_id)">Directions</button>
-								<button class="btn btn-primary" ng-click="showMe(place.place_id)">Google Map</button>
-							</li>
-						</ul>
+
+						<button class="btn btn-outline-info btn-sm" ng-click="getDirections(place.place_id)">Directions</button>
+						<button class="btn btn-outline-info btn-sm" ng-click="showMe(place.place_id)">Google Map</button>
 					</div>
 				</div>
 			</div>
