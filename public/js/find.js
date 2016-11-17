@@ -28,6 +28,15 @@ angular.module('myApp.find', ['ngRoute'])
     };
 
 
+    $scope.ratings = function (stars) {
+      var ratingArray = [];
+      for (var i = 0; i < stars; i++)
+        ratingArray.push(i)
+
+      return ratingArray;
+    }
+
+
     $scope.showMap = true;
     $scope.showMe = function (placeID) {
       $scope.showMap = false;

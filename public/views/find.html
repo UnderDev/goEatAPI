@@ -9,9 +9,12 @@
 						<h6>{{place.name}}</h6>
 					</div>
 
-					<div class="font-weight-bold">
-						<span>{{place.rating === 0 ? "Not rated" : place.rating+"/5"}}</span>
-					</div>
+					<span>{{place.rating === 0 ? "Not rated" : place.rating+"/5"}}</span>
+					<span ng-repeat="n in ratings('5') ">				
+						<span ng-if="place.rating > n">
+							<i class="fa fa-star" aria-hidden="true"></i>
+						</span>
+					</span>
 
 					<div class=" font-weight-bold ">
 						<p class="card-text">{{place.vicinity}}</p>
