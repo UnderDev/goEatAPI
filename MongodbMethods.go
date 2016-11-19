@@ -57,6 +57,8 @@ type Blacklists struct {
 	Blname       string
 	Bllatitude   string
 	Bllongtitude string
+	Blphoto	  	 string
+	Blid	     string
 }
 
 //opens and returns connection to Mongodb
@@ -183,6 +185,31 @@ func returnUpdateFavourites(res http.ResponseWriter, req *http.Request, ctx *mac
 	}
 
 	fmt.Println("Update favourites \n")
+
+} //returnUpdatePerson
+
+func returnUpdateBlacklist(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) { // Update user Blacklist based on searched name
+
+	collection := getCollection()
+
+	findName := "Oliver Arnold"
+	//findName := ctx.Params("fbpass")
+	name := ctx.Params("name")
+	id := ctx.Params("id")
+	photo := ctx.Params("photo")
+	lat := ctx.Params("latitude")
+	long := ctx.Params("longtitude")
+	myBlackList := Blacklists{Blname: name, Blid: id, Bllatitude: lat, Bllongtitude: long, Blphoto: photo}
+
+	query := bson.M{"name": findName}                             //find user
+	update := bson.M{"$push": bson.M{"blacklist": myBlackList}} //set new email value
+
+	err := collection.Update(query, update)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("Update Blacklist \n")
 
 } //returnUpdatePerson
 
