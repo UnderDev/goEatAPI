@@ -9,7 +9,7 @@ angular.module('myApp.find', ['ngRoute'])
     });
   }])
 
-.controller('FindCtrl', ['$scope', '$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', 'FavService', function ($scope, $sce, PlacesService, geolocationSvc, DirectionService, FavService) {
+.controller('FindCtrl', ['$scope', '$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', 'FavService', 'BlistService', function ($scope, $sce, PlacesService, geolocationSvc, DirectionService, FavService, BlistService) {
 
     var loc;
     $scope.directionsArr;
@@ -50,6 +50,18 @@ angular.module('myApp.find', ['ngRoute'])
             console.log("Updated favourites");
         }, function () {
             console.log("Unable to update");
+        });
+    }
+
+    $scope.blacklist = function (place) {
+
+        var blist = place;
+
+        BlistService.updateBlist(blist).then(function () {
+
+            console.log("Updated blacklist");
+        }, function () {
+            console.log("Unable to update blacklist");
         });
     }
 
@@ -394,6 +406,27 @@ angular.module('myApp.find', ['ngRoute'])
             var lon = favs.geometry.location.lng;
             console.log(lon);
             return $http.get('/returnUpdateFavourites/' + id + '/' + name + '/' + photo + '/' + lat + '/' + lon);
+        }
+    }
+
+
+})
+
+.factory('BlistService', function ($http, $rootScope) {
+
+    return {
+        updateBlist: function (blist) {
+            var id = blist.place_id;
+            console.log(id);
+            var name = blist.name;
+            console.log(name);
+            var photo = blist.photos[0].photo_reference;
+            console.log(photo);
+            var lat = blist.geometry.location.lat;
+            console.log(lat);
+            var lon = blist.geometry.location.lng;
+            console.log(lon);
+            return $http.get('/returnUpdateBlacklist/' + id + '/' + name + '/' + photo + '/' + lat + '/' + lon);
         }
     }
 
