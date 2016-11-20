@@ -39,7 +39,7 @@
         function statusChangeCallback(response) {
             console.log('statusChangeCallback');
             console.log(response.status);
-           
+
             // The response object is returned with a status field that lets the
             // app know the current login status of the person.
             // Full docs on the response object can be found in the documentation
@@ -47,7 +47,7 @@
             if (response.status === 'connected') {
                 var access_token = FB.getAuthResponse()['accessToken'];
 
-                $.get("/accessKey/"+access_token, function (data, status) {
+                $.get("/accessKey/" + access_token, function (data, status) {
                     //session storage of user id
                     if (typeof (Storage) !== "undefined") {
                         localStorage.setItem("usrId", data);
@@ -78,30 +78,32 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
-        FB.login(function (response) {
-            console.log("YEEEP")
-            if (response.authResponse) {
-                var access_token = FB.getAuthResponse()['accessToken'];
-                $.get("/accessKey/"+access_token, function (data, status) {
-                    //session storage of user id
-                    if (typeof (Storage) !== "undefined") {
-                        localStorage.setItem("usrId", data);
-                    } else {
-                        alert("Please update to a browser that supports HTML5")
-                    }
-                });
-                return;
-            } else {
-                console.log('User cancelled login or did not fully authorize.');
-            }
-        });
-        function b()
-        {
+        function facebookLogin() {
+            FB.login(function (response) {
+                console.log("YEEEP")
+                if (response.authResponse) {
+                    var access_token = FB.getAuthResponse()['accessToken'];
+                    $.get("/accessKey/" + access_token, function (data, status) {
+                        //session storage of user id
+                        if (typeof (Storage) !== "undefined") {
+                            localStorage.setItem("usrId", data);
+                        } else {
+                            alert("Please update to a browser that supports HTML5")
+                        }
+                    });
+                    return;
+                } else {
+                    console.log('User cancelled login or did not fully authorize.');
+                }
+            })
+        };
+
+        function b() {
             console.log(localStorage.getItem("usrId"));
         }
     </script>
     <div class="container">
-        <button onclick="FB.login(); " class="btn btn-primary">Login by Facebook</button>
+        <button onclick="facebookLogin(); " class="btn btn-primary">Login by Facebook</button>
         <button onclick="b();">check session</button>
     </div>
 </div>
