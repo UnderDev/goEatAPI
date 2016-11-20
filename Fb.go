@@ -1,17 +1,12 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 
 	fb "github.com/huandu/facebook"
 	"gopkg.in/macaron.v1"
 )
-
-type Id struct {
-	Id string
-}
 
 func acccessKey(w http.ResponseWriter, req *http.Request, ctx *macaron.Context) string {
 	key := ctx.Params("id")
@@ -31,19 +26,13 @@ func acccessKey(w http.ResponseWriter, req *http.Request, ctx *macaron.Context) 
 			return ""
 		}
 
-		id := Id{res["id"].(string)}
-		var p Person = goFind(id.Id)
+		id := res["id"].(string)
+		var p Person = goFind(id)
 		if p.Name == "" {
 			//create account
 			returnInsertPerson(res["id"].(string), res["name"].(string), url)
 		}
-		js, err := json.Marshal(id)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-
-		}
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(js)
+		return id
 	}
 	return "nil"
 }

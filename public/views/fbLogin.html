@@ -39,27 +39,23 @@
         function statusChangeCallback(response) {
             console.log('statusChangeCallback');
             console.log(response);
+           
             // The response object is returned with a status field that lets the
             // app know the current login status of the person.
             // Full docs on the response object can be found in the documentation
             // for FB.getLoginStatus().
             if (response.status === 'connected') {
                 var access_token = FB.getAuthResponse()['accessToken'];
-                
-                $http.get("https://goeatapi.herokuapp.com/accessKey/" + access_token)
-                .success(function (data) {
-                    myData = data;
-                    console.log(data);
-                    deferred.resolve(myData);
-                    console.log(myData);
+
+                $.get("/accessKey/"+access_token, function (data, status) {
+                    //session storage of user id
+                    if (typeof (Storage) !== "undefined") {
+                        localStorage.setItem("usrId", data);
+                    } else {
+                        alert("Please update to a browser that supports HTML5")
+                    }
                 });
-                var theUrl = "https://goeatapi.herokuapp.com/accessKey/" + access_token;
-                var xmlHttp = new XMLHttpRequest();
-                xmlHttp.open("GET", theUrl, false); // false for synchronous request
-                xmlHttp.send(null);
-                var t = xmlHttp.responseText;
-                console.log(t);
-                return t;
+                return;
             } else if (response.status === 'not_authorized') {
                 // The person is logged into Facebook, but not your app.
                 document.getElementById('status').innerHTML = 'Please log ' +
@@ -85,17 +81,26 @@
         FB.login(function (response) {
             if (response.authResponse) {
                 var access_token = FB.getAuthResponse()['accessToken'];
-                var theUrl = "https://goeatapi.herokuapp.com/accessKey/" + access_token;
-                var xmlHttp = new XMLHttpRequest();
-                xmlHttp.open("GET", theUrl, false); // false for synchronous request
-                xmlHttp.send(null);
-                return xmlHttp.responseText;
+                $.get("/accessKey/"+access_token, function (data, status) {
+                    //session storage of user id
+                    if (typeof (Storage) !== "undefined") {
+                        localStorage.setItem("usrId", data);
+                    } else {
+                        alert("Please update to a browser that supports HTML5")
+                    }
+                });
+                return;
             } else {
                 console.log('User cancelled login or did not fully authorize.');
             }
         });
+        function b()
+        {
+            console.log(localStorage.getItem("usrId"));
+        }
     </script>
     <div class="container">
-        <button onclick="FB.login();" class="btn btn-primary">Login by Facebook</button>
+        <button onclick="FB.login(); " class="btn btn-primary">Login by Facebook</button>
+        <button onclick="b();">check session</button>
     </div>
 </div>
