@@ -9,6 +9,6 @@ angular.module('myApp.fb', ['ngRoute'])
   });
 }])
 
-.controller('fbCtrl', [function() {
-
+.controller('fbCtrl', [function($scope) {
+    $scope.usrId = false;
 }]);
