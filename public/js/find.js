@@ -13,7 +13,6 @@ angular.module('myApp.find', ['ngRoute'])
 
     var loc;
     $scope.directionsArr;
-
     $scope.getDirections = function (place_id) {
       console.log(place_id);
       console.log(loc)
@@ -27,13 +26,18 @@ angular.module('myApp.find', ['ngRoute'])
 
     };
 
-
+    //Used to display star ratings upto the num passed in
     $scope.ratings = function (stars) {
       var ratingArray = [];
       for (var i = 0; i < stars; i++)
         ratingArray.push(i)
-
       return ratingArray;
+    }
+
+    //Round number passed in
+    $scope.roundNum = function (num) {
+      var wholeNum = Math.round(num);
+      return wholeNum;
     }
 
 

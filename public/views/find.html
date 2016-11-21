@@ -1,6 +1,6 @@
 <div ng-controller="FindCtrl">
 
-	<div class="bgColour">
+	<div class="bgColour text-xs-center">
 		<div class="bgLayout card-columns cardCol" style="text-xs-center">
 			<div ng-repeat="place in places track by $index" ng-show="showMap" class="cardSize">
 				<div class="card text-xs-center list-inline  " style="display:inline-block">
@@ -8,10 +8,9 @@
 					<div class="card-title card-block bg-info ">
 						<h6>{{place.name}}</h6>
 					</div>
-
-					<span>{{place.rating === 0 ? "Not rated" : place.rating+"/5"}}</span>
-					<span ng-repeat="n in ratings('5') ">				
-						<span ng-if="place.rating > n">
+					<!--<span>{{place.rating === 0 ? "Not rated" : place.rating+"/5"}}</span>-->
+					<span ng-repeat="n in ratings('5') ">			
+						<span ng-if="roundNum(place.rating) > n">
 							<i class="fa fa-star" aria-hidden="true"></i>
 						</span>
 					</span>
