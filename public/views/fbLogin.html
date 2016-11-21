@@ -8,7 +8,7 @@
                 xfbml: true, // parse social plugins on this page
                 version: 'v2.8' // use graph api version 2.8
             });
-
+            
             // Now that we've initialized the JavaScript SDK, we call 
             // FB.getLoginStatus().  This function gets the state of the
             // person visiting this page and can return one of three states to
@@ -20,7 +20,7 @@
             //    your app or not.
             //
             // These three cases are handled in the callback function.
-
+            
             FB.getLoginStatus(function (response) {
                 statusChangeCallback(response);
             });
@@ -33,6 +33,7 @@
                 });
             }
 
+
         };
 
         // This is called with the results from from FB.getLoginStatus().
@@ -40,6 +41,7 @@
             console.log('statusChangeCallback');
             console.log(response.status);
             $scope.usrId = false;
+
             // The response object is returned with a status field that lets the
             // app know the current login status of the person.
             // Full docs on the response object can be found in the documentation
@@ -64,7 +66,6 @@
                 console.log("Not logged in");
             }
         }
-
         // Load the SDK asynchronously
         (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
@@ -96,7 +97,7 @@
             })
         };
     </script>
-    <div class="container" ng-show="!usrId">
-        <button onclick="facebookLogin();" class="btn btn-primary">Login by Facebook</button>
+    <div class="container">
+        <li onclick="FB.login();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
     </div>
 </div>
