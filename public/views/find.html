@@ -1,14 +1,15 @@
 <div ng-controller="FindCtrl">
 
-	<div class="bgColour text-xs-center">
-		<div class="bgLayout card-columns cardCol" style="text-xs-center">
+	<div class="text-xs-center">
+
+		<div class="bgLayout card-columns cardCol">
 			<div ng-repeat="place in places track by $index" ng-show="showMap" class="cardSize">
 				<div class="card text-xs-center list-inline  " style="display:inline-block">
 
 					<div class="card-title card-block bg-info ">
-						<a class="btn" ng-click="addFav(place)"><i class="fa fa-heart" aria-hidden="false"></i></a>
-						<a class="btn" ng-click="blacklist(place)"><i class="fa fa-ban" aria-hidden="false"></i></a>
-						<h6>{{place.name}}</h6>
+						<span class="btn" ng-click="addFav(place)"><i class="fa fa-heart" aria-hidden="false"></i></span>
+						<span class="text-uppercase">{{place.name}}</span>
+						<span class="btn" ng-click="blacklist(place)"><i class="fa fa-ban" aria-hidden="false"></i></span>
 					</div>
 					<!--<span>{{place.rating === 0 ? "Not rated" : place.rating+"/5"}}</span>-->
 					<span ng-repeat="n in ratings('5') ">			
@@ -16,6 +17,9 @@
 							<i class="fa fa-star" aria-hidden="true"></i>
 						</span>
 					</span>
+					<span ng-if="place.rating === 0">
+							<i >Not Rated</i>
+						</span>
 
 					<div class=" font-weight-bold ">
 						<p class="card-text">{{place.vicinity}}</p>
@@ -30,21 +34,27 @@
 					</div>
 
 					<div class="card-footer">
-
-						<button class="btn btn-outline-info btn-sm" ng-click="getDirections(place.place_id)">Directions</button>
-						<button class="btn btn-outline-info btn-sm" ng-click="showMe(place.place_id)">Google Map</button>
+						<button class="btn btn-outline-info btn-sm" ng-click="showMe(place.place_id); getDirections(place.place_id)">Google Map</button>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div ng-hide="showMap" class="text-xs-center">
-			<!--https://developers.google.com/maps/documentation/embed/start-->
-			<iframe width="730" height="450" frameborder="1" style="border:4" ng-src="{{placeID}}" allowfullscreen></iframe>
-			<div class="container">
-				<button class="btn btn-primary" ng-click="hideMe()">Hide Map</button>
-			</div>
-		</div>
+		<div ng-hide="showMap">
 
+			<div class="container">
+				<iframe width="730" height="450" frameborder="1" style="border:4" ng-src="{{placeID}}" allowfullscreen></iframe>
+			</div>
+			<button class="btn btn-outline-info btn-lg" ng-click="hideMe()">Hide Map</button>
+			<button class="btn btn-outline-info btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+				aria-controls="collapseExample">Directions</button>
+
+			<div class="collapse" id="collapseExample">
+				<div class="container">
+					<div id="result"></div>
+				</div>
+			</div>
+
+		</div>
 	</div>
 </div>
