@@ -419,15 +419,11 @@ angular.module('myApp.find', ['ngRoute'])
         return {
             updateFavs: function (favs, usrId) {
                 var id = favs.place_id;
-                console.log(id);
                 var name = favs.name;
-                console.log(name);
                 var photo = favs.photos[0].photo_reference;
-                console.log(photo);
                 var lat = favs.geometry.location.lat;
-                console.log(lat);
                 var lon = favs.geometry.location.lng;
-                console.log(lon);
+                console.log(usrId);
                 return $http.get('/returnUpdateFavourites/' + usrId + id + '/' + name + '/' + photo + '/' + lat + '/' + lon);
             }
         }
