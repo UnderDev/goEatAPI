@@ -48,6 +48,8 @@ type Favs struct {
 	Favname       string
 	Favlatitude   string
 	Favlongtitude string
+	Favphoto	  string
+	Favid		  string
 }
 
 //user favourites used in user struct
@@ -55,6 +57,8 @@ type Blacklists struct {
 	Blname       string
 	Bllatitude   string
 	Bllongtitude string
+	Blphoto	  	 string
+	Blid	     string
 }
 
 //opens and returns connection to Mongodb
@@ -84,12 +88,6 @@ func returnAllPersons(res http.ResponseWriter, req *http.Request) { //return all
 		return
 	}
 
-	//fmt.Println(result)
-	/*
-		for i:=0; i<len(person); i++{
-			fmt.Println("Person:", person[i])
-		}
-	*/
 	places := result
 	if err != nil {
 		log.Fatalf("fatal error: %s", err)
@@ -97,7 +95,6 @@ func returnAllPersons(res http.ResponseWriter, req *http.Request) { //return all
 
 		json.NewEncoder(res).Encode(places)
 	}
-	//fmt.Println("List of all \n")
 
 } //returnAllPersons
 
@@ -162,6 +159,57 @@ func returnUpdatePerson(res http.ResponseWriter, req *http.Request, ctx *macaron
 	}
 
 	fmt.Println("Update \n")
+
+} //returnUpdatePerson
+
+//adapted from http://stackoverflow.com/questions/29817535/mongodb-how-to-insert-additional-object-into-object-collection-in-golang
+func returnUpdateFavourites(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) { // Update user favourites based on searched name
+	fmt.Println("--------->>>>>booo")
+	collection := getCollection()
+
+	findName := "Oliver Arnold"
+	//findName := ctx.Params("fbpass")
+	favname := ctx.Params("name")
+	favid := ctx.Params("id")
+	photo := ctx.Params("photo")
+	favlat := ctx.Params("latitude")
+	favlong := ctx.Params("longtitude")
+	myfavourites := Favs{Favname: favname, Favid: favid, Favlatitude: favlat, Favlongtitude: favlong, Favphoto: photo}
+
+	query := bson.M{"name": findName}                             //find user
+	update := bson.M{"$push": bson.M{"favourites": myfavourites}} //set new email value
+
+	err := collection.Update(query, update)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("Update favourites \n")
+
+} //returnUpdatePerson
+
+func returnUpdateBlacklist(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) { // Update user Blacklist based on searched name
+
+	collection := getCollection()
+
+	findName := "Oliver Arnold"
+	//findName := ctx.Params("fbpass")
+	name := ctx.Params("name")
+	id := ctx.Params("id")
+	photo := ctx.Params("photo")
+	lat := ctx.Params("latitude")
+	long := ctx.Params("longtitude")
+	myBlackList := Blacklists{Blname: name, Blid: id, Bllatitude: lat, Bllongtitude: long, Blphoto: photo}
+
+	query := bson.M{"name": findName}                             //find user
+	update := bson.M{"$push": bson.M{"blacklist": myBlackList}} //set new email value
+
+	err := collection.Update(query, update)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("Update Blacklist \n")
 
 } //returnUpdatePerson
 

@@ -42,4 +42,8 @@ func initRoutes(m *macaron.Macaron) {
 	m.Get("/returnAllPersons", returnAllPersons)
 
 	m.Get("/returnFindPerson/:id", returnFindPerson)
+
+	m.Get("/returnUpdateFavourites/:id/:name/:photo/:latitude/:longtitude", returnUpdateFavourites)
+
+	m.Get("/returnUpdateBlacklist/:id/:name/:photo/:latitude/:longtitude", returnUpdateBlacklist)
 }
