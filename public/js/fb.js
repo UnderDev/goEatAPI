@@ -9,6 +9,20 @@ angular.module('myApp.fb', ['ngRoute'])
   });
 }])
 
-.controller('fbCtrl', [function($scope) {
-    $scope.usrId = false;
+.controller('fbCtrl', ['$scope',function($scope) {
+  /*  $scope.usrId = false;
+    $scope.checkState = function (placeID) {
+        console.log($scope.usrId);
+        
+        if((localStorage.getItem("usrId")!=null)&&(localStorage.getItem("usrId")!=undefined))
+        {
+            console.log($scope.usrId);
+            $scope.usrId = true;
+        }
+        else{
+            console.log($scope.usrId);
+            $scope.usrId = false;
+        }
+        $scope.usrId = true;
+    }*/
 }]);

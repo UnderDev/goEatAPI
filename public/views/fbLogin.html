@@ -1,4 +1,4 @@
-<div>
+<div ng-controller="fbCtrl">
     <script>
         window.fbAsyncInit = function () {
             FB.init({
@@ -65,6 +65,8 @@
             } else {
                 console.log("Not logged in");
             }
+            //TEST TODAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY!
+            checkState();
         }
         // Load the SDK asynchronously
         (function (d, s, id) {
@@ -95,6 +97,10 @@
                     console.log('User cancelled login or did not fully authorize.');
                 }
             })
+        };
+        function b()
+        {
+            checkState();
         };
     </script>
     <div class="container">
