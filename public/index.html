@@ -20,16 +20,73 @@
   <script src="js/favorites.js"></script>
 </head>
 
+<style>
+  .bgColour {
+    background-color: #EBF5FB
+  }
+  
+  .bgLayout {
+    margin: 20px;
+    padding-top: 55px;
+  }
+  
+  @media (min-width: 544px) {
+    .card-columns .card {
+      min-width: 300px;
+      max-width: 400px;
+      max-height: 500px;
+      border: 1px solid darkgray;
+    }
+  }
+  
+  @media (min-width: 544px) {
+    .cardCol {
+      -webkit-column-count: 2;
+      -moz-column-count: 2;
+      column-count: 2;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .cardCol {
+      -webkit-column-count: 3;
+      -moz-column-count: 3;
+      column-count: 3;
+    }
+  }
+  .fa-star{
+     color: goldenrod;
+  }
+
+.normStar{
+  color: black;
+}
+
+</style>
+
 <body>
-  <nav class="navbar navbar-light bg-faded">
-    <div class="nav navbar-nav">
-      <a class="navbar-brand" href="#">goEat!</a>
-      <a class="nav-item nav-link" href="#!/find"><i class="fa fa-cutlery" aria-hidden="true"></i></a>
-      <a class="nav-item nav-link" href="#!"><i class="fa fa-history" aria-hidden="true"></i></a>
-      <a class="nav-item nav-link" href="#!/favorites"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-      <div ng-include src="'views/fbLogin.html'"></div>
-    </div>
+
+  <nav class="navbar  navbar-dark bg-inverse navbar-fixed-top  text-xs-center">
+    <div class="container">
+      <div class="row">
+        <div class="nav navbar-nav  text-xs-center">
+          <div class="col-sm-4">
+            <a class="nav-item nav-link" href="#!/find"><i class="fa fa-cutlery " aria-hidden="true"></i></a>
+            <a class="nav-item nav-link" href="#!"><i class="fa fa-history" aria-hidden="true"></i></a>
+            <a class="nav-item nav-link" href="#!/favorites"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+          </div>
+          <div class="col-sm-4">
+            <h1 class="col-sm-12 navbar-brand">GoEat!</h1>
+          </div>
+          <div class="col-sm-4">
+            <div ng-include src="'views/fbLogin.html'" class="pull-right"></div>
+          </div>
+        </div>
+      </div>
   </nav>
+
+
+
   <div ng-view></div>
 </body>
 
