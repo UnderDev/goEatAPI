@@ -167,8 +167,8 @@ func returnUpdateFavourites(res http.ResponseWriter, req *http.Request, ctx *mac
 	fmt.Println("--------->>>>>booo")
 	collection := getCollection()
 
-	findName := "Oliver Arnold"
-	//findName := ctx.Params("fbpass")
+	//findName := "Oliver Arnold"
+	findUser := ctx.Params("usrId")
 	favname := ctx.Params("name")
 	favid := ctx.Params("id")
 	photo := ctx.Params("photo")
@@ -176,7 +176,7 @@ func returnUpdateFavourites(res http.ResponseWriter, req *http.Request, ctx *mac
 	favlong := ctx.Params("longtitude")
 	myfavourites := Favs{Favname: favname, Favid: favid, Favlatitude: favlat, Favlongtitude: favlong, Favphoto: photo}
 
-	query := bson.M{"name": findName}                             //find user
+	query := bson.M{"Fbpass": findUser}                             //find user
 	update := bson.M{"$push": bson.M{"favourites": myfavourites}} //set new email value
 
 	err := collection.Update(query, update)

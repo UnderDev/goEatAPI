@@ -57,14 +57,23 @@ angular.module('myApp.find', ['ngRoute'])
 
         $scope.addFav = function (place) {
 
-            var favs = place;
+            if (typeof (Storage) !== "undefined") {
+                        var usrId = localStorage.getItem("usrId");
+                        //$scope.usrId = true;
 
-            FavService.updateFavs(favs).then(function () {
+                        var favs = place;
 
-                console.log("Updated favourites");
-            }, function () {
-                console.log("Unable to update");
-            });
+                        FavService.updateFavs(favs, usrId).then(function () {
+
+                            console.log("Updated favourites");
+                            }, function () {
+                            console.log("Unable to update");
+                        });
+                        } else {
+                            alert("Please update to a browser that supports HTML5")
+                    }
+            
+            
         }
 
         $scope.blacklist = function (place) {
@@ -408,7 +417,7 @@ angular.module('myApp.find', ['ngRoute'])
     .factory('FavService', function ($http, $rootScope) {
 
         return {
-            updateFavs: function (favs) {
+            updateFavs: function (favs, usrId) {
                 var id = favs.place_id;
                 console.log(id);
                 var name = favs.name;
@@ -419,7 +428,7 @@ angular.module('myApp.find', ['ngRoute'])
                 console.log(lat);
                 var lon = favs.geometry.location.lng;
                 console.log(lon);
-                return $http.get('/returnUpdateFavourites/' + id + '/' + name + '/' + photo + '/' + lat + '/' + lon);
+                return $http.get('/returnUpdateFavourites/' + usrId + id + '/' + name + '/' + photo + '/' + lat + '/' + lon);
             }
         }
 
