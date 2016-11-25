@@ -18,9 +18,8 @@ angular.module('myApp.find', ['ngRoute'])
                 result.innerHTML = "";            
                 data[0].legs[0].steps.forEach(function (Inst) {
                     result.innerHTML += Inst.html_instructions + "<br>"
-                     console.log(Inst); //Get directions as text from here
+                     //console.log(Inst); //Get directions as text from here
                 });
-
             }, function () {
                 $scope.data = undefined;
             });

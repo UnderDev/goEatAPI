@@ -1,15 +1,14 @@
 <div ng-controller="FindCtrl">
-
-
 	<div class="text-xs-center">
 		<div class="bgLayout card-columns cardCol">
 			<div ng-repeat="place in places track by $index" ng-show="showMap" class="cardSize">
 				<div class="card text-xs-center list-inline  " style="display:inline-block">
 
-					<div class="card-title card-block bg-info ">
-						<span class="btn" ng-click="addFav(place)"><i class="fa fa-heart" aria-hidden="false"></i></span>
-						<span class="text-uppercase">{{place.name}}</span>
-						<span class="btn" ng-click="blacklist(place)"><i class="fa fa-ban" aria-hidden="false"></i></span>
+					<div class="card-title card-block bg-info container-fluid">
+						<span class="btn col-xs-2" ng-click="addFav(place)"><i class="fa fa-heart" aria-hidden="false"></i></span>
+						<span class="text-uppercase  col-xs-8"><i>{{place.name}}</i></span>
+						<span class="btn col-xs-2" ng-click="blacklist(place)"><i class="fa fa-ban" aria-hidden="false"></i></span>
+
 					</div>
 					<!--<span>{{place.rating === 0 ? "Not rated" : place.rating+"/5"}}</span>-->
 					<span ng-repeat="n in ratings('5') ">			
@@ -26,7 +25,7 @@
 					</div>
 
 					<div class=" card-block  ">
-						<img width="200" height="150" ng-src="{{getURL(place.photos[0].photo_reference)}}" />
+						<img width="200" height="150" ng-src="{{getURL(place.photos[0].photo_reference)}}" class="rounded" />
 					</div>
 
 					<div class=" bg-success ">
