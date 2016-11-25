@@ -60,10 +60,10 @@ angular.module('myApp.find', ['ngRoute'])
             if (typeof (Storage) !== "undefined") {
                         var usrId = localStorage.getItem("usrId");
                         //$scope.usrId = true;
-
+                        //var fbpass = "10207337063737016";
                         var favs = place;
 
-                        FavService.updateFavs(favs, usrId).then(function () {
+                        FavService.updateFavs(favs, fbpass).then(function () {
 
                             console.log("Updated favourites");
                             }, function () {
@@ -417,14 +417,13 @@ angular.module('myApp.find', ['ngRoute'])
     .factory('FavService', function ($http, $rootScope) {
 
         return {
-            updateFavs: function (favs, usrId) {
+            updateFavs: function (favs, fbpass) {
                 var id = favs.place_id;
                 var name = favs.name;
                 var photo = favs.photos[0].photo_reference;
                 var lat = favs.geometry.location.lat;
                 var lon = favs.geometry.location.lng;
-                console.log(usrId);
-                return $http.get('/returnUpdateFavourites/' + usrId + id + '/' + name + '/' + photo + '/' + lat + '/' + lon);
+                return $http.get('/returnUpdateFavourites/' + fbpass + '/' + id + '/' + name + '/' + photo + '/' + lat + '/' + lon);
             }
         }
 

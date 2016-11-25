@@ -164,11 +164,10 @@ func returnUpdatePerson(res http.ResponseWriter, req *http.Request, ctx *macaron
 
 //adapted from http://stackoverflow.com/questions/29817535/mongodb-how-to-insert-additional-object-into-object-collection-in-golang
 func returnUpdateFavourites(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) { // Update user favourites based on searched name
-	fmt.Println("--------->>>>>booo")
+
 	collection := getCollection()
 
-	//findName := "Oliver Arnold"
-	findUser := ctx.Params("usrId")
+	findUser := ctx.Params("fbpass")
 	favname := ctx.Params("name")
 	favid := ctx.Params("id")
 	photo := ctx.Params("photo")
@@ -176,7 +175,7 @@ func returnUpdateFavourites(res http.ResponseWriter, req *http.Request, ctx *mac
 	favlong := ctx.Params("longtitude")
 	myfavourites := Favs{Favname: favname, Favid: favid, Favlatitude: favlat, Favlongtitude: favlong, Favphoto: photo}
 
-	query := bson.M{"Fbpass": findUser}                             //find user
+	query := bson.M{"fbpass": findUser}                             //find user
 	update := bson.M{"$push": bson.M{"favourites": myfavourites}} //set new email value
 
 	err := collection.Update(query, update)
