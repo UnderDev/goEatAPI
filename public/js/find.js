@@ -58,7 +58,7 @@ angular.module('myApp.find', ['ngRoute'])
         $scope.addFav = function (place) {
 
             if (typeof (Storage) !== "undefined") {
-                        var usrId = localStorage.getItem("usrId");
+                        var fbpass = localStorage.getItem("usrId");
                         //$scope.usrId = true;
                         //var fbpass = "10207337063737016";
                         var favs = place;
