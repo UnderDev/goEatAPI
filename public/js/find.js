@@ -9,7 +9,7 @@ angular.module('myApp.find', ['ngRoute'])
         });
     }])
 
-    .controller('FindCtrl', ['$scope', '$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', 'FavService', 'BlistService', function ($scope, $sce, PlacesService, geolocationSvc, DirectionService, FavService, BlistService) {
+    .controller('FindCtrl', ['$scope', '$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', 'FavService', 'BlistService', 'HistoryService', function ($scope, $sce, PlacesService, geolocationSvc, DirectionService, FavService, BlistService, HistoryService) {
 
         var loc;
         $scope.getDirections = function (place_id) {
@@ -58,34 +58,66 @@ angular.module('myApp.find', ['ngRoute'])
         $scope.addFav = function (place) {
 
             if (typeof (Storage) !== "undefined") {
-                        var fbpass = localStorage.getItem("usrId");
-                        //$scope.usrId = true;
-                        //var fbpass = "10207337063737016";
-                        var favs = place;
+                
+                //var fbpass = localStorage.getItem("usrId");
+                
+                //for local testing
+                var fbpass = "10207337063737016";
+                var favs = place;
 
-                        FavService.updateFavs(favs, fbpass).then(function () {
+                FavService.updateFavs(favs, fbpass).then(function () {
 
-                            console.log("Updated favourites");
-                            }, function () {
-                            console.log("Unable to update");
-                        });
-                        } else {
-                            alert("Please update to a browser that supports HTML5")
-                    }
+                    console.log("Updated favourites");
+                    }, function () {
+                    console.log("Unable to update");
+                });
+                } else {
+                    alert("Please update to a browser that supports HTML5")
+            }
             
             
         }
 
         $scope.blacklist = function (place) {
+            
+            if (typeof (Storage) !== "undefined") {
+                
+                //var fbpass = localStorage.getItem("usrId");
+                //for local testing
+                var fbpass = "10207337063737016";
+                var blist = place;
 
-            var blist = place;
-
-            BlistService.updateBlist(blist).then(function () {
+                BlistService.updateBlist(blist, fbpass).then(function () {
 
                 console.log("Updated blacklist");
             }, function () {
                 console.log("Unable to update blacklist");
             });
+                } else {
+                    alert("Please update to a browser that supports HTML5")
+            }
+   
+        }
+
+        $scope.history = function (place) {
+
+            if (typeof (Storage) !== "undefined") {
+                
+                //var fbpass = localStorage.getItem("usrId");
+                var fbpass = "10207337063737016";
+                var history = place;
+
+                HistoryService.updateHistory(history, fbpass).then(function () {
+
+                    console.log("Updated history");
+                    }, function () {
+                    console.log("Unable to update history");
+                });
+                } else {
+                    alert("Please update to a browser that supports HTML5")
+            }
+            
+            
         }
 
         var bypassGoogle = false;
@@ -433,7 +465,7 @@ angular.module('myApp.find', ['ngRoute'])
     .factory('BlistService', function ($http, $rootScope) {
 
         return {
-            updateBlist: function (blist) {
+            updateBlist: function (blist, fbpass) {
                 var id = blist.place_id;
                 console.log(id);
                 var name = blist.name;
@@ -444,7 +476,23 @@ angular.module('myApp.find', ['ngRoute'])
                 console.log(lat);
                 var lon = blist.geometry.location.lng;
                 console.log(lon);
-                return $http.get('/returnUpdateBlacklist/' + id + '/' + name + '/' + photo + '/' + lat + '/' + lon);
+                return $http.get('/returnUpdateBlacklist/' + fbpass + '/' + id + '/' + name + '/' + photo + '/' + lat + '/' + lon);
+            }
+        }
+
+
+    })
+
+    .factory('HistoryService', function ($http, $rootScope) {
+
+        return {
+            updateHistory: function (history, fbpass) {
+                var id = history.place_id;
+                var name = history.name;
+                var photo = history.photos[0].photo_reference;
+                var lat = history.geometry.location.lat;
+                var lon = history.geometry.location.lng;
+                return $http.get('/returnUpdateHistory/' + fbpass + '/' + id + '/' + name + '/' + photo + '/' + lat + '/' + lon);
             }
         }
 

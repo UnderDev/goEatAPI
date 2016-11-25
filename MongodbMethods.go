@@ -41,6 +41,7 @@ type Person struct {
 	Photo      string       `bson:"photo" json:"photo"`
 	Favourites []Favs       `bson:"favourites" json:"favourites`
 	Blacklist  []Blacklists `bson: "blacklist" json:"blacklist`
+	History    []History	`bson: "history" json:"history`
 }
 
 //user favourites used in user struct
@@ -59,6 +60,15 @@ type Blacklists struct {
 	Bllongtitude string
 	Blphoto	  	 string
 	Blid	     string
+}
+
+//user favourites used in user struct
+type History struct {
+	Hisname       string
+	Hislatitude   string
+	Hislongtitude string
+	Hisphoto  	 string
+	Hisid	     string
 }
 
 //opens and returns connection to Mongodb
@@ -168,15 +178,15 @@ func returnUpdateFavourites(res http.ResponseWriter, req *http.Request, ctx *mac
 	collection := getCollection()
 
 	findUser := ctx.Params("fbpass")
-	favname := ctx.Params("name")
-	favid := ctx.Params("id")
+	name := ctx.Params("name")
+	id := ctx.Params("id")
 	photo := ctx.Params("photo")
-	favlat := ctx.Params("latitude")
-	favlong := ctx.Params("longtitude")
-	myfavourites := Favs{Favname: favname, Favid: favid, Favlatitude: favlat, Favlongtitude: favlong, Favphoto: photo}
+	lat := ctx.Params("latitude")
+	long := ctx.Params("longtitude")
+	myfavourites := Favs{Favname: name, Favid: id, Favlatitude: lat, Favlongtitude: long, Favphoto: photo}
 
-	query := bson.M{"fbpass": findUser}                             //find user
-	update := bson.M{"$push": bson.M{"favourites": myfavourites}} //set new email value
+	query := bson.M{"fbpass": findUser}                             //find user by facebook identifier
+	update := bson.M{"$push": bson.M{"favourites": myfavourites}} //add to favourites list
 
 	err := collection.Update(query, update)
 	if err != nil {
@@ -185,14 +195,13 @@ func returnUpdateFavourites(res http.ResponseWriter, req *http.Request, ctx *mac
 
 	fmt.Println("Update favourites \n")
 
-} //returnUpdatePerson
+} //returnUpdateFavourites
 
 func returnUpdateBlacklist(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) { // Update user Blacklist based on searched name
 
 	collection := getCollection()
 
-	findName := "Oliver Arnold"
-	//findName := ctx.Params("fbpass")
+	findUser := ctx.Params("fbpass")
 	name := ctx.Params("name")
 	id := ctx.Params("id")
 	photo := ctx.Params("photo")
@@ -200,8 +209,8 @@ func returnUpdateBlacklist(res http.ResponseWriter, req *http.Request, ctx *maca
 	long := ctx.Params("longtitude")
 	myBlackList := Blacklists{Blname: name, Blid: id, Bllatitude: lat, Bllongtitude: long, Blphoto: photo}
 
-	query := bson.M{"name": findName}                             //find user
-	update := bson.M{"$push": bson.M{"blacklist": myBlackList}} //set new email value
+	query := bson.M{"fbpass": findUser}                             //find user by facebook identifier
+	update := bson.M{"$push": bson.M{"blacklist": myBlackList}} //add to blacklist
 
 	err := collection.Update(query, update)
 	if err != nil {
@@ -209,6 +218,30 @@ func returnUpdateBlacklist(res http.ResponseWriter, req *http.Request, ctx *maca
 	}
 
 	fmt.Println("Update Blacklist \n")
+
+} //returnUpdateBlacklist
+
+func returnUpdateHistory(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) { // Update user favourites based on searched name
+
+	collection := getCollection()
+
+	findUser := ctx.Params("fbpass")
+	name := ctx.Params("name")
+	id := ctx.Params("id")
+	photo := ctx.Params("photo")
+	lat := ctx.Params("latitude")
+	long := ctx.Params("longtitude")
+	myHistory := History{Hisname: name, Hisid: id, Hislatitude: lat, Hislongtitude: long, Hisphoto: photo}
+
+	query := bson.M{"fbpass": findUser}                     //find user by facebook identifier
+	update := bson.M{"$push": bson.M{"history": myHistory}} //add to favourites list
+
+	err := collection.Update(query, update)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("Update history \n")
 
 } //returnUpdatePerson
 
