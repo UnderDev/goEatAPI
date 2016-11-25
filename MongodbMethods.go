@@ -133,8 +133,9 @@ func returnInsertPerson(fbId string, fbName string, fbPhoto string) { //insert p
 
 func returnFindPerson(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) { //find individual person
 
+	fmt.Println("returnFindPerson method")
 	//find user by unique id
-	findId := ctx.Params("id")
+	findId := ctx.Params("fbpass")
 	json.NewEncoder(res).Encode(goFind(findId))
 
 } //returnFindPerson
@@ -144,10 +145,10 @@ func goFind(findId string) Person {
 
 	err := collection.Find(bson.M{"fbpass": findId}).One(&result)
 	if err != nil {
-		//panic("err")
+		panic("err")
 	}
 
-	fmt.Println("Find user by id")
+	fmt.Println(result)
 	places := result
 	if err == nil {
 		fmt.Println("returning real json")

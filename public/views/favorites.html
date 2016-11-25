@@ -2,30 +2,22 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-8">               
-				<div ng-repeat="place in places track by $index">
+				<div ng-repeat="fav in favs track by $index">
 					<div class="card">
 						<div class="card-block bg-info">
 							<div class="list-inline">
 								<div class="list-inline-item">
-									<h4 class="card-title">{{place.Favname}}</h4>
+									<div>
+									<span class="card-title">{{fav.Favname}}</span>
+									<span class="btn" ng-click="remove(fav)"><i class="fa fa-remove" aria-hidden="false"></i></span>
 								</div>
 								<div class="list-inline-item">
 									<span>{{place.rating === 0 ? "Not rated" : place.rating+"/5"}}</span>
 								</div>
 							</div>
 						</div>
-						<div class="card-block">
-							<div class="container">
-								<div class="col-sm-8">
-									<p class="card-text">{{place.vicinity}}</p>
-								</div>
-								<div class="col-sm-2 bg-success">
-									<p class="card-text text-xs-right" ng-if="place.opening_hours.open_now">Open now!</p>
-								</div>
-							</div>
-						</div>
 						<div class=" text-xs-center">
-							<img item-width="300" item-height="300px" ng-src="http://placehold.it/300" />
+							<img item-width="300" item-height="300px" ng-src="{{getURL(fav.Favphoto)}}" />
 						</div>
 						<div class="card-block">
 							<ul class="list-inline">

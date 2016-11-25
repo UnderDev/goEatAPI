@@ -59,10 +59,10 @@ angular.module('myApp.find', ['ngRoute'])
 
             if (typeof (Storage) !== "undefined") {
                 
-                var fbpass = localStorage.getItem("usrId");
+                //var fbpass = localStorage.getItem("usrId");
                 
                 //for local testing
-                //var fbpass = "10207337063737016";
+                var fbpass = "10207337063737016";
                 var type = "fav";
 
                 UpdateService.updateList(place, fbpass, type).then(function () {
@@ -82,9 +82,9 @@ angular.module('myApp.find', ['ngRoute'])
             
             if (typeof (Storage) !== "undefined") {
                 
-                var fbpass = localStorage.getItem("usrId");
+                //var fbpass = localStorage.getItem("usrId");
                 //for local testing
-                //var fbpass = "10207337063737016";
+                var fbpass = "10207337063737016";
                 var type = "blist";
 
                 UpdateService.updateList(place, fbpass, type).then(function () {
@@ -103,8 +103,8 @@ angular.module('myApp.find', ['ngRoute'])
 
             if (typeof (Storage) !== "undefined") {
                 
-                var fbpass = localStorage.getItem("usrId");
-                //var fbpass = "10207337063737016";
+                //var fbpass = localStorage.getItem("usrId");
+                var fbpass = "10207337063737016";
                 var type = "history";
 
                 UpdateService.updateList(place, fbpass, type).then(function () {

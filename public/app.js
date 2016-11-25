@@ -2,7 +2,7 @@
 angular.module('myApp', [
     'ngRoute',
     'myApp.find',
-    'myApp.settings',
+    'myApp.bookmarks',
     'myApp.fb',
     'myApp.favorites'
 ]).

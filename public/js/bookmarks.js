@@ -1,17 +1,19 @@
-'use strict';
+'use strict';    
+angular.module('myApp.bookmarks', ['ngRoute'])
 
-angular.module('myApp.favorites', ['ngRoute'])
+.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/bookmarks', {
+    templateUrl: 'views/bookmarks.html',
+    controller: 'BookmarksCtrl'
+  });
+}])
 
-  .config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.when('/favorites', {
-      templateUrl: 'views/favorites.html',
-      controller: 'FavoritesCtrl'
-    });
-  }])
+.controller('BookmarksCtrl', ['$scope', 'PeopleService', function ($scope, PeopleService) {
 
-  .controller('FavoritesCtrl', ['$scope', 'PeopleService', function ($scope, PeopleService) {
-
+    $scope.profile = [];
     $scope.favs = [];
+    $scope.blist = [];
+    $scope.history = [];
 
     if (typeof (Storage) !== "undefined") {
                 
@@ -20,7 +22,10 @@ angular.module('myApp.favorites', ['ngRoute'])
         //for local testing
         var fbpass = "10207337063737016";
         PeopleService.getData(fbpass).then(function (data) {
+            $scope.profile = data;
             $scope.favs = data.Favourites;
+            $scope.blist = data.Blacklist;
+            $scope.history = data.History;
             console.log(fbpass);
             
             console.log($scope.favs);
@@ -32,17 +37,9 @@ angular.module('myApp.favorites', ['ngRoute'])
         }
 
         $scope.getURL = function (stuff) {
-            
-                if (stuff != undefined){
+            if (stuff != undefined)
                     return "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + stuff + "&key=AIzaSyBO90mNejVGPHPYioe2_nnLL5776iXZCX8"
-            }
         }
-
-        RemoveService.remove(fbpass, fav).then(function(){
-
-        }, function(){
-
-        });
 
   }])
 
@@ -65,23 +62,3 @@ angular.module('myApp.favorites', ['ngRoute'])
       }
     }
   })
-
-  .factory('RemoveService', function ($q, $http, $rootScope) {
-    var myData = {};
-
-    return {
-      remove: function (fbpass, fav) {
-        var deferred = $q.defer();
-        $http.get('/returnRemoveFav/' + fbpass + '/' + fav) //will need unique id - not name
-          .success(function (data) {
-            console.log("back to getData");
-            myData = data;
-            deferred.resolve(myData);
-            // update angular's scopes
-            $rootScope.$$phase || $rootScope.$apply();
-          });
-        return deferred.promise;
-      }
-    }
-  })
-
