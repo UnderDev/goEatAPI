@@ -209,7 +209,6 @@ func returnRemoveBlist(res http.ResponseWriter, req *http.Request, ctx *macaron.
 	collection := getCollection()
 	findUser := ctx.Params("fbpass")
 	blist := ctx.Params("blist")
-	fmt.Println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>")
 	fmt.Println(findUser, blist)
 	query := bson.M{"blacklist" : bson.M{"blid": blist}}
 	err := collection.Update(bson.M{"fbpass": findUser, "blacklist.blid": blist}, bson.M{"$pull": query}) 
@@ -239,7 +238,7 @@ func returnRemoveHistory(res http.ResponseWriter, req *http.Request, ctx *macaro
 } //returnRemoveHistory
 
 
-//**************************************used methods*******************************
+//**************************************unused methods*******************************
 func returnRemovePerson(i string) { // Remove user
 	collection := getCollection()
 
