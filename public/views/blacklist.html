@@ -1,15 +1,17 @@
-<div ng-controller="FavoritesCtrl">
+<div ng-controller="BlacklistCtrl">
+
+
 	<div class="text-xs-center">
 		<div class="bgLayout card-columns cardCol">
-			<div ng-repeat="fav in favs track by $index" class="cardSize">
+			<div ng-repeat="blist in blists track by $index" class="cardSize">
 				<div class="card text-xs-center list-inline  " style="display:inline-block">
 					<div class="card-title card-block bg-info ">
-						<span class="text-uppercase">{{fav.Favname}}</span>
-						<span class="btn" ng-click="remove(fav.Favid); reloadRoute()"><i class="fa fa-remove" aria-hidden="false"></i></span>
+						<span class="text-uppercase">{{blist.Blname}}</span>
+						<span class="btn" ng-click="remove(blist.Blid)"><i class="fa fa-remove" aria-hidden="false"></i></span>
 					</div>
 					
 					<div class=" card-block  ">
-						<img width="200" height="150" ng-src="{{getURL(fav.Favphoto)}}" />
+						<img width="200" height="150" ng-src="{{getURL(blist.Blphoto)}}" />
 					</div>
 					<div class="card-footer">
 						<button class="btn btn-outline-info btn-sm" ng-click="history(place); showMe(place.place_id); getDirections(place.place_id)">Google Map</button>

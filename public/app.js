@@ -4,7 +4,9 @@ angular.module('myApp', [
     'myApp.find',
     'myApp.bookmarks',
     'myApp.fb',
-    'myApp.favorites'
+    'myApp.favorites',
+    'myApp.blacklist',
+    'myApp.history'
 ]).
 config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
     $locationProvider.hashPrefix('!');

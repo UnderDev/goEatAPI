@@ -41,4 +41,7 @@ func initRoutes(m *macaron.Macaron) {
 	m.Get("/returnUpdateFavourites/:fbpass/:id/:name/:photo/:latitude/:longtitude", returnUpdateFavourites)
 	m.Get("/returnUpdateBlacklist/:fbpass/:id/:name/:photo/:latitude/:longtitude", returnUpdateBlacklist)
 	m.Get("/returnUpdateHistory/:fbpass/:id/:name/:photo/:latitude/:longtitude", returnUpdateHistory)
+	m.Get("/returnRemoveFav/:fbpass/:fav", returnRemoveFav)
+	m.Get("/returnRemoveBlist/:fbpass/:blist", returnRemoveBlist)
+	m.Get("/returnRemoveHistory/:fbpass", returnRemoveHistory)
 }
