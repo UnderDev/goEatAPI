@@ -1,21 +1,21 @@
 'use strict';
 
-angular.module('myApp.favorites', ['ngRoute'])
+angular.module('myApp.blacklist', ['ngRoute'])
 
   .config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.when('/favorites', {
-      templateUrl: 'views/favorites.html',
-      controller: 'FavoritesCtrl'
+    $routeProvider.when('/blacklist', {
+      templateUrl: 'views/blacklist.html',
+      controller: 'BlacklistCtrl'
     });
   }])
 
-  .controller('FavoritesCtrl', ['$scope', '$route', 'PeopleService', 'RemoveServiceFav', function ($scope, $route, PeopleService, RemoveServiceFav) {
+  .controller('BlacklistCtrl', ['$scope', '$route', 'PeopleService', 'RemoveServiceBlist', function ($scope, $route, PeopleService, RemoveServiceBlist) {
 
     $scope.reloadRoute = function() {
       $route.reload();
     }
     
-    $scope.favs = [];
+    $scope.blist = [];
 
     if (typeof (Storage) !== "undefined") {
                 
@@ -24,11 +24,10 @@ angular.module('myApp.favorites', ['ngRoute'])
         //for local testing
         //var fbpass = "10207337063737016";
         PeopleService.getData(fbpass).then(function (data) {
-        console.log(data);
-            $scope.favs = data.Favourites;
+            $scope.blists = data.Blacklist;
             console.log(fbpass);
             
-            console.log($scope.favs);
+            console.log($scope.blists);
           }, function () {
             $scope.data = undefined;
           });
@@ -43,10 +42,10 @@ angular.module('myApp.favorites', ['ngRoute'])
             }
         }
 
-        $scope.remove = function (fav) {
+        $scope.remove = function (blist) {
 
-            console.log("this is remove func - ", fav);
-            RemoveServiceFav.remove(fav, fbpass).then(function(){
+            console.log("this is remove func - ", blist);
+            RemoveServiceBlist.remove(fbpass, blist).then(function(){
                 console.log("removed sucessfully")
             }, function(){
 
@@ -75,16 +74,15 @@ angular.module('myApp.favorites', ['ngRoute'])
     }
   })
 
-  .factory('RemoveServiceFav', function ($q, $http, $rootScope) {
+  .factory('RemoveServiceBlist', function ($q, $http, $rootScope) {
 
     return {
-      remove: function (fav, fbpass) {
+      remove: function (fbpass, blist) {
         var deferred = $q.defer();
-        //console.log("remove service - ", fav);
-        console.log(fbpass);
-        $http.get('/returnRemoveFav/' + fbpass + '/' + fav) //will need unique id - not name
+        console.log("remove service - ", fbpass, blist);
+        $http.get('/returnRemoveBlist/' + fbpass + '/' + blist) //will need unique id - not name
           .success(function () {
-            console.log("back to getData favs");
+            console.log("back to getData");
             // update angular's scopes
             $rootScope.$$phase || $rootScope.$apply();
           });
