@@ -2,14 +2,14 @@
 
 angular.module('myApp.fb', ['ngRoute'])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/fbButton', {
-    templateUrl: 'views/fbLogin.html',
-    controller: 'fbCtrl'
-  });
+.config(['$routeProvider', function ($routeProvider) {
+    $routeProvider.when('/fbButton', {
+        templateUrl: 'views/fbLogin.html',
+        controller: 'FbController'
+    });
 }])
 
-.controller('fbCtrl', ['$scope',function($scope) {
+.controller('FbController', ['$scope', function ($scope) {
     $scope.usrId = false;
     $scope.checkState = function (placeID) {
         console.log($scope.usrId);

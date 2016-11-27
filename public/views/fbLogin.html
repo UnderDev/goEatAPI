@@ -1,4 +1,4 @@
-<div ng-controller="fbCtrl">
+<div ng-controller='FbController'>
     <script>
         window.fbAsyncInit = function () {
             FB.init({
@@ -65,7 +65,6 @@
             } else {
                 console.log("Not logged in");
             }
-            //TEST TODAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY!
             checkState();
         }
         // Load the SDK asynchronously
@@ -103,7 +102,10 @@
             checkState();
         };
     </script>
-    <div class="container">
-        <li onclick="FB.login(); checkState();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
+    <div class="container" ng-hide="usrId">
+        <li onclick="FB.login();" ng-click="checkState();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
+    </div>
+    <div ng-hide="!usrId">
+        asfkasfkhask
     </div>
 </div>
