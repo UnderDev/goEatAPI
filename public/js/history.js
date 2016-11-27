@@ -1,21 +1,21 @@
 'use strict';
 
-angular.module('myApp.favorites', ['ngRoute'])
+angular.module('myApp.history', ['ngRoute'])
 
   .config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.when('/favorites', {
-      templateUrl: 'views/favorites.html',
-      controller: 'FavoritesCtrl'
+    $routeProvider.when('/history', {
+      templateUrl: 'views/history.html',
+      controller: 'HistoryCtrl'
     });
   }])
 
-  .controller('FavoritesCtrl', ['$scope', '$route', 'PeopleService', 'RemoveServiceFav', function ($scope, $route, PeopleService, RemoveServiceFav) {
-
+  .controller('HistoryCtrl', ['$scope', '$route', 'PeopleService', 'RemoveService', function ($scope, $route, PeopleService, RemoveService) {
+    
     $scope.reloadRoute = function() {
       $route.reload();
     }
-    
-    $scope.favs = [];
+
+    $scope.history = [];
 
     if (typeof (Storage) !== "undefined") {
                 
@@ -24,11 +24,10 @@ angular.module('myApp.favorites', ['ngRoute'])
         //for local testing
         //var fbpass = "10207337063737016";
         PeopleService.getData(fbpass).then(function (data) {
-        console.log(data);
-            $scope.favs = data.Favourites;
+
+            $scope.history = data.History;
             console.log(fbpass);
             
-            console.log($scope.favs);
           }, function () {
             $scope.data = undefined;
           });
@@ -43,10 +42,9 @@ angular.module('myApp.favorites', ['ngRoute'])
             }
         }
 
-        $scope.remove = function (fav) {
+        $scope.remove = function () {
 
-            console.log("this is remove func - ", fav);
-            RemoveServiceFav.remove(fav, fbpass).then(function(){
+            RemoveService.remove(fbpass).then(function(){
                 console.log("removed sucessfully")
             }, function(){
 
@@ -75,16 +73,15 @@ angular.module('myApp.favorites', ['ngRoute'])
     }
   })
 
-  .factory('RemoveServiceFav', function ($q, $http, $rootScope) {
+  .factory('RemoveService', function ($q, $http, $rootScope) {
 
     return {
-      remove: function (fav, fbpass) {
+      remove: function (fbpass) {
         var deferred = $q.defer();
-        //console.log("remove service - ", fav);
-        console.log(fbpass);
-        $http.get('/returnRemoveFav/' + fbpass + '/' + fav) //will need unique id - not name
+        console.log("remove service - ", fbpass);
+        $http.get('/returnRemoveHistory/' + fbpass) //will need unique id - not name
           .success(function () {
-            console.log("back to getData favs");
+            console.log("back to getData");
             // update angular's scopes
             $rootScope.$$phase || $rootScope.$apply();
           });

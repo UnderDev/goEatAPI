@@ -9,7 +9,7 @@ angular.module('myApp.find', ['ngRoute'])
         });
     }])
 
-    .controller('FindCtrl', ['$scope', '$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', 'FavService', 'BlistService', function ($scope, $sce, PlacesService, geolocationSvc, DirectionService, FavService, BlistService) {
+    .controller('FindCtrl', ['$scope', '$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', 'UpdateService', function ($scope, $sce, PlacesService, geolocationSvc, DirectionService, UpdateService) {
 
         var loc;
         $scope.getDirections = function (place_id) {
@@ -18,9 +18,8 @@ angular.module('myApp.find', ['ngRoute'])
                 result.innerHTML = "";            
                 data[0].legs[0].steps.forEach(function (Inst) {
                     result.innerHTML += Inst.html_instructions + "<br>"
-                     console.log(Inst); //Get directions as text from here
+                     //console.log(Inst); //Get directions as text from here
                 });
-
             }, function () {
                 $scope.data = undefined;
             });
@@ -57,26 +56,67 @@ angular.module('myApp.find', ['ngRoute'])
 
         $scope.addFav = function (place) {
 
-            var favs = place;
+            if (typeof (Storage) !== "undefined") {
+                
+                //var fbpass = localStorage.getItem("usrId");
+                
+                //for local testing
+                var fbpass = "10207337063737016";
+                var type = "fav";
 
-            FavService.updateFavs(favs).then(function () {
+                UpdateService.updateList(place, fbpass, type).then(function () {
 
-                console.log("Updated favourites");
-            }, function () {
-                console.log("Unable to update");
-            });
+                    console.log("Updated favourites");
+                    }, function () {
+                    console.log("Unable to update");
+                });
+                } else {
+                    alert("Please update to a browser that supports HTML5")
+            }
+            
+            
         }
 
         $scope.blacklist = function (place) {
+            
+            if (typeof (Storage) !== "undefined") {
+                
+                //var fbpass = localStorage.getItem("usrId");
+                //for local testing
+                var fbpass = "10207337063737016";
+                var type = "blist";
 
-            var blist = place;
-
-            BlistService.updateBlist(blist).then(function () {
+                UpdateService.updateList(place, fbpass, type).then(function () {
 
                 console.log("Updated blacklist");
             }, function () {
                 console.log("Unable to update blacklist");
             });
+                } else {
+                    alert("Please update to a browser that supports HTML5")
+            }
+   
+        }
+
+        $scope.history = function (place) {
+
+            if (typeof (Storage) !== "undefined") {
+                
+                //var fbpass = localStorage.getItem("usrId");
+                var fbpass = "10207337063737016";
+                var type = "history";
+
+                UpdateService.updateList(place, fbpass, type).then(function () {
+
+                    console.log("Updated history");
+                    }, function () {
+                    console.log("Unable to update history");
+                });
+                } else {
+                    alert("Please update to a browser that supports HTML5")
+            }
+            
+            
         }
 
         var bypassGoogle = false;
@@ -405,50 +445,31 @@ angular.module('myApp.find', ['ngRoute'])
         }
     })
 
-    .factory('FavService', function ($http, $rootScope) {
+    .factory('UpdateService', function ($http, $rootScope) {
 
         return {
-            updateFavs: function (favs) {
-                var id = favs.place_id;
-                console.log(id);
-                var name = favs.name;
-                console.log(name);
-                var photo = favs.photos[0].photo_reference;
-                console.log(photo);
-                var lat = favs.geometry.location.lat;
-                console.log(lat);
-                var lon = favs.geometry.location.lng;
-                console.log(lon);
-                return $http.get('/returnUpdateFavourites/' + id + '/' + name + '/' + photo + '/' + lat + '/' + lon);
+            updateList: function (place, fbpass, type) {
+                
+                var id = place.place_id;
+                var name = place.name;
+                var photo = place.photos[0].photo_reference;
+                var lat = place.geometry.location.lat;
+                var lon = place.geometry.location.lng;
+
+                if(type=="fav"){
+                    return $http.get('/returnUpdateFavourites/' + fbpass + '/' + id + '/' + name + '/' + photo + '/' + lat + '/' + lon);
+                }
+                else if(type=="blist"){
+                    return $http.get('/returnUpdateBlacklist/' + fbpass + '/' + id + '/' + name + '/' + photo + '/' + lat + '/' + lon);
+                }
+                else{
+                    return $http.get('/returnUpdateHistory/' + fbpass + '/' + id + '/' + name + '/' + photo + '/' + lat + '/' + lon);
+                }
             }
         }
-
-
     })
 
-    .factory('BlistService', function ($http, $rootScope) {
-
-        return {
-            updateBlist: function (blist) {
-                var id = blist.place_id;
-                console.log(id);
-                var name = blist.name;
-                console.log(name);
-                var photo = blist.photos[0].photo_reference;
-                console.log(photo);
-                var lat = blist.geometry.location.lat;
-                console.log(lat);
-                var lon = blist.geometry.location.lng;
-                console.log(lon);
-                return $http.get('/returnUpdateBlacklist/' + id + '/' + name + '/' + photo + '/' + lat + '/' + lon);
-            }
-        }
-
-
-    })
-
-
-    //http://stackoverflow.com/questions/14947478/angularjs-ng-repeat-with-data-from-service
+   //http://stackoverflow.com/questions/14947478/angularjs-ng-repeat-with-data-from-service
     .factory('DirectionService', function ($q, $http, $rootScope) {
         var myData = {};
 
