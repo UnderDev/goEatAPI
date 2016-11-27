@@ -10,7 +10,7 @@ angular.module('myApp.fb', ['ngRoute'])
 }])
 
 .controller('fbCtrl', ['$scope',function($scope) {
-  /*  $scope.usrId = false;
+    $scope.usrId = false;
     $scope.checkState = function (placeID) {
         console.log($scope.usrId);
         
@@ -24,5 +24,5 @@ angular.module('myApp.fb', ['ngRoute'])
             $scope.usrId = false;
         }
         $scope.usrId = true;
-    }*/
+    }
 }]);
