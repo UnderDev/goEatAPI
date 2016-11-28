@@ -116,12 +116,12 @@
         <div class="container" ng-hide="!usrId">
             <li onclick="facebookLogin();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
         </div>
-        <div ng-hide="usrId">
-           <li style="white-space: nowrap">
-                <p id="userName"></p>
-                <img id="imgProf"/>
-                <li onclick="logOut();" class="fa fa-sign-out fa-2x nav-item nav-link" aria-hidden="true"></li>
-            </li>
+
+        <div ng-hide="usrId">               
+                <li class="col-xs-2"><img id="imgProf" width="40" height="40" /></li>
+                <li class="col-xs-8" style="margin-top: 10px;" id="userName"></li>
+                <li class="col-xs-8"onclick="logOut();" class="fa fa-sign-out fa-2x nav-item nav-link" aria-hidden="true"></li>
         </div>
+        
     </div>
 </div>
