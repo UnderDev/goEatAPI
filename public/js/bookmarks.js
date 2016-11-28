@@ -61,4 +61,4 @@ angular.module('myApp.bookmarks', ['ngRoute'])
         return deferred.promise;
       }
     }
-  })
+})

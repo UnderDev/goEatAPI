@@ -1,0 +1,92 @@
+  .bgColour {
+    background-color: #EBF5FB
+  }
+  
+  .bgLayout {
+    margin: 20px;
+    padding-top: 55px;
+  }
+  
+  .contentPadding {
+    padding-top: 75px;
+  }
+  
+  .padTopBot {
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+
+  .btn-group, .btn-group-vertical {
+     display: block;
+     padding-left: 30px;
+  }
+  .paddingIcon {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  
+  @media (min-width: 544px) {
+    .card-columns .card {
+      min-width: 300px;
+      max-width: 450px;
+      max-height: 500px;
+      border: 1px solid darkgray;
+    }
+  }
+  
+  @media (min-width: 544px) {
+    .cardCol {
+      -webkit-column-count: 2;
+      -moz-column-count: 2;
+      column-count: 2;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .cardCol {
+      -webkit-column-count: 3;
+      -moz-column-count: 3;
+      column-count: 3;
+    }
+  }
+  
+  .fa-star {
+    color: goldenrod;
+  }
+  
+  .fa-heart:hover {
+    color: red;
+  }
+  
+  .fa-ban:hover {
+    color: white;
+  }
+  
+  .fa-ban:hover {
+    color: red;
+  }
+  
+  .normStar {
+    color: black;
+  }
+  
+  .card-title {
+    max-height: 90px;
+    height: 90px
+  }
+  
+  .dropdown-menu {
+    color: #373a3c;
+    background-color: rgba(255, 255, 255, 0);
+    background-clip: padding-box;
+    border: 0px;
+    padding-top: 55px;
+    padding-left: 50px;
+  }
+  
+  .btn-outline-secondary {
+    color: #fff;
+    background-image: none;
+    background-color: rgba(27, 24, 24, 0.47);
+    border-color: #fff;
+  }
