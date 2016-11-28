@@ -13,7 +13,7 @@ angular.module('myApp.fb', ['ngRoute'])
     $scope.usrId = true;
     $scope.checkState = function () {
         console.log("state : " + localStorage.getItem("usrId"));
-        if((localStorage.getItem("usrId")!=null)&&(localStorage.getItem("usrId")!=undefined))
+        if((localStorage.getItem("usrId")!=null)&&(localStorage.getItem("usrId")!=undefined)&&(localStorage.getItem("usrId")!="loggedOut"))
         {
             //user logged in
             console.log("Setting to false : "+$scope.usrId);
