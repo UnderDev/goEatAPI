@@ -104,9 +104,8 @@
     </script>
     <div class="container" ng-hide="usrId">
         <li onclick="FB.login();" ng-click="checkState();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
-        <li onclick="FB.logout();" ng-click="checkState();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
     </div>
     <div ng-hide="!usrId">
-        asfkasfkhask
+        <li onclick="FB.logout();" ng-click="checkState();" class="fa fa-sign-out fa-2x nav-item nav-link" aria-hidden="true"></li>
     </div>
 </div>
