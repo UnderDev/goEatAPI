@@ -84,11 +84,11 @@
                             
                             $.get("/returnFindPerson/" + data, function (data1, status1) {
                                 obj = JSON.parse(data1);
-                                console.log(obj.Photo);
+                                console.log(data1);
                                 console.log("***************************");
                                 console.log(obj.Name);
                                 document.getElementById("userName").innerHTML = obj.Name;
-                                document.getElementById("imgProf").src = obj.Photo;
+                                document.getElementById("imgProf").src = obj.photo;
                             })
                         }
                         else {
