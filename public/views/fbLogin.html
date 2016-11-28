@@ -2,13 +2,12 @@
     <script>
         window.fbAsyncInit = function () {
             FB.init({
-                appId: '1779657235585831',
-                cookie: true, // enable cookies to allow the server to access 
+                appId: '1779657235585831'
+                , cookie: true, // enable cookies to allow the server to access 
                 // the session
                 xfbml: true, // parse social plugins on this page
                 version: 'v2.8' // use graph api version 2.8
             });
-            
             // Now that we've initialized the JavaScript SDK, we call 
             // FB.getLoginStatus().  This function gets the state of the
             // person visiting this page and can return one of three states to
@@ -20,7 +19,6 @@
             //    your app or not.
             //
             // These three cases are handled in the callback function.
-            
             FB.getLoginStatus(function (response) {
                 statusChangeCallback(response);
             });
@@ -32,10 +30,7 @@
                     statusChangeCallback(response);
                 });
             }
-
-
         };
-
         // This is called with the results from from FB.getLoginStatus().
         function statusChangeCallback(response) {
             console.log('statusChangeCallback');
@@ -47,22 +42,23 @@
             // for FB.getLoginStatus().
             if (response.status === 'connected') {
                 var access_token = FB.getAuthResponse()['accessToken'];
-
                 $.get("/accessKey/" + access_token, function (data, status) {
                     //session storage of user id
                     if (typeof (Storage) !== "undefined") {
                         localStorage.setItem("usrId", data);
                         angular.element(document.getElementById('divID')).scope().checkState();
-                        
-                    } else {
+                    }
+                    else {
                         alert("Please update to a browser that supports HTML5")
                     }
                 });
                 return;
-            } else if (response.status === 'not_authorized') {
+            }
+            else if (response.status === 'not_authorized') {
                 // The person is logged into Facebook, but not your app.
                 console.log("No authorization given");
-            } else {
+            }
+            else {
                 console.log("Not logged in");
             }
         };
@@ -85,22 +81,35 @@
                         if (typeof (Storage) !== "undefined") {
                             localStorage.setItem("usrId", data);
                             angular.element(document.getElementById('divID')).scope().checkState();
-                        } else {
+                        }
+                        else {
                             alert("Please update to a browser that supports HTML5")
                         }
                     });
                     return;
-                } else {
+                }
+                else {
                     angular.element(document.getElementById('divID')).scope().checkState();
                     console.log('User cancelled login or did not fully authorize.');
                 }
             })
+        };
+
+        function logOut() {
+            FB.logout();
+            if (typeof (Storage) !== "undefined") {
+                localStorage.setItem("usrId", null);
+            }
+            else {
+                alert("Please update to a browser that supports HTML5")
+            }
+            angular.element(document.getElementById('divID')).scope().checkState();
         };
     </script>
     <div class="container" id="divID" ng-hide="!usrId">
         <li onclick="facebookLogin();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
     </div>
     <div ng-hide="usrId">
-        <li onclick="FB.logout();" class="fa fa-sign-out fa-2x nav-item nav-link" aria-hidden="true"></li>
+        <li onclick="logOut();" class="fa fa-sign-out fa-2x nav-item nav-link" aria-hidden="true"></li>
     </div>
 </div>
