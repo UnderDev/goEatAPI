@@ -1,8 +1,7 @@
 <div ng-controller="FavoritesCtrl">
-	<div class="text-xs-center contentPadding">
-		<h1>Favorites</h1>
-		<div class=" card-columns cardCol">
-			<div ng-repeat="fav in favs track by $index" class="cardSize">
+	<div class="text-xs-center">
+		<div class="bgLayout card-columns cardCol">
+			<div ng-repeat="fav in favs track by $index" class="cardSize" ng-show="showMap">
 				<div class="card text-xs-center list-inline  " style="display:inline-block">
 					<div class="card-title card-block bg-info ">
 						<span class="text-uppercase">{{fav.Favname}}</span>
@@ -13,8 +12,24 @@
 						<img width="200" height="150" ng-src="{{getURL(fav.Favphoto)}}" />
 					</div>
 					<div class="card-footer">
-						<button class="btn btn-outline-info btn-sm" ng-click="history(place); showMe(place.place_id); getDirections(place.place_id)">Google Map</button>
+						<button class="btn btn-outline-info btn-sm" ng-click="showMe(fav.Favid); getDirections(fav.Favid)">Google Map</button>
 					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-hide="showMap">
+
+			<div class="container">
+				<!--https://developers.google.com/maps/documentation/embed/start-->
+				<iframe width="730" height="450" frameborder="1" style="border:4" ng-src="{{placeID}}" allowfullscreen></iframe>
+			</div>
+			<button class="btn btn-outline-info btn-lg" ng-click="hideMe()">Hide Map</button>
+			<button class="btn btn-outline-info btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+				aria-controls="collapseExample">Directions</button>
+
+			<div class="collapse" id="collapseExample">
+				<div class="container">
+					<div id="result"></div>
 				</div>
 			</div>
 		</div>
