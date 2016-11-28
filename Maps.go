@@ -33,6 +33,8 @@ func nearby(res http.ResponseWriter, req *http.Request, ctx *macaron.Context, fi
 	if err != nil {
 		log.Fatalf("fatal error: %s", err)
 	}
+
+	//get the lat/long params
 	str := ctx.Params("pos")
 	pos := strings.Split(str, ",")
 	lat, err := strconv.ParseFloat(pos[0], 16)
@@ -47,6 +49,8 @@ func nearby(res http.ResponseWriter, req *http.Request, ctx *macaron.Context, fi
 	location := maps.LatLng{
 		Lat: lat,
 		Lng: lon}
+	//
+
 	//sort out getting latlong from browser and replace this hardcoded stuff
 
 	//	type NearbySearchRequest struct {
@@ -79,12 +83,21 @@ func nearby(res http.ResponseWriter, req *http.Request, ctx *macaron.Context, fi
 		OpenNow:  true,
 		Type:     filter,
 	}
-	//Change the context later, needs proper args
+
 	contx := context.Background()
+	log.Print(r)
 	psr, err := c.NearbySearch(contx, r)
+
 	//loop over results and send it back
 	if err != nil {
-		log.Fatalf("fatal error: %s", err)
+		if len(psr.Results) > 0 {
+			log.Fatalf("ssssfatal error: %s", err)
+		} else {
+			log.Print(psr.Results)
+			//this is going to return a null string, the browser will handle it
+			json.NewEncoder(res).Encode(psr.Results)
+		}
+
 	} else {
 
 		//type PlacesSearchResult struct {
@@ -118,16 +131,19 @@ func nearby(res http.ResponseWriter, req *http.Request, ctx *macaron.Context, fi
 		//    PermanentlyClosed bool `json:"permanently_closed"`
 		//}
 
-		str := ""
-		for _, plc := range psr.Results {
-			str += (plc.Name + " || ")
-		}
+		//for debugging purposes
+		// str := ""
+		// for _, plc := range psr.Results {
+		// 	str += (plc.Name + " || ")
+
+		// }
+		// log.Print(str)
 
 		places := psr.Results
 		if err != nil {
 			log.Fatalf("fatal error: %s", err)
 		} else {
-
+			//encode and send the places array back to the browser
 			json.NewEncoder(res).Encode(places)
 		}
 	}
