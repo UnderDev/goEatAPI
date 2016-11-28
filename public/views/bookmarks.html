@@ -1,4 +1,7 @@
-<div ng-controller="settingsCntrl">
+<div ng-controller="BookmarksCtrl">
+    <br>
+    <br>
+    <br>
     <ul class="nav nav-pills nav-stacked bg-faded col-md-1 full-height" style="height: 100vh">
         <li>
             <button class="list-group-item btn-block" ng-click="page='favs'">Favourites</button>
@@ -12,14 +15,17 @@
     </ul>
     <div ng-switch="page">
         <div ng-switch-when="favs">
-            <h1>favs Div</h1> </div>
+            <h1>Favourites</h1> 
+            <div ng-include src="'views/favorites.html'" />
+            </div>
         <div ng-switch-when="history">
-            <h1>hist Div</h1>
-            <div ng-include src="'views/find.html'" /> </div>
+            <h1>History</h1>
+            <div ng-include src="'views/history.html'" /> </div>
         <div ng-switch-when="blacklist">
-            <p>dsadasdasd</p>
+            <H1>Blacklist</H1>
+            <div ng-include src="'views/blacklist.html'" />
         </div>
         <div ng-switch-default>
-            <div ng-include src="'views/find.html'" /> </div>
+            <div ng-include src="'views/favorites.html'" /> </div>
     </div>
 </div>
