@@ -97,10 +97,10 @@
             })
         };
     </script>
-    <div class="container" id="divID" ng-hide="usrId">
+    <div class="container" id="divID" ng-hide="!usrId">
         <li onclick="facebookLogin();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
     </div>
-    <div ng-hide="!usrId">
+    <div ng-hide="usrId">
         <li onclick="FB.logout();" class="fa fa-sign-out fa-2x nav-item nav-link" aria-hidden="true"></li>
     </div>
 </div>
