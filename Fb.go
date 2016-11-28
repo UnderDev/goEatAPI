@@ -15,7 +15,7 @@ func acccessKey(w http.ResponseWriter, req *http.Request, ctx *macaron.Context) 
 		"access_token": key,
 	})
 	if err == nil {
-
+		fmt.Println("yes yes")
 		picture := res["picture"].(map[string]interface{})
 		fmt.Println("We gud")
 		data := picture["data"].(map[string]interface{})
@@ -27,16 +27,15 @@ func acccessKey(w http.ResponseWriter, req *http.Request, ctx *macaron.Context) 
 		}
 
 		id := res["id"].(string)
-		p, pErr := goFind(id)
-		if pErr != nil {
+		fmt.Println("yes yes")
+		var p Person = goFind(id)
+		fmt.Println("yes yes")
+		if p.Name == "" {
 			//create account
 			returnInsertPerson(res["id"].(string), res["name"].(string), url)
+			fmt.Println("NOPE")
 		}
-		else if(p.Name = "")
-		{
-			//create account
-			returnInsertPerson(res["id"].(string), res["name"].(string), url)
-		}
+		fmt.Println(p.Name)
 		return id
 	}
 	return "nil"
