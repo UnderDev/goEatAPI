@@ -40,7 +40,7 @@
         function statusChangeCallback(response) {
             console.log('statusChangeCallback');
             console.log(response.status);
-            
+            angular.element(document.getElementById('divID')).scope().checkState();
             // The response object is returned with a status field that lets the
             // app know the current login status of the person.
             // Full docs on the response object can be found in the documentation
@@ -52,20 +52,19 @@
                     //session storage of user id
                     if (typeof (Storage) !== "undefined") {
                         localStorage.setItem("usrId", data);
+                        angular.element(document.getElementById('divID')).scope().checkState();
                         
                     } else {
                         alert("Please update to a browser that supports HTML5")
                     }
                 });
+                return;
             } else if (response.status === 'not_authorized') {
                 // The person is logged into Facebook, but not your app.
                 console.log("No authorization given");
             } else {
                 console.log("Not logged in");
             }
-            console.log("bb");
-            angular.element(document.getElementById('divID')).scope().checkState();
-            console.log("bb111");
             return;
         }
         // Load the SDK asynchronously
@@ -101,7 +100,7 @@
         };
     </script>
     <div class="container" id="divID" ng-hide="usrId">
-        <li onclick="FB.login();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
+        <li onclick="facebookLogin();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
     </div>
     <div ng-hide="!usrId">
         <li onclick="FB.logout();" class="fa fa-sign-out fa-2x nav-item nav-link" aria-hidden="true"></li>
