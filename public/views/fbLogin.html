@@ -1,4 +1,4 @@
-<div id="divID" ng-controller='FbController'>
+<div ng-controller='FbController'>
     <script>
         window.fbAsyncInit = function () {
             FB.init({
@@ -109,10 +109,12 @@
             angular.element(document.getElementById('divID')).scope().checkState();
         };
     </script>
-    <div class="container" ng-hide="!usrId">
-        <li onclick="facebookLogin();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
-    </div>
-    <div ng-hide="usrId">
-        <li onclick="logOut();" class="fa fa-sign-out fa-2x nav-item nav-link" aria-hidden="true"></li>
+    <div id="divID">
+        <div class="container" ng-hide="!usrId">
+            <li onclick="facebookLogin();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
+        </div>
+        <div ng-hide="usrId">
+            <li onclick="logOut();" class="fa fa-sign-out fa-2x nav-item nav-link" aria-hidden="true"></li>
+        </div>
     </div>
 </div>
