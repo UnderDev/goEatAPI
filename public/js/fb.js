@@ -12,17 +12,17 @@ angular.module('myApp.fb', ['ngRoute'])
 .controller('FbController', ['$scope', function ($scope) {
     $scope.usrId = false;
     $scope.checkState = function (placeID) {
-        console.log($scope.usrId);
         
         if((localStorage.getItem("usrId")!=null)&&(localStorage.getItem("usrId")!=undefined))
         {
-            console.log($scope.usrId);
+            console.log("Setting to true :"+$scope.usrId);
             $scope.usrId = true;
+            console.log("Set to true :"+$scope.usrId);
         }
         else{
-            console.log($scope.usrId);
+            console.log("Setting to false"+$scope.usrId);
             $scope.usrId = false;
+            console.log("Set to false"+$scope.usrId);
         }
-        $scope.usrId = true;
     }
 }]);

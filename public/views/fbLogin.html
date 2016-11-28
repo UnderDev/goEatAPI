@@ -40,8 +40,7 @@
         function statusChangeCallback(response) {
             console.log('statusChangeCallback');
             console.log(response.status);
-            $scope.usrId = false;
-
+            
             // The response object is returned with a status field that lets the
             // app know the current login status of the person.
             // Full docs on the response object can be found in the documentation
@@ -53,7 +52,7 @@
                     //session storage of user id
                     if (typeof (Storage) !== "undefined") {
                         localStorage.setItem("usrId", data);
-                        $scope.usrId = true;
+                        
                     } else {
                         alert("Please update to a browser that supports HTML5")
                     }
@@ -85,7 +84,6 @@
                         //session storage of user id
                         if (typeof (Storage) !== "undefined") {
                             localStorage.setItem("usrId", data);
-                            $scope.usrId = true;
                             angular.element(document.getElementById('divID')).scope().checkState();
                         } else {
                             alert("Please update to a browser that supports HTML5")
@@ -93,7 +91,7 @@
                     });
                     return;
                 } else {
-                    $scope.usrId = true;
+                } else {
                     angular.element(document.getElementById('divID')).scope().checkState();
                     console.log('User cancelled login or did not fully authorize.');
                 }
