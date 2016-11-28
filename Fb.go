@@ -27,8 +27,13 @@ func acccessKey(w http.ResponseWriter, req *http.Request, ctx *macaron.Context) 
 		}
 
 		id := res["id"].(string)
-		var p Person = goFind(id)
-		if p == nil {
+		p, pErr := goFind(id)
+		if pErr != nil {
+			//create account
+			returnInsertPerson(res["id"].(string), res["name"].(string), url)
+		}
+		else if(p.Name = "")
+		{
 			//create account
 			returnInsertPerson(res["id"].(string), res["name"].(string), url)
 		}
