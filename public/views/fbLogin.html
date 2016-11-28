@@ -87,7 +87,8 @@
                                 console.log(obj.Photo);
                                 console.log("***************************");
                                 console.log(obj.Name);
-                                document.getElementById("p1").innerHTML = data1;
+                                document.getElementById("userName").innerHTML = obj.Name;
+                                document.getElementById("imgProf").src = obj.Photo;
                             })
                         }
                         else {
@@ -119,7 +120,8 @@
             <li onclick="facebookLogin();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
         </div>
         <div ng-hide="usrId">
-            <p id="p1"></p>
+            <p id="userName"></p>
+            <img id="imgProf"/>
             <li onclick="logOut();" class="fa fa-sign-out fa-2x nav-item nav-link" aria-hidden="true"></li>
         </div>
     </div>
