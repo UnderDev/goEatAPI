@@ -83,6 +83,10 @@
                             angular.element(document.getElementById('divID')).scope().checkState();
                             
                             $.get("/returnFindPerson/" + data, function (data1, status1) {
+                                obj = JSON.parse(json);
+                                console.log(obj.Photo);
+                                console.log("***************************");
+                                console.log(obj.Name);
                                 document.getElementById("p1").innerHTML = data1;
                             })
                         }
