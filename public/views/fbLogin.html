@@ -81,6 +81,7 @@
                         if (typeof (Storage) !== "undefined") {
                             localStorage.setItem("usrId", data);
                             angular.element(document.getElementById('divID')).scope().checkState();
+                            document.getElementById("p1").innerHTML = data;
                         }
                         else {
                             alert("Please update to a browser that supports HTML5")
@@ -99,11 +100,9 @@
             console.log("bbbbeeep");
             FB.logout();
             if (typeof (Storage) !== "undefined") {
-                console.log("222bbbbeeep");
                 localStorage.setItem("usrId", "loggedOut");
             }
             else {
-                console.log("bbbbe222eep");
                 alert("Please update to a browser that supports HTML5")
             }
             angular.element(document.getElementById('divID')).scope().checkState();
@@ -114,6 +113,7 @@
             <li onclick="facebookLogin();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
         </div>
         <div ng-hide="usrId">
+            <p id="p1"></p>
             <li onclick="logOut();" class="fa fa-sign-out fa-2x nav-item nav-link" aria-hidden="true"></li>
         </div>
     </div>
