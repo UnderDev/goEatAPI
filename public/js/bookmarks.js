@@ -17,10 +17,10 @@ angular.module('myApp.bookmarks', ['ngRoute'])
 
     if (typeof (Storage) !== "undefined") {
                 
-        //var fbpass = localStorage.getItem("usrId");
+        var fbpass = localStorage.getItem("usrId");
         
         //for local testing
-        var fbpass = "10207337063737016";
+        //var fbpass = "10207337063737016";
         PeopleService.getData(fbpass).then(function (data) {
             $scope.profile = data;
             $scope.favs = data.Favourites;
