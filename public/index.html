@@ -13,6 +13,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="sha384-VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU"
     crossorigin="anonymous"></script>
   <script src="https://use.fontawesome.com/8153b7cffb.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
   <script src="app.js"></script>
   <script src="js/fb.js"></script>
   <script src="js/find.js"></script>
@@ -22,87 +23,28 @@
   <script src="js/history.js"></script>
 </head>
 
-<style>
-  .bgColour {
-    background-color: #EBF5FB
-  }
-  
-  .bgLayout {
-    margin: 20px;
-    padding-top: 55px;
-  }
-  
-  @media (min-width: 544px) {
-    .card-columns .card {
-      min-width: 300px;
-      max-width: 450px;
-      max-height: 500px;
-      border: 1px solid darkgray;
-    }
-  }
-  
-  @media (min-width: 544px) {
-    .cardCol {
-      -webkit-column-count: 2;
-      -moz-column-count: 2;
-      column-count: 2;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .cardCol {
-      -webkit-column-count: 3;
-      -moz-column-count: 3;
-      column-count: 3;
-    }
-  }
-  
-  .fa-star {
-    color: goldenrod;
-  }
-  
-  .fa-heart:hover {
-    color: white;
-  }
-  
-  .fa-heart:hover {
-    color: red;
-  }
-  
-  .fa-ban:hover {
-    color: white;
-  }
-  
-  .fa-ban:hover {
-    color: red;
-  }
-  
-  .normStar {
-    color: black;
-  }
-
-.card-title{
-  max-height: 90px;
-  height: 90px
-}
-
-
-</style>
-
 <body class="bgColour">
-
   <nav class="navbar  navbar-dark bg-inverse navbar-fixed-top  text-xs-center">
     <div class="container">
       <div class="row">
         <div class="nav navbar-nav  text-xs-center">
           <div class="col-sm-4">
             <a class="nav-item nav-link" href="#!/find"><i class="fa fa-cutlery " aria-hidden="true"></i></a>
-            <a class="nav-item nav-link" href="#!"><i class="fa fa-history" aria-hidden="true"></i></a>
-            <a class="nav-item nav-link" href="#!/bookmarks"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a>
+
+            <div class="btn-group">
+              <a class="nav-item nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a>
+              <ul class="dropdown-menu text-xs-center">
+                <li><a href="#!/favorites" class="btn btn-outline-secondary btn-block" role="button" aria-pressed="true">Favs</a></li>
+                <li class="padTopBot"><a href="#!/history" class="btn btn-outline-secondary btn-block" role="button" aria-pressed="true">History</a></li>
+                <li><a href="#!/blacklist" class="btn btn-outline-secondary btn-block" role="button" aria-pressed="true">Blacklist</a></li>
+              </ul>
+            </div>
           </div>
+
           <div class="col-sm-4">
             <h1 class="col-sm-12 navbar-brand">GoEat!</h1>
           </div>
+
           <div class="col-sm-4">
             <div ng-include src="'views/fbLogin.html'" class="pull-right"></div>
           </div>
