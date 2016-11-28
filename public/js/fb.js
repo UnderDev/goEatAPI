@@ -15,14 +15,17 @@ angular.module('myApp.fb', ['ngRoute'])
         
         if((localStorage.getItem("usrId")!=null)&&(localStorage.getItem("usrId")!=undefined))
         {
-            console.log("Setting to true :"+$scope.usrId);
+            //user logged in
+            console.log("Setting to false : "+$scope.usrId);
             $scope.usrId = false;
-            console.log("Set to true :"+$scope.usrId);
+            console.log("Set to false : "+$scope.usrId);
         }
         else{
-            console.log("Setting to false"+$scope.usrId);
+            //user not logged in
+            console.log("Setting to true "+$scope.usrId);
             $scope.usrId = true;
-            console.log("Set to false"+$scope.usrId);
+            console.log("Set to true "+$scope.usrId);
         }
+        
     }
 }]);
