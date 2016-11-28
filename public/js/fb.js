@@ -28,6 +28,5 @@ angular.module('myApp.fb', ['ngRoute'])
             console.log("Set to true "+$scope.usrId);
             $scope.$apply();
         }
-        
     }
 }]);
