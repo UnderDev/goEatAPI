@@ -1,5 +1,5 @@
 # goEat
-Created as part of the GMIT BofSc(Honours) in Computing in Software Development, Emerging Technologies module.
+Created as part of the GMIT BSc(Honours) in Computing in Software Development, Emerging Technologies module.
 ##Introduction
 goEat is a service that provides a list of nearby places where you can get your mastication on. Using your current Geolocation,
 goEat finds restaurants and places providing takeaway and delivery options, that are within 10km of you.
@@ -179,8 +179,8 @@ This request passes the users Facebook id which is returned when they log into t
     ]
 }
 
-		/returnUpdateHistory/{fbpass}{id}{name}{photo}{latitutde}{longtitude}
-```
+```		/returnUpdateHistory/{fbpass}{id}{name}{photo}{latitutde}{longtitude}
+```	
 An example request could be:
 ```
   /returnFindPerson/10207337063737016/ChIJn_a2RkCRW0gRgEnIeIH0TGY/Clayton%20Hotel %20Galway/CoQBdwAAABfAQkmK-sGzXeyI2Zp_r_k_2qORTiJirPNssCbO0VnjdRN0LUEQU9yoJTcOrNHuvzlKoYoRZ6QT1UmmKSYLhpog_6ZcUeClBNMf4P72ypiPHw4C3FgdY_oHOLuFprN0Iz1OAIr7uZCl4bubJb9S5Ip8pVFdxWT4QVseMSnEbQOrEhCSOZm5WSpPl4w8IDp6em-uGhQE7ylnCD_Zy4ZPgOWcshnvkmVuyQ/53.291342/-8.989296999999999
@@ -188,7 +188,7 @@ An example request could be:
 This request passes the users Facebook id to find the correct document in MongoDB.  This request searches for the user document and creates a new item in their history array containing the eatery id, name, photo reference, latitude and longtitude coordinates.
 
 
-
+```	
 	/returnRemoveFav/{fbpass}{fav}
 ```
 An example request could be:
@@ -196,5 +196,5 @@ An example request could be:
   /returnFindPerson/10207337063737016/ChIJn_a2RkCRW0gRgEnIeIH0TGY
 ```
 This request passes the users Facebook id to find the correct document in MongoDB.  This request searches for the user document and searches for the ID of all the locations stored in their favourites list for the specified ID and removes it.
-```
+
 
