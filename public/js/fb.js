@@ -12,7 +12,7 @@ angular.module('myApp.fb', ['ngRoute'])
 .controller('FbController', ['$scope', function ($scope) {
     $scope.usrId = true;
     $scope.checkState = function () {
-        
+        console.log("state : " + localStorage.getItem("usrId"));
         if((localStorage.getItem("usrId")!=null)&&(localStorage.getItem("usrId")!=undefined))
         {
             //user logged in

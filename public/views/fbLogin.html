@@ -96,11 +96,14 @@
         };
 
         function logOut() {
+            console.log("bbbbeeep");
             FB.logout();
             if (typeof (Storage) !== "undefined") {
+                console.log("222bbbbeeep");
                 localStorage.setItem("usrId", null);
             }
             else {
+                console.log("bbbbe222eep");
                 alert("Please update to a browser that supports HTML5")
             }
             angular.element(document.getElementById('divID')).scope().checkState();
