@@ -65,7 +65,7 @@
             } else {
                 console.log("Not logged in");
             }
-            checkState();
+            angular.element(document.getElementById('divID')).scope().checkState();
         }
         // Load the SDK asynchronously
         (function (d, s, id) {
@@ -86,6 +86,7 @@
                         if (typeof (Storage) !== "undefined") {
                             localStorage.setItem("usrId", data);
                             $scope.usrId = true;
+                            angular.element(document.getElementById('divID')).scope().checkState();
                         } else {
                             alert("Please update to a browser that supports HTML5")
                         }
@@ -93,19 +94,16 @@
                     return;
                 } else {
                     $scope.usrId = true;
+                    angular.element(document.getElementById('divID')).scope().checkState();
                     console.log('User cancelled login or did not fully authorize.');
                 }
             })
         };
-        function b()
-        {
-            checkState();
-        };
     </script>
-    <div class="container" ng-hide="usrId">
-        <li onclick="FB.login();" ng-click="checkState();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
+    <div class="container" id="divID" ng-hide="usrId">
+        <li onclick="FB.login();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
     </div>
     <div ng-hide="!usrId">
-        <li onclick="FB.logout();" ng-click="checkState();" class="fa fa-sign-out fa-2x nav-item nav-link" aria-hidden="true"></li>
+        <li onclick="FB.logout();" class="fa fa-sign-out fa-2x nav-item nav-link" aria-hidden="true"></li>
     </div>
 </div>
