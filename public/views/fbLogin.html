@@ -81,7 +81,10 @@
                         if (typeof (Storage) !== "undefined") {
                             localStorage.setItem("usrId", data);
                             angular.element(document.getElementById('divID')).scope().checkState();
-                            document.getElementById("p1").innerHTML = data;
+                            
+                            $.get("/returnFindPerson/" + data, function (data1, status1) {
+                                document.getElementById("p1").innerHTML = data1;
+                            })
                         }
                         else {
                             alert("Please update to a browser that supports HTML5")
@@ -97,7 +100,6 @@
         };
 
         function logOut() {
-            console.log("bbbbeeep");
             FB.logout();
             if (typeof (Storage) !== "undefined") {
                 localStorage.setItem("usrId", "loggedOut");
