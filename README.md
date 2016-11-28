@@ -117,3 +117,84 @@ Which would return an array of Places, each roughly resembling the following:
 	/returnRemoveBlist/:fbpass/:blist
 	/returnRemoveHistory/:fbpass
 ```
+
+
+#####Go API Enpoints
+```
+	      /returnFindPerson/{fbpass}
+```
+An example request could be:
+```
+  /returnFindPerson/10207337063737016
+```
+This request passes the users Facebook id which is returned when they log into the app with Facebook.  This request would return a Person object, which would look as follows:
+```
+{
+    "_id": {
+        "$oid": "583744fd36f40474fa835b41"
+    },
+    "name": "John Doe",
+    "fbpass": "10207337063731234",
+    "photo": "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/11090_10203670417271234_8022226923608097096_n.jpg?oh=29907a390b448649868411f5c105edb8&oe=58C562B6",
+    "favourites": [
+        {
+            "favname": "Kettle of Fish",
+            "favlatitude": "53.271752",
+            "favlongtitude": "-9.054240799999999",
+            "favphoto": "CoQBdwAAAGQUzmZT-h_piRRpo5Kn4AG8zO2Dw_nDF4tIo89-FZ0flAm8VA2N7Y4IzssvQxx-98HY933VI_JQt_UeJ8J6S1OunCe0_K-JyMvm3EUqch7uJtIcXorZBWQKTn9AB4VPj4Pg7mAUZy7UsuqwOkMDOG6Rt6yrTZ0ILz8b4s47GIZ3EhCorNciXPo9UrcPrPESdZRoGhS8u-zV2OxMz2LlNTK82Zp8aAtbdg",
+            "favid": "ChIJLZXH3vqWW0gRXbOmL5ql-DY"
+        },
+    ],
+    "blacklist": [
+        {
+            "blname": "Clayton Hotel Galway",
+            "bllatitude": "53.291342",
+            "bllongtitude": "-8.989296999999999",
+            "blphoto": "CoQBdwAAAOR33ipVkpVwDYwVAAGFnVCnfohzyoEZxcNZhEFSyLelOsTzPkRGcBGS9Ivr6jCfJ3MKaV5A6r5Paz2abCAdo5bET8x6a8QSJaQurVJLy8OwA9_E_sJlXc0YF3LgRTsQQJSKBuMcuSMu5uDAIjpvISDmUj8t5IXsXY3AuDj5DfTBEhCqjfXbg1FNmiGUjnqWETpgGhSwqAgXHwULqwEiLldvZ7O-8cueCg",
+            "blid": "ChIJn_a2RkCRW0gRgEnIeIH0TGY"
+        }
+    ],
+    "history": [
+        {
+            "hisname": "Front Door",
+            "hislatitude": "53.2715985",
+            "hislongtitude": "-9.0536359",
+            "hisphoto": "CoQBdwAAADDJn7m7kJJVjARtIqS6kA64BcmxxRde2XiMot7CL0g2iw-r-Xmtn-l8bVqt1viH7EVvS_DBKHAjTiId2i8S2ojChsSCOSwdk5uQH02Ls7ujSrt2wg2aYLtt88Zd5C89rQ14sUCF7AvfLCkcrReUactvCDNxiX7MGeFNM5yrXqPeEhAKfIUtZAgQUXTeAwlqqRdvGhS0IwM-4cMa7mShmKQk2YO-HWfC-A",
+            "hisid": "ChIJ_aKF2fqWW0gRDLLSSGNL_hc"
+        },
+        {
+            "hisname": "Garveys Inn",
+            "hislatitude": "53.274279",
+            "hislongtitude": "-9.047906",
+            "hisphoto": "CoQBdwAAAJ18XswqYMTHBflJBAa6h9WU7bmUgy30b8skgSTKk8aBU-jviSpizMarTESuDC3mDpxTqjGaYG3dPhEoRuDii9rfgIrcPEzebJ5HHN-yjPPWPIaDPAp_Sh6Jas766SmnuI9Trv7Of1FqvWVvmb9UthWWES07o2vf8x4pmkA16psUEhAFeR3o0yioe2xjr-zM7rSYGhTCaPfcfoKtl8N3x4HM11v-vcAOMA",
+            "hisid": "ChIJb7nd9OWWW0gRqXVx5z1QKUY"
+        },
+        {
+            "hisname": "Clayton Hotel Galway",
+            "hislatitude": "53.291342",
+            "hislongtitude": "-8.989296999999999",
+            "hisphoto": "CoQBdwAAANzQ_AxD_IR7Y4GIsoBe2IK0p8vbSpEOP-Y9rirFISnVYOqA4R2O6BlUn9akMqGTJOlu8UNHBF2Ak8WljfpbPoXNGidDLghY7kYTCzjtJ04IpWTxOQmBsKH8WuyKawK6XkSXMvr057Dk96Cnaaj_cqUm5SUSR06s9eqpF7J566WIEhDkzaEZqU3JbzJW3IVVwA__GhSF8HYG3-VUuUjVl9J_5YcEKxjiSA",
+            "hisid": "ChIJn_a2RkCRW0gRgEnIeIH0TGY"
+        }
+    ]
+}
+
+		/returnUpdateHistory/{fbpass}{id}{name}{photo}{latitutde}{longtitude}
+```
+An example request could be:
+```
+  /returnFindPerson/10207337063737016/ChIJn_a2RkCRW0gRgEnIeIH0TGY/Clayton%20Hotel %20Galway/CoQBdwAAABfAQkmK-sGzXeyI2Zp_r_k_2qORTiJirPNssCbO0VnjdRN0LUEQU9yoJTcOrNHuvzlKoYoRZ6QT1UmmKSYLhpog_6ZcUeClBNMf4P72ypiPHw4C3FgdY_oHOLuFprN0Iz1OAIr7uZCl4bubJb9S5Ip8pVFdxWT4QVseMSnEbQOrEhCSOZm5WSpPl4w8IDp6em-uGhQE7ylnCD_Zy4ZPgOWcshnvkmVuyQ/53.291342/-8.989296999999999
+```
+This request passes the users Facebook id to find the correct document in MongoDB.  This request searches for the user document and creates a new item in their history array containing the eatery id, name, photo reference, latitude and longtitude coordinates.
+
+
+
+	/returnRemoveFav/{fbpass}{fav}
+```
+An example request could be:
+```
+  /returnFindPerson/10207337063737016/ChIJn_a2RkCRW0gRgEnIeIH0TGY
+```
+This request passes the users Facebook id to find the correct document in MongoDB.  This request searches for the user document and searches for the ID of all the locations stored in their favourites list for the specified ID and removes it.
+```
+
