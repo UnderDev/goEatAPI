@@ -11,7 +11,7 @@ angular.module('myApp.fb', ['ngRoute'])
 
 .controller('FbController', ['$scope', function ($scope) {
     $scope.usrId = false;
-    $scope.checkState = function (placeID) {
+    $scope.checkState = function () {
         
         if((localStorage.getItem("usrId")!=null)&&(localStorage.getItem("usrId")!=undefined))
         {

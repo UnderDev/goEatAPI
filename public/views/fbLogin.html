@@ -57,14 +57,16 @@
                         alert("Please update to a browser that supports HTML5")
                     }
                 });
-                return;
             } else if (response.status === 'not_authorized') {
                 // The person is logged into Facebook, but not your app.
                 console.log("No authorization given");
             } else {
                 console.log("Not logged in");
             }
+            console.log("bb");
             angular.element(document.getElementById('divID')).scope().checkState();
+            console.log("bb111");
+            return;
         }
         // Load the SDK asynchronously
         (function (d, s, id) {
