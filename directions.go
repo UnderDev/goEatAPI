@@ -19,7 +19,7 @@ func getDirections(res http.ResponseWriter, req *http.Request, ctx *macaron.Cont
 		log.Fatalf("fatal error: %s", err)
 	}
 
-	str := ctx.Params("stuff")
+	str := ctx.Params("directions")
 	pos := strings.Split(str, ",")
 	lat := pos[0]
 	lon := pos[1]
