@@ -1,7 +1,15 @@
 <div ng-controller="FindCtrl">
-	<div class="text-xs-center">
+	<div class=" text-xs-center">
+
+          <div class="bg-inverse" style="padding-top: 65px;">
+            <a class="nav-item nav-link" style="cursor: pointer;" ng-click="doRefresh(restaurants)">Restaurants</a>
+            <a class="nav-item nav-link" style="cursor: pointer;" ng-click="doRefresh(takeaway)">Takeaway</a>
+            <a class="nav-item nav-link" style="cursor: pointer;" ng-click="doRefresh(delivery)">Delivery</a>
+          </div>
+
 		<div class="bgLayout card-columns cardCol">
-			<div ng-repeat="place in places track by $index" ng-show="showMap" class="cardSize">
+			<div ng-hide="noneFound">			
+				<div  ng-repeat="place in places track by $index" ng-show="showMap" class="cardSize">
 				<div class="card text-xs-center list-inline  " style="display:inline-block">
 
 					<div class="card-title card-block bg-info container-fluid">
@@ -38,7 +46,9 @@
 				</div>
 			</div>
 		</div>
-
+			</div>
+		
+		<div ng-show="noneFound">We couldn't find anything near you!</div>
 		<div ng-hide="showMap">
 
 			<div class="container">
