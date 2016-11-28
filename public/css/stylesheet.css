@@ -4,7 +4,7 @@
   
   .bgLayout {
     margin: 20px;
-    padding-top: 55px;
+    padding-top: 30px;
   }
 
   .padSides {
@@ -92,7 +92,7 @@
   .btn-outline-secondary {
     color: #fff;
     background-image: none;
-    background-color: rgba(27, 24, 24, 0.47);
+    background-color: rgba(27, 24, 24, 0.69);
     border-color: #fff;
   }
 
