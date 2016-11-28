@@ -23,10 +23,10 @@ angular.module('myApp.history', ['ngRoute'])
     //checks if browser supports local storage for facebook login details
     if (typeof (Storage) !== "undefined") {
                 
-        //var fbpass = localStorage.getItem("usrId");
+        var fbpass = localStorage.getItem("usrId");
         
         //for local testing
-        var fbpass = "10207337063737016";
+        //var fbpass = "10207337063737016";
         //pass facebook id to service to check whether user is in database and return person if found
         PeopleService.getData(fbpass).then(function (data) {
             //store history from response
