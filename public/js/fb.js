@@ -13,7 +13,7 @@ angular.module('myApp.fb', ['ngRoute'])
     $scope.usrId = true;
     $scope.reRoute = function()
     {
-        $window.location = "#/find";
+        $window.location = "/#!/find";
     }
     $scope.checkState = function () {
         console.log("state : " + localStorage.getItem("usrId"));
