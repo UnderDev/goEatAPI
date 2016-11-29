@@ -11,6 +11,10 @@ angular.module('myApp.fb', ['ngRoute'])
 
 .controller('FbController', ['$scope', function ($scope) {
     $scope.usrId = true;
+    $scope.reRoute = function()
+    {
+        $window.location = "#/find";
+    }
     $scope.checkState = function () {
         console.log("state : " + localStorage.getItem("usrId"));
         if((localStorage.getItem("usrId")!=null)&&(localStorage.getItem("usrId")!=undefined)&&(localStorage.getItem("usrId")!="loggedOut"))
