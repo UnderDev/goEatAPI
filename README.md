@@ -28,7 +28,7 @@ library. User's can sign up/in using their Facebook account if they want to keep
 
 ####Endpoints
 
-#####Google Places Enpoints
+#####Google Places Endpoints
 ```
 	/maps
 		/nearby
@@ -41,7 +41,7 @@ An example request could be:
   /maps/nearby/delivery/53.2785689,-9.0104879
 ```
 Which would return an array of Places, each roughly resembling the following:
-```
+```JSON
 [  
     {  
         "formatted_address":"",
@@ -102,9 +102,95 @@ Which would return an array of Places, each roughly resembling the following:
     ...
 ]
 ```
+
+#####The Google Maps Directions Endpoint
 ```
-	/direction/:stuff
+	/direction/{lat},{long},{id}
 ```
+The directions endpoint consumes the user's current geolocation and the destination's Google Places ID. The API will return JSON in a format resembling the following:
+```JSON
+[  
+    {  
+        "summary":"",
+        "legs":[  
+            {  
+                "steps":[  
+                    {  
+                        "html_instructions":"Head",
+                        "distance":{  
+                            "text":"1 m",
+                            "value":0
+                        },
+                        "start_location":{  
+                            "lat":53.2912748,
+                            "lng":-8.989321
+                        },
+                        "end_location":{  
+                            "lat":53.2912748,
+                            "lng":-8.989321
+                        },
+                        "polyline":{  
+                            "points":"mmgdIfvzu@"
+                        },
+                        "steps":null,
+                        "transit_details":null,
+                        "travel_mode":"DRIVING",
+                        "duration":{  
+                            "value":0,
+                            "text":""
+                        }
+                    }
+                ],
+                "distance":{  
+                    "text":"1 m",
+                    "value":0
+                },
+                "start_location":{  
+                    "lat":53.2912748,
+                    "lng":-8.989321
+                },
+                "end_location":{  
+                    "lat":53.2912748,
+                    "lng":-8.989321
+                },
+                "start_address":"Apartment 18, Teach Briota, Monivea Rd, Galway, Ireland",
+                "end_address":"Clayton Hotel Galway, Ballybrit, Galway, Ireland",
+                "duration":{  
+                    "value":0,
+                    "text":""
+                },
+                "duration_in_traffic":{  
+                    "value":0,
+                    "text":""
+                },
+                "arrival_time":null,
+                "departure_time":null
+            }
+        ],
+        "waypoint_order":[  
+
+        ],
+        "overview_polyline":{  
+            "points":"mmgdIfvzu@"
+        },
+        "bounds":{  
+            "northeast":{  
+                "lat":53.2912748,
+                "lng":-8.989321
+            },
+            "southwest":{  
+                "lat":53.2912748,
+                "lng":-8.989321
+            }
+        },
+        "copyrights":"Map data ©2016 Google",
+        "warnings":[  
+
+        ]
+    }
+]
+```
+
 
 ```
 	/accessKey/:id
@@ -119,7 +205,7 @@ Which would return an array of Places, each roughly resembling the following:
 ```
 
 
-#####Go API Enpoints
+#####goEat User Endpoints
 ```
 	      /returnFindPerson/{fbpass}
 ```
@@ -128,7 +214,7 @@ An example request could be:
   /returnFindPerson/10207337063737016
 ```
 This request passes the users Facebook id which is returned when they log into the app with Facebook.  This request would return a Person object, which would look as follows:
-```
+```JSON
 {
     "_id": {
         "$oid": "583744fd36f40474fa835b41"
@@ -179,7 +265,10 @@ This request passes the users Facebook id which is returned when they log into t
     ]
 }
 
-```		/returnUpdateHistory/{fbpass}{id}{name}{photo}{latitutde}{longtitude}
+```
+
+```
+	/returnUpdateHistory/{fbpass}{id}{name}{photo}{latitutde}{longtitude}
 ```	
 An example request could be:
 ```
