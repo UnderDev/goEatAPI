@@ -1,9 +1,10 @@
 # goEat
 Created as part of the GMIT BSc(Honours) in Computing in Software Development, Emerging Technologies module.
+
+A live version can be found on [Heroku](https://goeatapi.herokuapp.com/)
 ##Introduction
 goEat is a service that provides a list of nearby places where you can get your mastication on. Using your current Geolocation,
 goEat finds restaurants and places providing takeaway and delivery options, that are within 10km of you.
-
 
 ##Project Architecture
 
