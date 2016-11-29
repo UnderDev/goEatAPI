@@ -245,7 +245,7 @@ func returnInsertPerson(fbId string, fbName string, fbPhoto string) {
 	name := fbName
 	fbpass := fbId
 	photo := fbPhoto
-	myfavourites := []Favs{{}}
+	myfavourites := []Favs{}
 
 	// Insert into db
 	err := collection.Insert(&Person{Name: name, Fbpass: fbpass, Photo: photo, Favourites: myfavourites})
