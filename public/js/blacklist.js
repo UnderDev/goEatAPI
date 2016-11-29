@@ -19,7 +19,7 @@ angular.module('myApp.blacklist', ['ngRoute'])
     }
 
     //checks if browser supports local storage for facebook login details
-    if (typeof (Storage) !== "undefined") {
+    if (typeof (Storage) !== "undefined"&&localStorage.getItem("usrId")!="loggedOut") {
                 
         //var fbpass = localStorage.getItem("usrId");
         

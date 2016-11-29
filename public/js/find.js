@@ -68,7 +68,7 @@ angular.module('myApp.find', ['ngRoute'])
         $scope.history = [];
 
         //checks if browser supports local storage for facebook login details
-    if (typeof (Storage) !== "undefined") {
+    if (typeof (Storage) !== "undefined"&&localStorage.getItem("usrId")!="loggedOut") {
                 
         var fbpass = localStorage.getItem("usrId");
         
@@ -94,7 +94,7 @@ angular.module('myApp.find', ['ngRoute'])
         //add favourite to database
         $scope.addFav = function (place) {
             //checks whether browser supports local storage for facebook id
-            if (typeof (Storage) !== "undefined") {
+            if (typeof (Storage) !== "undefined"&&localStorage.getItem("usrId")!="loggedOut") {
 
                 var fbpass = localStorage.getItem("usrId");
 
@@ -134,7 +134,7 @@ angular.module('myApp.find', ['ngRoute'])
         $scope.blacklist = function (place) {
 
             //checks whether browser supports local storage for facebook id
-            if (typeof (Storage) !== "undefined") {
+            if (typeof (Storage) !== "undefined"&&localStorage.getItem("usrId")!="loggedOut") {
 
                 var fbpass = localStorage.getItem("usrId");
                 //for local testing
@@ -171,7 +171,7 @@ angular.module('myApp.find', ['ngRoute'])
         //add item to user history in database
         $scope.history = function (place) {
             //checks whether browser supports local storage for facebook id
-            if (typeof (Storage) !== "undefined") {
+            if (typeof (Storage) !== "undefined"&&localStorage.getItem("usrId")!="loggedOut") {
 
                 //var fbpass = localStorage.getItem("usrId");
                 var fbpass = "10207337063737016";
