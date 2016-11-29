@@ -110,6 +110,7 @@
                 alert("Please update to a browser that supports HTML5")
             }
             angular.element(document.getElementById('divID')).scope().checkState();
+            
         };
     </script>
     <div id="divID">
@@ -120,7 +121,7 @@
         <div ng-hide="usrId">               
                 <div class="col-xs-2"><img id="imgProf" width="40" height="40" /></div>
                 <div class="col-xs-8" style="margin-top: 10px;" id="userName"></div>
-                <div class="col-xs-2 fa fa-sign-out fa-2x nav-item nav-link" onclick="logOut();" aria-hidden="true"></div>
+                <div class="col-xs-2 fa fa-sign-out fa-2x nav-item nav-link" onclick="logOut();" href="#!/find" aria-hidden="true"></div>
         </div>
         
     </div>
