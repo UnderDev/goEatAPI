@@ -103,13 +103,16 @@ angular.module('myApp.find', ['ngRoute'])
 
                 var type = "fav"; //sets update type to favourite
                 var check = false;
-                //check if place is already in database
-                for(var i = 0; i<$scope.favs.length; i++){
-                    if(place.place_id === $scope.favs[i].Favid)
-                    {
-                        check = true;
-                    }
-                }
+
+                if($scope.favs !== null){//if favourites is not empty, check for selected item
+                    //check if place is already in database
+                    for(var i = 0; i<$scope.favs.length; i++){
+                        if(place.place_id === $scope.favs[i].Favid)
+                        {
+                            check = true;
+                        }
+                    }//for
+                }//if
                 //if favourite is not already in database, send to database
                if(check === false){
                 //sends selected place object, users facebook id and type of list to be updated to service
@@ -139,12 +142,15 @@ angular.module('myApp.find', ['ngRoute'])
                 var type = "blist";//sets update type to blacklist
 
                 var check = false;
-                //check if place is already in database
-                for(var i = 0; i<$scope.blist.length; i++){
-                    if(place.place_id === $scope.blist[i].Blid){
-                        check = true;
-                    }
-                }
+                
+                if($scope.blist !== null){//if blacklist is not empty, check for selected item
+                    //check if place is already in database
+                    for(var i = 0; i<$scope.blist.length; i++){
+                        if(place.place_id === $scope.blist[i].Blid){
+                            check = true;
+                        }
+                    }//for
+                }//if
                
                 //sends selected place object, users facebook id and type of list to be updated to service
                 //if place is not already in blacklist array on database, send to database
@@ -171,13 +177,16 @@ angular.module('myApp.find', ['ngRoute'])
                 var fbpass = "10207337063737016";
                 var type = "history";//sets update type to history
                 var check = false;
-                //check if place is already in database
-                for(var i = 0; i<$scope.hist.length; i++){
-                    if(place.place_id === $scope.hist[i].Hisid)
-                    {
-                        check = true;
-                    }
-                }
+
+                if($scope.hist !== null){ //if history is not empty, check for selected item
+                    //check if place is already in database
+                    for(var i = 0; i<$scope.hist.length; i++){
+                        if(place.place_id === $scope.hist[i].Hisid)
+                        {
+                            check = true;
+                        }
+                    }//for
+                }//if
                 //if place is not already in history array in database, send to database
                if(check === false){
                     //sends selected place object, users facebook id and type of list to be updated to service
