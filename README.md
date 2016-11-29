@@ -99,7 +99,7 @@ Which would return an array of Places, each roughly resembling the following:
         "vicinity":"16 Prospect Hill, Galway",
         "permanently_closed":false
     },
-    ...
+    {}
 ]
 ```
 
@@ -192,10 +192,15 @@ The directions endpoint consumes the user's current geolocation and the destinat
 ```
 
 
+
+
+
+#####goEat User Endpoints
+
+User profile information is managed using the following endpoints:
 ```
 	/accessKey/:id
-	/returnAllPersons
-	/returnFindPerson/:fbpass
+
 	/returnUpdateFavourites/:fbpass/:id/:name/:photo/:latitude/:longtitude
 	/returnUpdateBlacklist/:fbpass/:id/:name/:photo/:latitude/:longtitude
 	/returnUpdateHistory/:fbpass/:id/:name/:photo/:latitude/:longtitude
@@ -203,9 +208,15 @@ The directions endpoint consumes the user's current geolocation and the destinat
 	/returnRemoveBlist/:fbpass/:blist
 	/returnRemoveHistory/:fbpass
 ```
+Each provides one basic CRUD operation related to the user's favorites, history, and blacklist. 
 
 
-#####goEat User Endpoints
+All current users can be requested as well, however this feature is mainly used for development and debugging purposes.
+```
+	/returnAllPersons
+```
+
+Individual users can be requested using 
 ```
 	      /returnFindPerson/{fbpass}
 ```
