@@ -1,53 +1,55 @@
 <div ng-controller="FindCtrl">
 	<div class=" text-xs-center">
 
-          <div class="bg-inverse " style="padding-top: 60px;">
-            <a class="nav-item nav-link" style="cursor: pointer;"  ng-click="doRefresh(restaurants)">Restaurants</a>
-            <a class="nav-item nav-link padSides" style="cursor: pointer;"  ng-click="doRefresh(takeaway)">Takeaway</a>
-            <a class="nav-item nav-link"  style="cursor: pointer;" ng-click="doRefresh(delivery)">Delivery</a>
-          </div>
+		<div class="bg-inverse " style="padding-top: 60px;">
+			<a class="nav-item nav-link" style="cursor: pointer;" ng-click="doRefresh(restaurants)">Restaurants</a>
+			<span>|</span>
+			<a class="nav-item nav-link" style="cursor: pointer;" ng-click="doRefresh(takeaway)">Takeaway</a>
+			<span>|</span>
+			<a class="nav-item nav-link" style="cursor: pointer;" ng-click="doRefresh(delivery)">Delivery</a>
+		</div>
 
 		<div class="bgLayout card-columns cardCol">
-			<div ng-hide="noneFound">			
-				<div  ng-repeat="place in places track by $index" ng-show="showMap" class="cardSize">
-				<div class="card text-xs-center list-inline  " style="display:inline-block">
+			<div ng-hide="noneFound">
+				<div ng-repeat="place in places track by $index" ng-show="showMap" class="cardSize">
+					<div class="card text-xs-center list-inline  " style="display:inline-block">
 
-					<div class="card-title card-block bg-info container-fluid">
-						<span class="btn col-xs-2" ng-click="addFav(place)"><i class="fa fa-heart" aria-hidden="false"></i></span>
-						<span class="text-uppercase  col-xs-8"><i>{{place.name}}</i></span>
-						<span class="btn col-xs-2" ng-click="blacklist(place)"><i class="fa fa-ban" aria-hidden="false"></i></span>
+						<div class="card-title card-block bg-info container-fluid">
+							<span class="btn col-xs-2" ng-click="addFav(place)"><i class="fa fa-heart" aria-hidden="false"></i></span>
+							<span class="text-uppercase  col-xs-8"><i>{{place.name}}</i></span>
+							<span class="btn col-xs-2" ng-click="blacklist(place)"><i class="fa fa-ban" aria-hidden="false"></i></span>
 
-					</div>
-					<!--<span>{{place.rating === 0 ? "Not rated" : place.rating+"/5"}}</span>-->
-					<span ng-repeat="n in ratings('5') ">			
+						</div>
+						<!--<span>{{place.rating === 0 ? "Not rated" : place.rating+"/5"}}</span>-->
+						<span ng-repeat="n in ratings('5') ">			
 						<span ng-if="roundNum(place.rating) > n">
 							<i class="fa fa-star" aria-hidden="true"></i>
 						</span>
-					</span>
-					<span ng-if="place.rating === 0">
+						</span>
+						<span ng-if="place.rating === 0">
 							<i >Not Rated</i>
 						</span>
 
-					<div class=" font-weight-bold ">
-						<p class="card-text">{{place.vicinity}}</p>
-					</div>
+						<div class=" font-weight-bold ">
+							<p class="card-text">{{place.vicinity}}</p>
+						</div>
 
-					<div class=" card-block  ">
-						<img width="200" height="150" ng-src="{{getURL(place.photos[0].photo_reference)}}" class="rounded" />
-					</div>
+						<div class=" card-block  ">
+							<img width="200" height="150" ng-src="{{getURL(place.photos[0].photo_reference)}}" class="rounded" />
+						</div>
 
-					<div class=" bg-success ">
-						<div class="card-text" ng-if="place.opening_hours.open_now">Open now!</div>
-					</div>
+						<div class=" bg-success ">
+							<div class="card-text" ng-if="place.opening_hours.open_now">Open now!</div>
+						</div>
 
-					<div class="card-footer">
-						<button class="btn btn-outline-info btn-sm" ng-click="history(place); showMe(place.place_id); getDirections(place.place_id)">Google Map</button>
+						<div class="card-footer">
+							<button class="btn btn-outline-info btn-sm" ng-click="history(place); showMe(place.place_id); getDirections(place.place_id)">Google Map</button>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-			</div>
-		
+
 		<div ng-show="noneFound">We couldn't find anything near you!</div>
 		<div ng-hide="showMap">
 
