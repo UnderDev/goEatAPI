@@ -14,6 +14,8 @@ were designed around it. The goEatAPI uses the [Google Places](https://developer
 and directions to them, respectively. Interactions with Google Maps services are provided by the [Go Client for Google Maps Services](https://github.com/googlemaps/google-maps-services-go)
 library. User's can sign up/in using their Facebook account if they want to keep track of favorites, or just blacklist that place down the street who don't know what "medium-rare" means. 
 
+![Architecture Diagram](https://cloud.githubusercontent.com/assets/10116669/20705788/4dbd198a-b61c-11e6-968b-e94ca1451d97.png)
+
 ###Technologies
 
 * [Go](https://golang.org/)
