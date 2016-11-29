@@ -1,9 +1,10 @@
 # goEat
 Created as part of the GMIT BSc(Honours) in Computing in Software Development, Emerging Technologies module.
+
+A live version can be found on [Heroku](https://goeatapi.herokuapp.com/)
 ##Introduction
 goEat is a service that provides a list of nearby places where you can get your mastication on. Using your current Geolocation,
 goEat finds restaurants and places providing takeaway and delivery options, that are within 10km of you.
-
 
 ##Project Architecture
 
@@ -13,6 +14,8 @@ The API also serves a single page application(SPA) written in [AngularJS](https:
 were designed around it. The goEatAPI uses the [Google Places](https://developers.google.com/places/) and [Google Maps](https://developers.google.com/maps/) APIs for retrieving a list of nearby dining locations
 and directions to them, respectively. Interactions with Google Maps services are provided by the [Go Client for Google Maps Services](https://github.com/googlemaps/google-maps-services-go)
 library. User's can sign up/in using their Facebook account if they want to keep track of favorites, or just blacklist that place down the street who don't know what "medium-rare" means. 
+
+![Architecture Diagram](https://cloud.githubusercontent.com/assets/10116669/20705788/4dbd198a-b61c-11e6-968b-e94ca1451d97.png)
 
 ###Technologies
 
@@ -28,7 +31,7 @@ library. User's can sign up/in using their Facebook account if they want to keep
 
 ####Endpoints
 
-#####Google Places Enpoints
+#####Google Places Endpoints
 ```
 	/maps
 		/nearby
@@ -41,7 +44,7 @@ An example request could be:
   /maps/nearby/delivery/53.2785689,-9.0104879
 ```
 Which would return an array of Places, each roughly resembling the following:
-```
+```JSON
 [  
     {  
         "formatted_address":"",
@@ -99,17 +102,108 @@ Which would return an array of Places, each roughly resembling the following:
         "vicinity":"16 Prospect Hill, Galway",
         "permanently_closed":false
     },
-    ...
+    {}
 ]
 ```
+
+#####The Google Maps Directions Endpoint
 ```
-	/direction/:stuff
+	/direction/{lat},{long},{id}
+```
+The directions endpoint consumes the user's current geolocation and the destination's Google Places ID. The API will return JSON in a format resembling the following:
+```JSON
+[  
+    {  
+        "summary":"",
+        "legs":[  
+            {  
+                "steps":[  
+                    {  
+                        "html_instructions":"Head",
+                        "distance":{  
+                            "text":"1 m",
+                            "value":0
+                        },
+                        "start_location":{  
+                            "lat":53.2912748,
+                            "lng":-8.989321
+                        },
+                        "end_location":{  
+                            "lat":53.2912748,
+                            "lng":-8.989321
+                        },
+                        "polyline":{  
+                            "points":"mmgdIfvzu@"
+                        },
+                        "steps":null,
+                        "transit_details":null,
+                        "travel_mode":"DRIVING",
+                        "duration":{  
+                            "value":0,
+                            "text":""
+                        }
+                    }
+                ],
+                "distance":{  
+                    "text":"1 m",
+                    "value":0
+                },
+                "start_location":{  
+                    "lat":53.2912748,
+                    "lng":-8.989321
+                },
+                "end_location":{  
+                    "lat":53.2912748,
+                    "lng":-8.989321
+                },
+                "start_address":"Apartment 18, Teach Briota, Monivea Rd, Galway, Ireland",
+                "end_address":"Clayton Hotel Galway, Ballybrit, Galway, Ireland",
+                "duration":{  
+                    "value":0,
+                    "text":""
+                },
+                "duration_in_traffic":{  
+                    "value":0,
+                    "text":""
+                },
+                "arrival_time":null,
+                "departure_time":null
+            }
+        ],
+        "waypoint_order":[  
+
+        ],
+        "overview_polyline":{  
+            "points":"mmgdIfvzu@"
+        },
+        "bounds":{  
+            "northeast":{  
+                "lat":53.2912748,
+                "lng":-8.989321
+            },
+            "southwest":{  
+                "lat":53.2912748,
+                "lng":-8.989321
+            }
+        },
+        "copyrights":"Map data ©2016 Google",
+        "warnings":[  
+
+        ]
+    }
+]
 ```
 
+
+
+
+
+#####goEat User Endpoints
+
+User profile information is managed using the following endpoints:
 ```
 	/accessKey/:id
-	/returnAllPersons
-	/returnFindPerson/:fbpass
+
 	/returnUpdateFavourites/:fbpass/:id/:name/:photo/:latitude/:longtitude
 	/returnUpdateBlacklist/:fbpass/:id/:name/:photo/:latitude/:longtitude
 	/returnUpdateHistory/:fbpass/:id/:name/:photo/:latitude/:longtitude
@@ -117,9 +211,15 @@ Which would return an array of Places, each roughly resembling the following:
 	/returnRemoveBlist/:fbpass/:blist
 	/returnRemoveHistory/:fbpass
 ```
+Each provides one basic CRUD operation related to the user's favorites, history, and blacklist. 
 
 
-#####Go API Enpoints
+All current users can be requested as well, however this feature is mainly used for development and debugging purposes.
+```
+	/returnAllPersons
+```
+
+Individual users can be requested using 
 ```
 	      /returnFindPerson/{fbpass}
 ```
@@ -128,7 +228,7 @@ An example request could be:
   /returnFindPerson/10207337063737016
 ```
 This request passes the users Facebook id which is returned when they log into the app with Facebook.  This request would return a Person object, which would look as follows:
-```
+```JSON
 {
     "_id": {
         "$oid": "583744fd36f40474fa835b41"
@@ -179,7 +279,10 @@ This request passes the users Facebook id which is returned when they log into t
     ]
 }
 
-```		/returnUpdateHistory/{fbpass}{id}{name}{photo}{latitutde}{longtitude}
+```
+
+```
+	/returnUpdateHistory/{fbpass}{id}{name}{photo}{latitutde}{longtitude}
 ```	
 An example request could be:
 ```

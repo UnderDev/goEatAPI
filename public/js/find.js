@@ -17,6 +17,7 @@ angular.module('myApp.find', ['ngRoute'])
 
 
         var loc;
+        //Function takes in the current place_id, and loop over the array steps for all directions, apending them onto a HtmlElement
         $scope.getDirections = function (place_id) {
             DirectionService.getData(loc, place_id).then(function (data) {
                 var result = document.getElementById('result');
@@ -35,7 +36,7 @@ angular.module('myApp.find', ['ngRoute'])
         $scope.ratings = function (stars) {
             var ratingArray = [];
             for (var i = 0; i < stars; i++)
-                ratingArray.push(i)
+                ratingArray.push(i)//push cur number to array
             return ratingArray;
         }
 
@@ -50,14 +51,17 @@ angular.module('myApp.find', ['ngRoute'])
         $scope.showMe = function (placeID) {
             $scope.showMap = false;
             geolocationSvc.getCurrentPosition().then(function (location) {
-                var latLong = location.coords.latitude + "," + location.coords.longitude;
+                var latLong = location.coords.latitude + "," + location.coords.longitude;//get the curent lat/long from the location passed in                 
                 //http://stackoverflow.com/questions/29444132/angular-interpolation-error-for-src-attribute 
+               //Build the url needed to send the request with lat/long apended on
                 $scope.placeID = $sce.trustAsResourceUrl("https://www.google.com/maps/embed/v1/directions?origin=" + latLong + "&destination=place_id:" + placeID + "&key=AIzaSyB5ZgNt2r2S-v7LI-SQdMpsORxPTpgPoAY");
             })
         }
         $scope.hideMe = function () {
             $scope.showMap = true;
         }
+
+
         //variables for checking if item is already on database
         $scope.favs = [];
         $scope.blist = [];
