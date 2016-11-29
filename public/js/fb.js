@@ -9,7 +9,7 @@ angular.module('myApp.fb', ['ngRoute'])
     });
 }])
 
-.controller('FbController', ['$scope', function ($scope) {
+.controller('FbController', ['$scope, $window', function ($scope, $window) {
     $scope.usrId = true;
     $scope.reRoute = function()
     {
