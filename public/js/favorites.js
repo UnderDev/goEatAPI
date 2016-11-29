@@ -21,9 +21,10 @@ angular.module('myApp.favorites', ['ngRoute'])
     }
     
     //checks if browser supports local storage for facebook login details
-    if (typeof (Storage) !== "undefined"&&localStorage.getItem("usrId")!="loggedOut") {
-                
-        var fbpass = localStorage.getItem("usrId");
+    if (typeof (Storage) !== "undefined") {
+        if(localStorage.getItem("usrId")!="loggedOut"){
+            var fbpass = localStorage.getItem("usrId");
+        }
         
         //for local testing
         //var fbpass = "10207337063737016";
