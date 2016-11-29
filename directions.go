@@ -14,13 +14,14 @@ import (
 
 /*https://github.com/googlemaps/google-maps-services-go*/
 func getDirections(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) {
-	c, err := maps.NewClient(maps.WithAPIKey("AIzaSyB5ZgNt2r2S-v7LI-SQdMpsORxPTpgPoAY"))
+	c, err := maps.NewClient(maps.WithAPIKey("AIzaSyB5ZgNt2r2S-v7LI-SQdMpsORxPTpgPoAY")) //api key
 	if err != nil {
 		log.Fatalf("fatal error: %s", err)
 	}
 
 	str := ctx.Params("directions")
-	pos := strings.Split(str, ",")
+	pos := strings.Split(str, ",") //split up strings by , stored in Pos
+
 	lat := pos[0]
 	lon := pos[1]
 	dest := pos[2]
