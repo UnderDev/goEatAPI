@@ -237,6 +237,25 @@ func returnRemoveHistory(res http.ResponseWriter, req *http.Request, ctx *macaro
 
 } //returnRemoveHistory
 
+//insert person into database using facebook details
+func returnInsertPerson(fbId string, fbName string, fbPhoto string) { 
+	collection := getCollection()
+
+	//Person builder for database entry
+	name := fbName
+	fbpass := fbId
+	photo := fbPhoto
+	myfavourites := []Favs{{}}
+
+	// Insert into db
+	err := collection.Insert(&Person{Name: name, Fbpass: fbpass, Photo: photo, Favourites: myfavourites})
+
+	if err != nil {
+		panic(err)
+	}
+
+} //returnInsertPerson
+
 
 //**************************************unused methods*******************************
 func returnRemovePerson(i string) { // Remove user
@@ -285,29 +304,7 @@ func returnAllPersons(res http.ResponseWriter, req *http.Request) { //return all
 
 } //returnAllPersons
 
-//insert person into database using facebook details
-func returnInsertPerson(fbId string, fbName string, fbPhoto string) { 
-	collection := getCollection()
 
-	//Person builder - will be replaced with http request
-	name := fbName
-	fbpass := fbId
-	photo := fbPhoto
-	favname := "KFC"
-	favlat := "34.453453"
-	favlong := "23.643563"
-	myfavourites := []Favs{{Favname: favname, Favlatitude: favlat, Favlongtitude: favlong}}
-
-	// Insert into db
-	err := collection.Insert(&Person{Name: name, Fbpass: fbpass, Photo: photo, Favourites: myfavourites})
-
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println("Inserted to database")
-
-} //returnInsertPerson
 
 func returnUpdatePerson(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) { // Update user email based on searched name
 	collection := getCollection()

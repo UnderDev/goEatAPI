@@ -100,7 +100,7 @@ angular.module('myApp.find', ['ngRoute'])
                 var type = "fav"; //sets update type to favourite
                 var check = false;
 
-                if($scope.favs !== null){
+                if($scope.favs !== null){//if favourites is not empty, check for selected item
                     //check if place is already in database
                     for(var i = 0; i<$scope.favs.length; i++){
                         if(place.place_id === $scope.favs[i].Favid)
@@ -139,7 +139,7 @@ angular.module('myApp.find', ['ngRoute'])
 
                 var check = false;
                 
-                if($scope.blist !== null){
+                if($scope.blist !== null){//if blacklist is not empty, check for selected item
                     //check if place is already in database
                     for(var i = 0; i<$scope.blist.length; i++){
                         if(place.place_id === $scope.blist[i].Blid){
@@ -174,7 +174,7 @@ angular.module('myApp.find', ['ngRoute'])
                 var type = "history";//sets update type to history
                 var check = false;
 
-                if($scope.hist !== null){
+                if($scope.hist !== null){ //if history is not empty, check for selected item
                     //check if place is already in database
                     for(var i = 0; i<$scope.hist.length; i++){
                         if(place.place_id === $scope.hist[i].Hisid)
