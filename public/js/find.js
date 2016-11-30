@@ -2,14 +2,14 @@
 
 angular.module('myApp.find', ['ngRoute'])
 
-    .config(['$routeProvider', function ($routeProvider) {
+    .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/find', {
             templateUrl: 'views/find.html',
             controller: 'FindCtrl'
         });
     }])
 
-    .controller('FindCtrl', ['$scope', '$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', 'UpdateService', 'PeopleService', '$route', function ($scope, $sce, PlacesService, geolocationSvc, DirectionService, UpdateService, PeopleService, $route) {
+    .controller('FindCtrl', ['$scope', '$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', 'UpdateService', 'PeopleService', '$route', function($scope, $sce, PlacesService, geolocationSvc, DirectionService, UpdateService, PeopleService, $route) {
         var bypassGoogle = false;
         $scope.delivery = 'delivery';
         $scope.restaurants = 'restaurants';
@@ -18,22 +18,22 @@ angular.module('myApp.find', ['ngRoute'])
 
         var loc;
         //Function takes in the current place_id, and loop over the array steps for all directions, apending them onto a HtmlElement
-        $scope.getDirections = function (place_id) {
-            DirectionService.getData(loc, place_id).then(function (data) {
+        $scope.getDirections = function(place_id) {
+            DirectionService.getData(loc, place_id).then(function(data) {
                 var result = document.getElementById('result');
                 result.innerHTML = "";
-                data[0].legs[0].steps.forEach(function (Inst) {
+                data[0].legs[0].steps.forEach(function(Inst) {
                     result.innerHTML += Inst.html_instructions + "<br>"
                     //console.log(Inst); //Get directions as text from here
                 });
-            }, function () {
+            }, function() {
                 $scope.data = undefined;
             });
 
         };
 
         //Used to display star ratings upto the num passed in
-        $scope.ratings = function (stars) {
+        $scope.ratings = function(stars) {
             var ratingArray = [];
             for (var i = 0; i < stars; i++)
                 ratingArray.push(i)//push cur number to array
@@ -41,12 +41,12 @@ angular.module('myApp.find', ['ngRoute'])
         }
 
         //Round number passed in
-        $scope.roundNum = function (num) {
+        $scope.roundNum = function(num) {
             var wholeNum = Math.round(num);
             return wholeNum;
         }
 
-        $scope.checkBlacklist = function (placeId) {
+        $scope.checkBlacklist = function(placeId) {
             var check = false;
             if ($scope.blist !== null) {//if blacklist is not empty, check for selected item
                 //check if place is already in database
@@ -60,17 +60,49 @@ angular.module('myApp.find', ['ngRoute'])
             return check;
         }
 
+        $scope.checkFavlist = function(placeId) {
+            var check = false;
+            if ($scope.favs !== null) {//if blacklist is not empty, check for selected item
+                //check if place is already in database
+                console.log("checkBlacklist working")
+                for (var i = 0; i < $scope.favs.length; i++) {
+                    if (placeId === $scope.favs[i].Favid) {
+                        check = true;
+                    }
+                }//for
+            }//if
+            return check;
+        }
+
+        //reload page when item is removed
+        $scope.reloadRoute = function() {
+            $route.reload();
+        }
+
+        //function for removing item from blacklist
+        $scope.remove = function(blist) {
+
+            console.log("this is remove func - ", blist);
+            RemoveServiceBlist.remove(blist, fbpass).then(function() {
+                console.log("removed sucessfully")
+            }, function() {
+
+            });
+        } //remove
+
+
+
         $scope.showMap = true;
-        $scope.showMe = function (placeID) {
+        $scope.showMe = function(placeID) {
             $scope.showMap = false;
-            geolocationSvc.getCurrentPosition().then(function (location) {
+            geolocationSvc.getCurrentPosition().then(function(location) {
                 var latLong = location.coords.latitude + "," + location.coords.longitude;//get the curent lat/long from the location passed in                 
                 //http://stackoverflow.com/questions/29444132/angular-interpolation-error-for-src-attribute 
                 //Build the url needed to send the request with lat/long apended on
                 $scope.placeID = $sce.trustAsResourceUrl("https://www.google.com/maps/embed/v1/directions?origin=" + latLong + "&destination=place_id:" + placeID + "&key=AIzaSyB5ZgNt2r2S-v7LI-SQdMpsORxPTpgPoAY");
             })
         }
-        $scope.hideMe = function () {
+        $scope.hideMe = function() {
             $scope.showMap = true;
         }
 
@@ -88,13 +120,13 @@ angular.module('myApp.find', ['ngRoute'])
             //for local testing
             //var fbpass = "10207337063737016";
             //pass facebook id to service to check whether user is in database and return person if found
-            PeopleService.getData(fbpass).then(function (data) {
+            PeopleService.getData(fbpass).then(function(data) {
                 //store favourites, blacklist and history arrays from response
                 $scope.favs = data.Favourites;
                 $scope.blist = data.Blacklist;
                 $scope.hist = data.History;
 
-            }, function () {
+            }, function() {
                 $scope.data = undefined;
             });
         } else {
@@ -105,7 +137,7 @@ angular.module('myApp.find', ['ngRoute'])
 
 
         //add favourite to database
-        $scope.addFav = function (place) {
+        $scope.addFav = function(place) {
             //checks whether browser supports local storage for facebook id
             if (typeof (Storage) !== "undefined") {
                 if (localStorage.getItem("usrId") != "loggedOut") {
@@ -128,12 +160,12 @@ angular.module('myApp.find', ['ngRoute'])
                     //if favourite is not already in database, send to database
                     if (check === false) {
                         //sends selected place object, users facebook id and type of list to be updated to service
-                        UpdateService.updateList(place, fbpass, type).then(function () {
+                        UpdateService.updateList(place, fbpass, type).then(function() {
 
                             console.log("Updated favourites");
                             //reload page
                             $route.reload();
-                        }, function () {
+                        }, function() {
                             console.log("Unable to update");
                         });
                     }
@@ -144,7 +176,7 @@ angular.module('myApp.find', ['ngRoute'])
         }//addFav
 
         //add blacklist item to database
-        $scope.blacklist = function (place) {
+        $scope.blacklist = function(place) {
 
             //checks whether browser supports local storage for facebook id
             if (typeof (Storage) !== "undefined") {
@@ -169,11 +201,11 @@ angular.module('myApp.find', ['ngRoute'])
                     //sends selected place object, users facebook id and type of list to be updated to service
                     //if place is not already in blacklist array on database, send to database
                     if (check === false) {
-                        UpdateService.updateList(place, fbpass, type).then(function () {
+                        UpdateService.updateList(place, fbpass, type).then(function() {
 
                             console.log("Updated blacklist");
                             $route.reload();
-                        }, function () {
+                        }, function() {
                             console.log("Unable to update blacklist");
                         });
                     }//if
@@ -184,7 +216,7 @@ angular.module('myApp.find', ['ngRoute'])
         }//blacklist
 
         //add item to user history in database
-        $scope.history = function (place) {
+        $scope.history = function(place) {
             //checks whether browser supports local storage for facebook id
             if (typeof (Storage) !== "undefined") {
                 if (localStorage.getItem("usrId") != "loggedOut") {
@@ -205,10 +237,10 @@ angular.module('myApp.find', ['ngRoute'])
                     //if place is not already in history array in database, send to database
                     if (check === false) {
                         //sends selected place object, users facebook id and type of list to be updated to service
-                        UpdateService.updateList(place, fbpass, type).then(function () {
+                        UpdateService.updateList(place, fbpass, type).then(function() {
 
                             console.log("Updated history");
-                        }, function () {
+                        }, function() {
                             console.log("Unable to update history");
                         });
                     }
@@ -223,7 +255,7 @@ angular.module('myApp.find', ['ngRoute'])
         $scope.noneFound = true;
 
         //gets the list of places from the api
-        $scope.doRefresh = function (category) {
+        $scope.doRefresh = function(category) {
             $scope.places = [];
             if (bypassGoogle == true) {
                 $scope.places = [
@@ -503,9 +535,9 @@ angular.module('myApp.find', ['ngRoute'])
                     }
                 ]
             } else {
-                geolocationSvc.getCurrentPosition().then(function (location) {
+                geolocationSvc.getCurrentPosition().then(function(location) {
                     loc = location;
-                    PlacesService.getData(location, category).then(function (data) {
+                    PlacesService.getData(location, category).then(function(data) {
                         $scope.places = data;
 
                         if (typeof data[0] != "object") {
@@ -517,14 +549,14 @@ angular.module('myApp.find', ['ngRoute'])
                             $scope.noneFound = false;
                         }
 
-                    }, function () {
+                    }, function() {
                         $scope.data = undefined;
                     });
                 })
             }
         }
 
-        $scope.getURL = function (stuff) {
+        $scope.getURL = function(stuff) {
             if (bypassGoogle == true) {
                 return "http://placehold.it/300"
             } else {
@@ -539,14 +571,14 @@ angular.module('myApp.find', ['ngRoute'])
 
     //factory to get user profile from database
     //http://stackoverflow.com/questions/14947478/angularjs-ng-repeat-with-data-from-service
-    .factory('PeopleService', function ($q, $http, $rootScope) {
+    .factory('PeopleService', function($q, $http, $rootScope) {
         var myData = {};
         //sends facebook id to Routes.go func and returns profile if found
         return {
-            getData: function (fbpass) {
+            getData: function(fbpass) {
                 var deferred = $q.defer();
                 $http.get('/returnFindPerson/' + fbpass)
-                    .success(function (data) {
+                    .success(function(data) {
                         myData = data;
                         //jquery deferred promise
                         deferred.resolve(myData);
@@ -558,17 +590,36 @@ angular.module('myApp.find', ['ngRoute'])
         }
     })//PeopleService
 
+    //service to remove item from users blacklist on database
+    .factory('RemoveServiceBlist', function($q, $http, $rootScope) {
+        //sends location id and user facebook id to Go api, finds user, deletes item and returns
+        return {
+            remove: function(blist, fbpass) {
+                var deferred = $q.defer();
+                console.log("remove service - ", fbpass, blist);
+                $http.get('/returnRemoveBlist/' + fbpass + '/' + blist)
+                    .success(function() {
+                        console.log("back to getData");
+                        // update angular's scopes
+                        $rootScope.$$phase || $rootScope.$apply();
+                    });
+                return deferred.promise;
+            } //remove
+        }
+    }) //RemoveServiceBlist
+
+
     //http://stackoverflow.com/questions/14947478/angularjs-ng-repeat-with-data-from-service
-    .factory('PlacesService', function ($q, $http, $rootScope) {
+    .factory('PlacesService', function($q, $http, $rootScope) {
         var myData = {};
 
         return {
-            getData: function (location, category) {
+            getData: function(location, category) {
                 var deferred = $q.defer();
                 var lat = location.coords.latitude;
                 var lon = location.coords.longitude;
                 $http.get('/maps/nearby/' + category + '/' + lat + ',' + lon)
-                    .success(function (data) {
+                    .success(function(data) {
                         myData = data;
                         deferred.resolve(myData);
                         // update angular's scopes
@@ -579,10 +630,10 @@ angular.module('myApp.find', ['ngRoute'])
         }
     })
     //service to update favourites, blacklist and history items in database
-    .factory('UpdateService', function ($http, $rootScope) {
+    .factory('UpdateService', function($http, $rootScope) {
 
         return {
-            updateList: function (place, fbpass, type) {
+            updateList: function(place, fbpass, type) {
 
                 //place attributes for update
                 var id = place.place_id;
@@ -607,16 +658,16 @@ angular.module('myApp.find', ['ngRoute'])
     })//UpdateService
 
     //http://stackoverflow.com/questions/14947478/angularjs-ng-repeat-with-data-from-service
-    .factory('DirectionService', function ($q, $http, $rootScope) {
+    .factory('DirectionService', function($q, $http, $rootScope) {
         var myData = {};
 
         return {
-            getData: function (location, destination) {
+            getData: function(location, destination) {
                 var deferred = $q.defer();
                 var lat = location.coords.latitude;
                 var lon = location.coords.longitude;
                 $http.get('/direction/' + lat + ',' + lon + "," + destination)
-                    .success(function (data) {
+                    .success(function(data) {
                         myData = data;
                         deferred.resolve(myData);
                         $rootScope.$$phase || $rootScope.$apply();
@@ -624,7 +675,7 @@ angular.module('myApp.find', ['ngRoute'])
                 return deferred.promise;
             }
         }
-    }).factory('geolocationSvc', ['$q', '$window', function ($q, $window) {
+    }).factory('geolocationSvc', ['$q', '$window', function($q, $window) {
 
 
         //adapted from http://stackoverflow.com/questions/23185619/how-can-i-use-html5-geolocation-in-angularjs
@@ -636,10 +687,10 @@ angular.module('myApp.find', ['ngRoute'])
                 deferred.reject('Geolocation not supported.');
             } else {
                 $window.navigator.geolocation.getCurrentPosition(
-                    function (position) {
+                    function(position) {
                         deferred.resolve(position);
                     },
-                    function (err) {
+                    function(err) {
                         deferred.reject(err);
                     });
             }
