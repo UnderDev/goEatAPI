@@ -52,7 +52,6 @@
                                 obj = JSON.parse(data1);
                                 document.getElementById("userName").innerHTML = obj.Name;
                                 document.getElementById("imgProf").src = obj.photo;
-                                reload();
                             })
                         }
                         else {
@@ -124,7 +123,7 @@
     </script>
     <div id="divID">
         <div class="container" style="cursor: pointer;" ng-hide="!usrId">
-            <li onclick="facebookLogin();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
+            <li onclick="facebookLogin(); reload()" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
         </div>
 
         <div ng-hide="usrId">               
