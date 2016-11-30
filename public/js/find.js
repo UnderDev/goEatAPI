@@ -48,12 +48,14 @@ angular.module('myApp.find', ['ngRoute'])
 
         $scope.checkBlacklist = function (placeId) {
             var check = false;
-            var set = new Set($scope.blist);
-            if ($scope.blist !== null) {
-                if (set.has(placeId)) {
-                    check = true;
-                }
-            }
+            if ($scope.blist !== null) {//if blacklist is not empty, check for selected item
+                //check if place is already in database
+                for (var i = 0; i < $scope.blist.length; i++) {
+                    if (placeId === $scope.blist[i].Blid) {
+                        check = true;
+                    }
+                }//for
+            }//if
             return check;
         }
 
