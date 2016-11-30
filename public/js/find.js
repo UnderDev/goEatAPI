@@ -47,15 +47,16 @@ angular.module('myApp.find', ['ngRoute'])
         }
 
         $scope.checkBlacklist = function (placeId) {
-            var check=false;
-                     if($scope.blist !== null){//if blacklist is not empty, check for selected item
-                        //check if place is already in database
-                        for(var i = 0; i<$scope.blist.length; i++){
-                            if(placeId === $scope.blist[i].Blid){
-                                check = true;
-                            }
-                        }//for
-                    }//if
+            var check = false;
+            console.log(placeId + $scope.blist)
+            if ($scope.blist !== null) {//if blacklist is not empty, check for selected item
+                //check if place is already in database
+                for (var i = 0; i < $scope.blist.length; i++) {
+                    if (placeId === $scope.blist[i].Blid) {
+                        check = true;
+                    }
+                }//for
+            }//if
             return check;
         }
 
@@ -65,7 +66,7 @@ angular.module('myApp.find', ['ngRoute'])
             geolocationSvc.getCurrentPosition().then(function (location) {
                 var latLong = location.coords.latitude + "," + location.coords.longitude;//get the curent lat/long from the location passed in                 
                 //http://stackoverflow.com/questions/29444132/angular-interpolation-error-for-src-attribute 
-               //Build the url needed to send the request with lat/long apended on
+                //Build the url needed to send the request with lat/long apended on
                 $scope.placeID = $sce.trustAsResourceUrl("https://www.google.com/maps/embed/v1/directions?origin=" + latLong + "&destination=place_id:" + placeID + "&key=AIzaSyB5ZgNt2r2S-v7LI-SQdMpsORxPTpgPoAY");
             })
         }
@@ -80,67 +81,66 @@ angular.module('myApp.find', ['ngRoute'])
         $scope.history = [];
 
         //checks if browser supports local storage for facebook login details
-    if (typeof (Storage) !== "undefined") {
-        if(localStorage.getItem("usrId")!="loggedOut"){
-            var fbpass = localStorage.getItem("usrId");
-        }
-        //for local testing
-        //var fbpass = "10207337063737016";
-        //pass facebook id to service to check whether user is in database and return person if found
-        PeopleService.getData(fbpass).then(function (data) {
-            //store favourites, blacklist and history arrays from response
-            $scope.favs = data.Favourites;
-            $scope.blist = data.Blacklist;
-            $scope.hist = data.History;
-            
-          }, function () {
-            $scope.data = undefined;
-          });
-           } else {
-                //alert user that browser does not support local storage
-                alert("Please update to a browser that supports HTML5")
+        if (typeof (Storage) !== "undefined") {
+            if (localStorage.getItem("usrId") != "loggedOut") {
+                var fbpass = localStorage.getItem("usrId");
+            }
+            //for local testing
+            //var fbpass = "10207337063737016";
+            //pass facebook id to service to check whether user is in database and return person if found
+            PeopleService.getData(fbpass).then(function (data) {
+                //store favourites, blacklist and history arrays from response
+                $scope.favs = data.Favourites;
+                $scope.blist = data.Blacklist;
+                $scope.hist = data.History;
+
+            }, function () {
+                $scope.data = undefined;
+            });
+        } else {
+            //alert user that browser does not support local storage
+            alert("Please update to a browser that supports HTML5")
         }//if
 
-        
+
 
         //add favourite to database
         $scope.addFav = function (place) {
             //checks whether browser supports local storage for facebook id
             if (typeof (Storage) !== "undefined") {
-                if(localStorage.getItem("usrId")!="loggedOut"){ 
+                if (localStorage.getItem("usrId") != "loggedOut") {
                     var fbpass = localStorage.getItem("usrId");
-                
-                //for local testing
-                //var fbpass = "10207337063737016";
+
+                    //for local testing
+                    //var fbpass = "10207337063737016";
 
                     var type = "fav"; //sets update type to favourite
                     var check = false;
 
-                    if($scope.favs !== null){//if favourites is not empty, check for selected item
+                    if ($scope.favs !== null) {//if favourites is not empty, check for selected item
                         //check if place is already in database
-                        for(var i = 0; i<$scope.favs.length; i++){
-                            if(place.place_id === $scope.favs[i].Favid)
-                            {
+                        for (var i = 0; i < $scope.favs.length; i++) {
+                            if (place.place_id === $scope.favs[i].Favid) {
                                 check = true;
                             }
                         }//for
                     }//if
-                        //if favourite is not already in database, send to database
-                    if(check === false){
+                    //if favourite is not already in database, send to database
+                    if (check === false) {
                         //sends selected place object, users facebook id and type of list to be updated to service
-                            UpdateService.updateList(place, fbpass, type).then(function () {
+                        UpdateService.updateList(place, fbpass, type).then(function () {
 
-                                console.log("Updated favourites");
-                                //reload page
-                                $route.reload();
-                                }, function () {
-                                console.log("Unable to update");
-                                });
+                            console.log("Updated favourites");
+                            //reload page
+                            $route.reload();
+                        }, function () {
+                            console.log("Unable to update");
+                        });
                     }
-                    } else {
-                                    alert("Please update to a browser that supports HTML5")
-                }    
-                }//if
+                } else {
+                    alert("Please update to a browser that supports HTML5")
+                }
+            }//if
         }//addFav
 
         //add blacklist item to database
@@ -148,38 +148,38 @@ angular.module('myApp.find', ['ngRoute'])
 
             //checks whether browser supports local storage for facebook id
             if (typeof (Storage) !== "undefined") {
-                if(localStorage.getItem("usrId")!="loggedOut"){
+                if (localStorage.getItem("usrId") != "loggedOut") {
                     var fbpass = localStorage.getItem("usrId");
-                
+
                     //for local testing
                     //var fbpass = "10207337063737016";
                     var type = "blist";//sets update type to blacklist
 
                     var check = false;
-                    
-                    if($scope.blist !== null){//if blacklist is not empty, check for selected item
+
+                    if ($scope.blist !== null) {//if blacklist is not empty, check for selected item
                         //check if place is already in database
-                        for(var i = 0; i<$scope.blist.length; i++){
-                            if(place.place_id === $scope.blist[i].Blid){
+                        for (var i = 0; i < $scope.blist.length; i++) {
+                            if (place.place_id === $scope.blist[i].Blid) {
                                 check = true;
                             }
                         }//for
                     }//if
-                
+
                     //sends selected place object, users facebook id and type of list to be updated to service
                     //if place is not already in blacklist array on database, send to database
-                    if(check === false){
-                            UpdateService.updateList(place, fbpass, type).then(function () {
+                    if (check === false) {
+                        UpdateService.updateList(place, fbpass, type).then(function () {
 
-                                console.log("Updated blacklist");
-                                $route.reload();
-                            }, function () {
-                                console.log("Unable to update blacklist");
-                            });
+                            console.log("Updated blacklist");
+                            $route.reload();
+                        }, function () {
+                            console.log("Unable to update blacklist");
+                        });
                     }//if
-                        } else {
-                            alert("Please update to a browser that supports HTML5")
-                    }
+                } else {
+                    alert("Please update to a browser that supports HTML5")
+                }
             }//if
         }//blacklist
 
@@ -187,29 +187,28 @@ angular.module('myApp.find', ['ngRoute'])
         $scope.history = function (place) {
             //checks whether browser supports local storage for facebook id
             if (typeof (Storage) !== "undefined") {
-                if(localStorage.getItem("usrId")!="loggedOut"){
+                if (localStorage.getItem("usrId") != "loggedOut") {
 
                     var fbpass = localStorage.getItem("usrId");
                     //var fbpass = "10207337063737016";
                     var type = "history";//sets update type to history
                     var check = false;
 
-                    if($scope.hist !== null){ //if history is not empty, check for selected item
+                    if ($scope.hist !== null) { //if history is not empty, check for selected item
                         //check if place is already in database
-                        for(var i = 0; i<$scope.hist.length; i++){
-                            if(place.place_id === $scope.hist[i].Hisid)
-                            {
+                        for (var i = 0; i < $scope.hist.length; i++) {
+                            if (place.place_id === $scope.hist[i].Hisid) {
                                 check = true;
                             }
                         }//for
                     }//if
                     //if place is not already in history array in database, send to database
-                   if(check === false){
+                    if (check === false) {
                         //sends selected place object, users facebook id and type of list to be updated to service
                         UpdateService.updateList(place, fbpass, type).then(function () {
 
                             console.log("Updated history");
-                            }, function () {
+                        }, function () {
                             console.log("Unable to update history");
                         });
                     }
@@ -509,15 +508,15 @@ angular.module('myApp.find', ['ngRoute'])
                     PlacesService.getData(location, category).then(function (data) {
                         $scope.places = data;
 
-                        if(typeof data[0] != "object"){
+                        if (typeof data[0] != "object") {
                             //since the Go api returns an array of chars that spells null, check to see if the array's types are actually objects
                             //this handles the event of no places being found by google                             
                             $scope.noneFound = true;
                         }
-                        else{
-                             $scope.noneFound = false;
+                        else {
+                            $scope.noneFound = false;
                         }
-                            
+
                     }, function () {
                         $scope.data = undefined;
                     });
@@ -540,24 +539,24 @@ angular.module('myApp.find', ['ngRoute'])
 
     //factory to get user profile from database
     //http://stackoverflow.com/questions/14947478/angularjs-ng-repeat-with-data-from-service
-  .factory('PeopleService', function ($q, $http, $rootScope) {
-    var myData = {};
-    //sends facebook id to Routes.go func and returns profile if found
-    return {
-      getData: function (fbpass) {
-        var deferred = $q.defer();
-        $http.get('/returnFindPerson/' + fbpass) 
-          .success(function (data) {
-            myData = data;
-            //jquery deferred promise
-            deferred.resolve(myData);
-            // update angular's scopes
-            $rootScope.$$phase || $rootScope.$apply();
-          });
-        return deferred.promise;
-      }//getData
-    }
-  })//PeopleService
+    .factory('PeopleService', function ($q, $http, $rootScope) {
+        var myData = {};
+        //sends facebook id to Routes.go func and returns profile if found
+        return {
+            getData: function (fbpass) {
+                var deferred = $q.defer();
+                $http.get('/returnFindPerson/' + fbpass)
+                    .success(function (data) {
+                        myData = data;
+                        //jquery deferred promise
+                        deferred.resolve(myData);
+                        // update angular's scopes
+                        $rootScope.$$phase || $rootScope.$apply();
+                    });
+                return deferred.promise;
+            }//getData
+        }
+    })//PeopleService
 
     //http://stackoverflow.com/questions/14947478/angularjs-ng-repeat-with-data-from-service
     .factory('PlacesService', function ($q, $http, $rootScope) {
@@ -568,7 +567,7 @@ angular.module('myApp.find', ['ngRoute'])
                 var deferred = $q.defer();
                 var lat = location.coords.latitude;
                 var lon = location.coords.longitude;
-                $http.get('/maps/nearby/'+category+'/' + lat + ',' + lon)
+                $http.get('/maps/nearby/' + category + '/' + lat + ',' + lon)
                     .success(function (data) {
                         myData = data;
                         deferred.resolve(myData);
