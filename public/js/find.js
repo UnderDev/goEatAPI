@@ -101,7 +101,7 @@ angular.module('myApp.find', ['ngRoute'])
         if (typeof (Storage) !== "undefined") {
             if (localStorage.getItem("usrId") != "loggedOut") {
                 var fbpass = localStorage.getItem("usrId");
-                $route.reload();
+                
             }
             //for local testing
             //var fbpass = "10207337063737016";
