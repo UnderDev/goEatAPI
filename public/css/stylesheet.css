@@ -7,11 +7,6 @@
     padding-top: 30px;
   }
 
-  .padSides {
-    padding-right: 20px;
-    padding-left: 20px;
-  }
-  
   .contentPadding {
     padding-top: 75px;
   }
@@ -62,17 +57,13 @@
   .fa-heart:hover {
     color: red;
   }
-  
-  .fa-ban:hover {
-    color: white;
+
+  .fa fa-remove:hover {
+    color: red;
   }
   
   .fa-ban:hover {
     color: red;
-  }
-  
-  .normStar {
-    color: black;
   }
   
   .card-title {
