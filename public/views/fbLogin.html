@@ -43,15 +43,21 @@
             if (response.status === 'connected') {
                 var access_token = FB.getAuthResponse()['accessToken'];
                 $.get("/accessKey/" + access_token, function (data, status) {
-                    //session storage of user id
-                    if (typeof (Storage) !== "undefined") {
-                        localStorage.setItem("usrId", data);
-                        angular.element(document.getElementById('divID')).scope().checkState();
-                    }
-                    else {
-                        alert("Please update to a browser that supports HTML5")
-                    }
-                });
+                        //session storage of user id
+                        if (typeof (Storage) !== "undefined") {
+                            localStorage.setItem("usrId", data);
+                            angular.element(document.getElementById('divID')).scope().checkState();
+                            
+                            $.get("/returnFindPerson/" + data, function (data1, status1) {
+                                obj = JSON.parse(data1);
+                                document.getElementById("userName").innerHTML = obj.Name;
+                                document.getElementById("imgProf").src = obj.photo;
+                            })
+                        }
+                        else {
+                            alert("Please update to a browser that supports HTML5")
+                        }
+                    });
                 return;
             }
             else if (response.status === 'not_authorized') {
