@@ -1,14 +1,13 @@
-<div ng-controller="fbCtrl">
+<div ng-controller='FbController'>
     <script>
         window.fbAsyncInit = function () {
             FB.init({
-                appId: '1779657235585831',
-                cookie: true, // enable cookies to allow the server to access 
+                appId: '1779657235585831'
+                , cookie: true, // enable cookies to allow the server to access 
                 // the session
                 xfbml: true, // parse social plugins on this page
                 version: 'v2.8' // use graph api version 2.8
             });
-            
             // Now that we've initialized the JavaScript SDK, we call 
             // FB.getLoginStatus().  This function gets the state of the
             // person visiting this page and can return one of three states to
@@ -20,7 +19,6 @@
             //    your app or not.
             //
             // These three cases are handled in the callback function.
-            
             FB.getLoginStatus(function (response) {
                 statusChangeCallback(response);
             });
@@ -32,42 +30,38 @@
                     statusChangeCallback(response);
                 });
             }
-
-
         };
-
         // This is called with the results from from FB.getLoginStatus().
         function statusChangeCallback(response) {
             console.log('statusChangeCallback');
             console.log(response.status);
-            $scope.usrId = false;
-
+            angular.element(document.getElementById('divID')).scope().checkState();
             // The response object is returned with a status field that lets the
             // app know the current login status of the person.
             // Full docs on the response object can be found in the documentation
             // for FB.getLoginStatus().
             if (response.status === 'connected') {
                 var access_token = FB.getAuthResponse()['accessToken'];
-
                 $.get("/accessKey/" + access_token, function (data, status) {
                     //session storage of user id
                     if (typeof (Storage) !== "undefined") {
                         localStorage.setItem("usrId", data);
-                        $scope.usrId = true;
-                    } else {
+                        angular.element(document.getElementById('divID')).scope().checkState();
+                    }
+                    else {
                         alert("Please update to a browser that supports HTML5")
                     }
                 });
                 return;
-            } else if (response.status === 'not_authorized') {
+            }
+            else if (response.status === 'not_authorized') {
                 // The person is logged into Facebook, but not your app.
                 console.log("No authorization given");
-            } else {
+            }
+            else {
                 console.log("Not logged in");
             }
-            //TEST TODAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY!
-            checkState();
-        }
+        };
         // Load the SDK asynchronously
         (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
@@ -86,24 +80,50 @@
                         //session storage of user id
                         if (typeof (Storage) !== "undefined") {
                             localStorage.setItem("usrId", data);
-                            $scope.usrId = true;
-                        } else {
+                            angular.element(document.getElementById('divID')).scope().checkState();
+                            
+                            $.get("/returnFindPerson/" + data, function (data1, status1) {
+                                obj = JSON.parse(data1);
+                                document.getElementById("userName").innerHTML = obj.Name;
+                                document.getElementById("imgProf").src = obj.photo;
+                            })
+                        }
+                        else {
                             alert("Please update to a browser that supports HTML5")
                         }
                     });
                     return;
-                } else {
-                    $scope.usrId = true;
+                }
+                else {
+                    angular.element(document.getElementById('divID')).scope().checkState();
                     console.log('User cancelled login or did not fully authorize.');
                 }
             })
         };
-        function b()
-        {
-            checkState();
+
+        function logOut() {
+            FB.logout();
+            if (typeof (Storage) !== "undefined") {
+                localStorage.setItem("usrId", "loggedOut");
+            }
+            else {
+                alert("Please update to a browser that supports HTML5")
+            }
+            angular.element(document.getElementById('divID')).scope().checkState();
+            angular.element(document.getElementById('divID')).scope().reRoute();
+            
         };
     </script>
-    <div class="container" style="cursor: pointer;">
-        <li onclick="FB.login();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
+    <div id="divID">
+        <div class="container" ng-hide="!usrId">
+            <li onclick="facebookLogin();" class="fa fa-facebook-official fa-2x nav-item nav-link" aria-hidden="true"></li>
+        </div>
+
+        <div ng-hide="usrId">               
+                <div class="col-xs-2"><img id="imgProf" width="40" height="40" /></div>
+                <div class="col-xs-8" style="margin-top: 10px;" id="userName"></div>
+                <div class="col-xs-2 fa fa-sign-out fa-2x nav-item nav-link" onclick="logOut();" aria-hidden="true"></div>
+        </div>
+        
     </div>
 </div>

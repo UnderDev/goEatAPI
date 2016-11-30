@@ -69,9 +69,9 @@ angular.module('myApp.find', ['ngRoute'])
 
         //checks if browser supports local storage for facebook login details
     if (typeof (Storage) !== "undefined") {
-                
-        var fbpass = localStorage.getItem("usrId");
-        
+        if(localStorage.getItem("usrId")!="loggedOut"){
+            var fbpass = localStorage.getItem("usrId");
+        }
         //for local testing
         //var fbpass = "10207337063737016";
         //pass facebook id to service to check whether user is in database and return person if found
@@ -95,9 +95,9 @@ angular.module('myApp.find', ['ngRoute'])
         $scope.addFav = function (place) {
             //checks whether browser supports local storage for facebook id
             if (typeof (Storage) !== "undefined") {
-
-                var fbpass = localStorage.getItem("usrId");
-
+                if(localStorage.getItem("usrId")!="loggedOut"){ 
+                    var fbpass = localStorage.getItem("usrId");
+                }
                 //for local testing
                 //var fbpass = "10207337063737016";
 
@@ -135,8 +135,9 @@ angular.module('myApp.find', ['ngRoute'])
 
             //checks whether browser supports local storage for facebook id
             if (typeof (Storage) !== "undefined") {
-
-                var fbpass = localStorage.getItem("usrId");
+                if(localStorage.getItem("usrId")!="loggedOut"){
+                    var fbpass = localStorage.getItem("usrId");
+                }
                 //for local testing
                 //var fbpass = "10207337063737016";
                 var type = "blist";//sets update type to blacklist
@@ -172,33 +173,35 @@ angular.module('myApp.find', ['ngRoute'])
         $scope.history = function (place) {
             //checks whether browser supports local storage for facebook id
             if (typeof (Storage) !== "undefined") {
+                if(localStorage.getItem("usrId")!="loggedOut"){
 
-                //var fbpass = localStorage.getItem("usrId");
-                var fbpass = "10207337063737016";
-                var type = "history";//sets update type to history
-                var check = false;
+                    //var fbpass = localStorage.getItem("usrId");
+                    var fbpass = "10207337063737016";
+                    var type = "history";//sets update type to history
+                    var check = false;
 
-                if($scope.hist !== null){ //if history is not empty, check for selected item
-                    //check if place is already in database
-                    for(var i = 0; i<$scope.hist.length; i++){
-                        if(place.place_id === $scope.hist[i].Hisid)
-                        {
-                            check = true;
-                        }
-                    }//for
-                }//if
-                //if place is not already in history array in database, send to database
-               if(check === false){
-                    //sends selected place object, users facebook id and type of list to be updated to service
-                    UpdateService.updateList(place, fbpass, type).then(function () {
+                    if($scope.hist !== null){ //if history is not empty, check for selected item
+                        //check if place is already in database
+                        for(var i = 0; i<$scope.hist.length; i++){
+                            if(place.place_id === $scope.hist[i].Hisid)
+                            {
+                                check = true;
+                            }
+                        }//for
+                    }//if
+                    //if place is not already in history array in database, send to database
+                   if(check === false){
+                        //sends selected place object, users facebook id and type of list to be updated to service
+                        UpdateService.updateList(place, fbpass, type).then(function () {
 
-                        console.log("Updated history");
-                        }, function () {
-                        console.log("Unable to update history");
-                    });
+                            console.log("Updated history");
+                            }, function () {
+                            console.log("Unable to update history");
+                        });
                     }
-                } else {
-                    alert("Please update to a browser that supports HTML5")
+                }
+            } else {
+                alert("Please update to a browser that supports HTML5")
             }//if
         }//history
 
