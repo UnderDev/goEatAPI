@@ -17,7 +17,7 @@
 						<div class="card-title card-block bg-info container-fluid">
 
 							<span ng-if="checkBlacklist(place.place_id) === true">
-								<span class="btn col-xs-2" data-toggle="modal" data-target="#add2Fav" ng-click="addFav(place)"><i class="fa fa-ban" aria-hidden="false"></i></span>
+								<span class="btn col-xs-2" data-toggle="modal" data-target="#add2Fav" ng-click="addFav(place)"><i class="fa fa-ban" style="color:red" aria-hidden="false"></i></span>
 							</span>
 
 							<span ng-if="checkBlacklist(place.place_id) === false">
