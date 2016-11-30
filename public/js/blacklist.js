@@ -58,43 +58,4 @@ angular.module('myApp.blacklist', ['ngRoute'])
                 });
             } //remove
 
-  }]) //BlacklistCtrl
-
-//factory to get user profile from database
-//http://stackoverflow.com/questions/14947478/angularjs-ng-repeat-with-data-from-service
-.factory('PeopleService', function ($q, $http, $rootScope) {
-        var myData = {};
-        //sends facebook id to Routes.go func and returns profile if found
-        return {
-            getData: function (fbpass) {
-                    var deferred = $q.defer();
-                    $http.get('/returnFindPerson/' + fbpass)
-                        .success(function (data) {
-                            myData = data;
-                            //jquery deferred promise
-                            deferred.resolve(myData);
-                            // update angular's scopes
-                            $rootScope.$$phase || $rootScope.$apply();
-                        });
-                    return deferred.promise;
-                } ////getData
-        }
-    }) ////PeopleService
-
-//service to remove item from users blacklist on database
-.factory('RemoveServiceBlist', function ($q, $http, $rootScope) {
-    //sends location id and user facebook id to Go api, finds user, deletes item and returns
-    return {
-        remove: function (blist, fbpass) {
-                var deferred = $q.defer();
-                console.log("remove service - ", fbpass, blist);
-                $http.get('/returnRemoveBlist/' + fbpass + '/' + blist)
-                    .success(function () {
-                        console.log("back to getData");
-                        // update angular's scopes
-                        $rootScope.$$phase || $rootScope.$apply();
-                    });
-                return deferred.promise;
-            } //remove
-    }
-}); //RemoveServiceBlist
+  }]); //BlacklistCtrl
