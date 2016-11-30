@@ -50,7 +50,6 @@ angular.module('myApp.find', ['ngRoute'])
             var check = false;
             if ($scope.blist !== null) {//if blacklist is not empty, check for selected item
                 //check if place is already in database
-                console.log("checkBlacklist working")
                 for (var i = 0; i < $scope.blist.length; i++) {
                     if (placeId === $scope.blist[i].Blid) {
                         check = true;
@@ -64,7 +63,6 @@ angular.module('myApp.find', ['ngRoute'])
             var check = false;
             if ($scope.favs !== null) {//if blacklist is not empty, check for selected item
                 //check if place is already in database
-                console.log("checkBlacklist working")
                 for (var i = 0; i < $scope.favs.length; i++) {
                     if (placeId === $scope.favs[i].Favid) {
                         check = true;
