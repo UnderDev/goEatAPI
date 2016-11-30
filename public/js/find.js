@@ -9,7 +9,7 @@ angular.module('myApp.find', ['ngRoute'])
         });
     }])
 
-    .controller('FindCtrl', ['$scope', '$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', 'UpdateService', 'PeopleService', '$route', function($scope, $sce, PlacesService, geolocationSvc, DirectionService, UpdateService, PeopleService, $route) {
+    .controller('FindCtrl', ['$scope', '$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', 'UpdateService', 'PeopleService', '$route', 'RemoveServiceBlist', function($scope, $sce, PlacesService, geolocationSvc, DirectionService, UpdateService, PeopleService, $route, RemoveServiceBlist) {
         var bypassGoogle = false;
         $scope.delivery = 'delivery';
         $scope.restaurants = 'restaurants';
