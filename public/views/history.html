@@ -1,15 +1,15 @@
 <div ng-controller="HistoryCtrl">
 	<div class="text-xs-center contentPadding">
 		<h1>History</h1>
-            <button class="btn btn-outline-info btn-sm" ng-click="remove(); reloadRoute()">Clear History</button>
-        </div>
+		<button class="btn btn-outline-info btn-sm" ng-click="remove(); reloadRoute()">Clear History</button>
+
 		<div class="bgLayout card-columns cardCol">
 			<div ng-repeat="hist in history track by $index" class="cardSize" ng-show="showMap">
 				<div class="card text-xs-center list-inline  " style="display:inline-block">
 					<div class="card-title card-block bg-info ">
 						<span class="text-uppercase">{{hist.Hisname}}</span>
 					</div>
-					
+
 					<div class=" card-block  ">
 						<img width="200" height="150" ng-src="{{getURL(hist.Hisphoto)}}" />
 					</div>
@@ -19,8 +19,8 @@
 				</div>
 			</div>
 		</div>
-		<div ng-hide="showMap">
 
+		<div ng-hide="showMap">
 			<div class="container">
 				<!--https://developers.google.com/maps/documentation/embed/start-->
 				<iframe width="730" height="450" frameborder="1" style="border:4" ng-src="{{placeID}}" allowfullscreen></iframe>
