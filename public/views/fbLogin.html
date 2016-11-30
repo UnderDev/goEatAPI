@@ -52,6 +52,7 @@
                                 obj = JSON.parse(data1);
                                 document.getElementById("userName").innerHTML = obj.Name;
                                 document.getElementById("imgProf").src = obj.photo;
+                                reload();
                             })
                         }
                         else {
@@ -92,6 +93,7 @@
                                 obj = JSON.parse(data1);
                                 document.getElementById("userName").innerHTML = obj.Name;
                                 document.getElementById("imgProf").src = obj.photo;
+                                $scope.reload();
                             })
                         }
                         else {
