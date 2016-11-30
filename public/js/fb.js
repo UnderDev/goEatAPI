@@ -19,7 +19,6 @@ angular.module('myApp.fb', ['ngRoute'])
     $scope.reRoute = function()
     {
         $window.location = "/#!/find";
-        reloadRoute();
     }
     $scope.checkState = function () {
         console.log("state : " + localStorage.getItem("usrId"));
