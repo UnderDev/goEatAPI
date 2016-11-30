@@ -97,37 +97,38 @@ angular.module('myApp.find', ['ngRoute'])
             if (typeof (Storage) !== "undefined") {
                 if(localStorage.getItem("usrId")!="loggedOut"){ 
                     var fbpass = localStorage.getItem("usrId");
-                }
+                
                 //for local testing
                 //var fbpass = "10207337063737016";
 
-                var type = "fav"; //sets update type to favourite
-                var check = false;
+                    var type = "fav"; //sets update type to favourite
+                    var check = false;
 
-                if($scope.favs !== null){//if favourites is not empty, check for selected item
-                    //check if place is already in database
-                    for(var i = 0; i<$scope.favs.length; i++){
-                        if(place.place_id === $scope.favs[i].Favid)
-                        {
-                            check = true;
-                        }
-                    }//for
-                }//if
-                //if favourite is not already in database, send to database
-               if(check === false){
-                //sends selected place object, users facebook id and type of list to be updated to service
-                    UpdateService.updateList(place, fbpass, type).then(function () {
-
-                        console.log("Updated favourites");
-                        //reload page
-                        $route.reload();
-                        }, function () {
-                        console.log("Unable to update");
-                    });
-               }
-                        } else {
-                            alert("Please update to a browser that supports HTML5")
+                    if($scope.favs !== null){//if favourites is not empty, check for selected item
+                        //check if place is already in database
+                        for(var i = 0; i<$scope.favs.length; i++){
+                            if(place.place_id === $scope.favs[i].Favid)
+                            {
+                                check = true;
+                            }
+                        }//for
                     }//if
+                        //if favourite is not already in database, send to database
+                    if(check === false){
+                        //sends selected place object, users facebook id and type of list to be updated to service
+                            UpdateService.updateList(place, fbpass, type).then(function () {
+
+                                console.log("Updated favourites");
+                                //reload page
+                                $route.reload();
+                                }, function () {
+                                console.log("Unable to update");
+                                });
+                    }
+                    } else {
+                                    alert("Please update to a browser that supports HTML5")
+                }    
+                }//if
         }//addFav
 
         //add blacklist item to database
@@ -137,36 +138,37 @@ angular.module('myApp.find', ['ngRoute'])
             if (typeof (Storage) !== "undefined") {
                 if(localStorage.getItem("usrId")!="loggedOut"){
                     var fbpass = localStorage.getItem("usrId");
-                }
-                //for local testing
-                //var fbpass = "10207337063737016";
-                var type = "blist";//sets update type to blacklist
-
-                var check = false;
                 
-                if($scope.blist !== null){//if blacklist is not empty, check for selected item
-                    //check if place is already in database
-                    for(var i = 0; i<$scope.blist.length; i++){
-                        if(place.place_id === $scope.blist[i].Blid){
-                            check = true;
-                        }
-                    }//for
-                }//if
-               
-                //sends selected place object, users facebook id and type of list to be updated to service
-                //if place is not already in blacklist array on database, send to database
-                if(check === false){
-                        UpdateService.updateList(place, fbpass, type).then(function () {
+                    //for local testing
+                    //var fbpass = "10207337063737016";
+                    var type = "blist";//sets update type to blacklist
 
-                            console.log("Updated blacklist");
-                            $route.reload();
-                        }, function () {
-                            console.log("Unable to update blacklist");
-                        });
-                }//if
-                    } else {
-                        alert("Please update to a browser that supports HTML5")
-                }//if
+                    var check = false;
+                    
+                    if($scope.blist !== null){//if blacklist is not empty, check for selected item
+                        //check if place is already in database
+                        for(var i = 0; i<$scope.blist.length; i++){
+                            if(place.place_id === $scope.blist[i].Blid){
+                                check = true;
+                            }
+                        }//for
+                    }//if
+                
+                    //sends selected place object, users facebook id and type of list to be updated to service
+                    //if place is not already in blacklist array on database, send to database
+                    if(check === false){
+                            UpdateService.updateList(place, fbpass, type).then(function () {
+
+                                console.log("Updated blacklist");
+                                $route.reload();
+                            }, function () {
+                                console.log("Unable to update blacklist");
+                            });
+                    }//if
+                        } else {
+                            alert("Please update to a browser that supports HTML5")
+                    }
+            }//if
         }//blacklist
 
         //add item to user history in database
@@ -175,8 +177,8 @@ angular.module('myApp.find', ['ngRoute'])
             if (typeof (Storage) !== "undefined") {
                 if(localStorage.getItem("usrId")!="loggedOut"){
 
-                    //var fbpass = localStorage.getItem("usrId");
-                    var fbpass = "10207337063737016";
+                    var fbpass = localStorage.getItem("usrId");
+                    //var fbpass = "10207337063737016";
                     var type = "history";//sets update type to history
                     var check = false;
 
