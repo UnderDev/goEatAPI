@@ -9,13 +9,8 @@ angular.module('myApp.fb', ['ngRoute'])
     });
 }])
 
-.controller('FbController', ['$scope', '$window', '$route', function ($scope, $window, $route) {
+.controller('FbController', ['$scope', '$window', function ($scope, $window) {
     $scope.usrId = true;
-
-    $scope.reloadRoute = function() {
-        $route.reload();
-    }
-
     $scope.reRoute = function()
     {
         $window.location = "/#!/find";
