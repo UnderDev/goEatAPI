@@ -150,4 +150,22 @@ angular.module('myApp.services', [])
                 }
             }//updateList
         }
-    });//UpdateService
+    })//UpdateService
+    
+    //service to remove item from users favourites on database
+  .factory('RemoveService', function ($q, $http, $rootScope) {
+    //sends location id and user facebook id to Go api, finds user, deletes item and returns
+    return {
+      remove: function (fbpass) {
+        var deferred = $q.defer();
+        console.log("remove service - ", fbpass);
+        $http.get('/returnRemoveHistory/' + fbpass) //will need unique id - not name
+          .success(function () {
+            console.log("back to getData");
+            // update angular's scopes
+            $rootScope.$$phase || $rootScope.$apply();
+          });
+        return deferred.promise;
+      }//remove
+    }
+  });
