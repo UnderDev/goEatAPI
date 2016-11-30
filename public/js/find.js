@@ -9,7 +9,7 @@ angular.module('myApp.find', ['ngRoute'])
         });
     }])
 
-    .controller('FindCtrl', ['$scope', '$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', 'UpdateService', 'PeopleService', '$route', 'RemoveServiceBlist', function($scope, $sce, PlacesService, geolocationSvc, DirectionService, UpdateService, PeopleService, $route, RemoveServiceBlist) {
+    .controller('FindCtrl', ['$scope', '$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', 'UpdateService', 'PeopleService', '$route', 'RemoveServiceBlist','RemoveServiceFav', function($scope, $sce, PlacesService, geolocationSvc, DirectionService, UpdateService, PeopleService, $route,RemoveServiceFav, RemoveServiceBlist) {
         var bypassGoogle = false;
         $scope.delivery = 'delivery';
         $scope.restaurants = 'restaurants';
@@ -77,16 +77,7 @@ angular.module('myApp.find', ['ngRoute'])
             $route.reload();
         }
 
-        //function for removing item from blacklist
-        $scope.remove = function(blist) {
 
-            console.log("this is remove func - ", blist);
-            RemoveServiceBlist.remove(blist, fbpass).then(function() {
-                console.log("removed sucessfully")
-            }, function() {
-
-            });
-        } //remove
 
 
 
@@ -588,23 +579,7 @@ angular.module('myApp.find', ['ngRoute'])
         }
     })//PeopleService
 
-    //service to remove item from users blacklist on database
-    .factory('RemoveServiceBlist', function($q, $http, $rootScope) {
-        //sends location id and user facebook id to Go api, finds user, deletes item and returns
-        return {
-            remove: function(blist, fbpass) {
-                var deferred = $q.defer();
-                console.log("remove service - ", fbpass, blist);
-                $http.get('/returnRemoveBlist/' + fbpass + '/' + blist)
-                    .success(function() {
-                        console.log("back to getData");
-                        // update angular's scopes
-                        $rootScope.$$phase || $rootScope.$apply();
-                    });
-                return deferred.promise;
-            } //remove
-        }
-    }) //RemoveServiceBlist
+
 
 
     //http://stackoverflow.com/questions/14947478/angularjs-ng-repeat-with-data-from-service
@@ -673,7 +648,9 @@ angular.module('myApp.find', ['ngRoute'])
                 return deferred.promise;
             }
         }
-    }).factory('geolocationSvc', ['$q', '$window', function($q, $window) {
+    })
+    
+    .factory('geolocationSvc', ['$q', '$window', function($q, $window) {
 
 
         //adapted from http://stackoverflow.com/questions/23185619/how-can-i-use-html5-geolocation-in-angularjs

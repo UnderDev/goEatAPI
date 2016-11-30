@@ -5,7 +5,7 @@
 				<div class="card text-xs-center list-inline  " style="display:inline-block">
 
 					<div class="card-title card-block bg-info container-fluid">
-						<span class="btn col-xs-2" data-toggle="modal" data-target="#add2Fav" ng-click="remove(fav.Favid); reloadRoute()"><i class="fa fa-remove" aria-hidden="false"></i></span>
+						<span class="btn col-xs-2" ng-click="remove(fav.Favid); reloadRoute()"><i class="fa fa-remove" aria-hidden="false"></i></span>
 						<span class="text-uppercase  col-xs-8"><i class="ng-binding">{{fav.Favname}}</i></span>
 					</div>
 
@@ -18,15 +18,6 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="modal fade" id="removeFav" tabindex="-1" role="dialog" aria-labelledby="myModalremove2Fav" aria-hidden="true">
-			<div class="modal-dialog " role="document">
-				<div class="modal-content">
-					SuccessFully Removed From Favorites!<br> Click Anywhere to Exit
-				</div>
-			</div>
-		</div>
-
 		<div ng-hide="showMap">
 
 			<div class="container">
