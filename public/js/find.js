@@ -9,7 +9,7 @@ angular.module('myApp.find', ['ngRoute'])
         });
     }])
 
-    .controller('FindCtrl', ['$scope', '$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', 'UpdateService', 'PeopleService', '$route', 'RemoveServiceBlist','RemoveServiceFav', function($scope, $sce, PlacesService, geolocationSvc, DirectionService, UpdateService, PeopleService, $route, RemoveServiceBlist,RemoveServiceFav) {
+    .controller('FindCtrl', ['$scope', '$sce', 'PlacesService', 'geolocationSvc', 'DirectionService', 'UpdateService', 'PeopleService', '$route', 'RemoveServiceBlist', 'RemoveServiceFav', function($scope, $sce, PlacesService, geolocationSvc, DirectionService, UpdateService, PeopleService, $route, RemoveServiceBlist, RemoveServiceFav) {
         var bypassGoogle = false;
         $scope.delivery = 'delivery';
         $scope.restaurants = 'restaurants';
@@ -199,6 +199,29 @@ angular.module('myApp.find', ['ngRoute'])
                 }
             }//if
         }//blacklist
+
+        //Remove blacklist item from database
+        $scope.removeBlacklist = function(blist) {
+
+            console.log("this is remove func - ", blist);
+            RemoveServiceBlist.remove(blist, fbpass).then(function() {
+                console.log("removed sucessfully")
+            }, function() {
+
+            });
+        } //remove
+
+        //Removes favorite item from database
+        $scope.removeFav = function (fav) {
+
+            RemoveServiceFav.remove(fav, fbpass).then(function(){
+                console.log("removed sucessfully")
+            }, function(){
+
+            });//RemoveServiceFav
+        }//remove
+
+
 
         //add item to user history in database
         $scope.history = function(place) {
