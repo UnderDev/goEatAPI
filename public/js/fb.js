@@ -9,11 +9,12 @@ angular.module('myApp.fb', ['ngRoute'])
     });
 }])
 
-.controller('FbController', ['$scope', '$window', '$route', function ($scope, $window, $route) {
+.controller('FbController', ['$scope', '$window', '$route', '$location', function ($scope, $window, $route, $location) {
     $scope.usrId = true;
     $scope.reRoute = function()
     {
-        $window.location = "/#!/find";
+        //$window.location = "/#!/find";
+        $window.location.href = '/#/find';
     }
 
      $scope.reloadRoute = function() {
@@ -21,20 +22,20 @@ angular.module('myApp.fb', ['ngRoute'])
     }
 
     $scope.checkState = function () {
-        console.log("state : " + localStorage.getItem("usrId"));
+        //console.log("state : " + localStorage.getItem("usrId"));
         if((localStorage.getItem("usrId")!=null)&&(localStorage.getItem("usrId")!=undefined)&&(localStorage.getItem("usrId")!="loggedOut"))
         {
             //user logged in
-            console.log("Setting to false : "+$scope.usrId);
+            //console.log("Setting to false : "+$scope.usrId);
             $scope.usrId = false;
-            console.log("Set to false : "+$scope.usrId);
+            //console.log("Set to false : "+$scope.usrId);
             $scope.$apply();
         }
         else{
             //user not logged in
-            console.log("Setting to true "+$scope.usrId);
+            //console.log("Setting to true "+$scope.usrId);
             $scope.usrId = true;
-            console.log("Set to true "+$scope.usrId);
+            //console.log("Set to true "+$scope.usrId);
             $scope.$apply();
         }
     }

@@ -101,7 +101,6 @@ angular.module('myApp.find', ['ngRoute'])
         if (typeof (Storage) !== "undefined") {
             if (localStorage.getItem("usrId") != "loggedOut") {
                 var fbpass = localStorage.getItem("usrId");
-                
             }
             //for local testing
             //var fbpass = "10207337063737016";
@@ -204,7 +203,7 @@ angular.module('myApp.find', ['ngRoute'])
         //Remove blacklist item from database
         $scope.removeBlacklist = function(blist) {
 
-            console.log("this is remove func - ", blist);
+            //console.log("this is remove func - ", blist);
             RemoveServiceBlist.remove(blist, fbpass).then(function() {
                 console.log("removed sucessfully")
             }, function() {
