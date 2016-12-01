@@ -3,7 +3,9 @@ Created as part of the GMIT BSc(Honours) in Computing in Software Development, E
 
 A live version can be found on [Heroku](https://goeatapi.herokuapp.com/)
 
-Be aware, due to the use of free limited usage Google API keys, **nearby places and their images may not load properly**. These usage limits are refreshed after 24 hours. Additionally, devices and browsers supporting HTML with geolocation are required. 
+Be aware, due to the use of free limited usage Google API keys, **nearby places and their images may not load properly**. These usage limits are refreshed after 24 hours. Additionally, devices and browsers supporting HTML with geolocation are required.
+
+For security reasons, the **Facebook OAuth Login-in system will not work on build running on localhost**. For this reason, to see all of the app's features, it is advised to use the hosted version on heroku  
 
 ##Introduction
 goEat is a service that provides a list of nearby places where you can get your mastication on. Using your current Geolocation,
@@ -315,5 +317,25 @@ An example request could be:
   /returnFindPerson/10207337063737016/ChIJn_a2RkCRW0gRgEnIeIH0TGY
 ```
 This request passes the users Facebook id to find the correct document in MongoDB.  This request searches for the user document and searches for the ID of all the locations stored in their favourites list for the specified ID and removes it.
+
+A user account can be both created and logged in using	
+
+```	
+	/accessKey/{Facebook user authentication code}
+```
+An example request could be:
+```	
+	/accessKey/EAANS5HMQGmMBAN58ZBRpLD1IhofOL
+```
+Where EAANS5HMQGmMBAN58ZBRpLD1IhofOL is an authorization access key provided by Facebook.com's RESTful API
+The request uses the access key to login a user, or if the user is new to the app, it will create an account for them.
+The endpoint queries the Facebook API for basic personal information of the user, and stores it in MongoDB
+This request then returns the user id associated with the account.
+This looks like the following: 
+
+```
+	10207337063731234
+```
+
 
 
