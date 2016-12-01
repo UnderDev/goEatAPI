@@ -65,6 +65,10 @@
   .fa-ban:hover {
     color: red;
   }
+
+  .fa fa-remove:hover{
+   color: red;
+  }
   
   .card-title {
     max-height: 90px;
