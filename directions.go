@@ -16,7 +16,7 @@ import (
 func getDirections(res http.ResponseWriter, req *http.Request, ctx *macaron.Context) {
 	c, err := maps.NewClient(maps.WithAPIKey("AIzaSyB5ZgNt2r2S-v7LI-SQdMpsORxPTpgPoAY")) //api key
 	if err != nil {
-		log.Fatalf("fatal error: %s", err)
+
 	}
 
 	str := ctx.Params("directions")
@@ -33,7 +33,7 @@ func getDirections(res http.ResponseWriter, req *http.Request, ctx *macaron.Cont
 
 	routes, _, err := c.Directions(context.Background(), r)
 	if err != nil {
-		log.Fatalf("fatal error: %s", err)
+		log.Printf("fatal error: %s", err)
 	}
 	json.NewEncoder(res).Encode(routes)
 }
