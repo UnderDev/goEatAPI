@@ -14,7 +14,7 @@ angular.module('myApp.fb', ['ngRoute'])
     $scope.reRoute = function()
     {
         //$window.location = "/#!/find";
-        $location.path('/#!/find');
+        $window.location.href = '/#/find';
     }
 
      $scope.reloadRoute = function() {
