@@ -30,7 +30,7 @@ angular.module('myApp.favorites', ['ngRoute'])
         //var fbpass = "10207337063737016";
         //pass facebook id to service to check whether user is in database and return person if found
         PeopleService.getData(fbpass).then(function (data) {
-        console.log(data);
+        //console.log(data);
             //store favourites from response
             $scope.favs = data.Favourites;
             

@@ -31,7 +31,7 @@ func nearby(res http.ResponseWriter, req *http.Request, ctx *macaron.Context, fi
 	//c is the pointer to the maps client that is generated using the api key
 	c, err := maps.NewClient(maps.WithAPIKey("AIzaSyB5ZgNt2r2S-v7LI-SQdMpsORxPTpgPoAY"))
 	if err != nil {
-		log.Fatalf("fatal error: %s", err)
+
 	}
 
 	//get the lat/long params
@@ -91,7 +91,7 @@ func nearby(res http.ResponseWriter, req *http.Request, ctx *macaron.Context, fi
 	//loop over results and send it back
 	if err != nil {
 		if len(psr.Results) > 0 {
-			log.Fatalf("ssssfatal error: %s", err)
+			log.Printf("fatal error: %s", err)
 		} else {
 			log.Print(psr.Results)
 			//this is going to return a null string, the browser will handle it
