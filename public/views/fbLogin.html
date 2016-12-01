@@ -87,6 +87,7 @@
                         if (typeof (Storage) !== "undefined") {
                             localStorage.setItem("usrId", data);
                             angular.element(document.getElementById('divID')).scope().checkState();
+                            //reload page after user logs in to update favs and blacklist in view
                             angular.element(document.getElementById('divID')).scope().reloadRoute();
                             $.get("/returnFindPerson/" + data, function (data1, status1) {
                                 obj = JSON.parse(data1);
