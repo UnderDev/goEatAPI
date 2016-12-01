@@ -16,7 +16,7 @@ It has been built and packaged for deployment to the [Heroku PaaS](https://www.h
 The API also serves a single page application(SPA) written in [AngularJS](https://angularjs.org/), which uses the various endpoints that
 were designed around it. The goEatAPI uses the [Google Places](https://developers.google.com/places/) and [Google Maps](https://developers.google.com/maps/) APIs for retrieving a list of nearby dining locations
 and directions to them, respectively. Interactions with Google Maps services are provided by the [Go Client for Google Maps Services](https://github.com/googlemaps/google-maps-services-go)
-library. User's can sign up/in using their Facebook account if they want to keep track of favorites, or just blacklist that place down the street who don't know what "medium-rare" means. 
+library. User's can sign up/in using their Facebook account if they want to keep track of favorites, or just blacklist that place down the street that doesn't know what "medium-rare" means. 
 
 ![Architecture Diagram](https://cloud.githubusercontent.com/assets/10116669/20705788/4dbd198a-b61c-11e6-968b-e94ca1451d97.png)
 
@@ -30,6 +30,19 @@ library. User's can sign up/in using their Facebook account if they want to keep
 * [Google Places](https://developers.google.com/places/)
 * [Google Maps](https://developers.google.com/maps/)
 * [Facebook Login](https://developers.facebook.com/products/login)
+
+####Deployment
+It is assumed that:
+* [GO](https://golang.org/dl/) is properly installed in the environment that will be running the goEat! server. 
+* The user has adequate knowledge of Git
+
+
+1. The repository must be cloned into the Go workspace:
+	* Run "git clone https://github.com/Rabhimself/goEatAPI.git" from the src folder in the Go workspace.	
+2. The project must be compiled into an executable file
+	* Run "go build" from inside the goEatApi folder.
+3. Run the executable that was created
+	* goEatAPI.exe
 
 
 ####Endpoints
