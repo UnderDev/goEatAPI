@@ -9,12 +9,17 @@ angular.module('myApp.fb', ['ngRoute'])
     });
 }])
 
-.controller('FbController', ['$scope', '$window', function ($scope, $window) {
+.controller('FbController', ['$scope', '$window', '$route', function ($scope, $window, $route) {
     $scope.usrId = true;
     $scope.reRoute = function()
     {
         $window.location = "/#!/find";
     }
+
+     $scope.reloadRoute = function() {
+            $route.reload();
+    }
+
     $scope.checkState = function () {
         console.log("state : " + localStorage.getItem("usrId"));
         if((localStorage.getItem("usrId")!=null)&&(localStorage.getItem("usrId")!=undefined)&&(localStorage.getItem("usrId")!="loggedOut"))
