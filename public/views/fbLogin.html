@@ -117,7 +117,10 @@
                 alert("Please update to a browser that supports HTML5")
             }
             angular.element(document.getElementById('divID')).scope().checkState();
-            angular.element(document.getElementById('divID')).scope().reRoute();
+            //reload page after user logs in to update favs and blacklist in view
+            angular.element(document.getElementById('divID')).scope().reloadRoute();
+            
+            //angular.element(document.getElementById('divID')).scope().reRoute();
             
         };
     </script>
