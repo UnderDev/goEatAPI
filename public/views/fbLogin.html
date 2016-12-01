@@ -87,7 +87,7 @@
                         if (typeof (Storage) !== "undefined") {
                             localStorage.setItem("usrId", data);
                             angular.element(document.getElementById('divID')).scope().checkState();
-                            angular.element(document.getElementById('divID')).scope().reloadroute();
+                            angular.element(document.getElementById('divID')).scope().reloadRoute();
                             $.get("/returnFindPerson/" + data, function (data1, status1) {
                                 obj = JSON.parse(data1);
                                 document.getElementById("userName").innerHTML = obj.Name;
