@@ -11,16 +11,20 @@ angular.module('myApp.fb', ['ngRoute'])
 
 .controller('FbController', ['$scope', '$window', '$route', '$location', function ($scope, $window, $route, $location) {
     $scope.usrId = true;
+    //reroute user to find page
     $scope.reRoute = function()
     {
         //$window.location = "/#!/find";
         $window.location.href = '/#/find';
     }
 
+    //reload current page
      $scope.reloadRoute = function() {
             $route.reload();
     }
-
+     
+     //hide log in button if user logs in
+     //hide log out button if user logs out
     $scope.checkState = function () {
         //console.log("state : " + localStorage.getItem("usrId"));
         if((localStorage.getItem("usrId")!=null)&&(localStorage.getItem("usrId")!=undefined)&&(localStorage.getItem("usrId")!="loggedOut"))
