@@ -11,7 +11,7 @@ For security reasons, the **Facebook OAuth Login-in system will not work on a bu
 goEat is a service that provides a list of nearby places where you can get your mastication on. Using your current Geolocation,
 goEat finds restaurants and places providing takeaway and delivery options, that are within 10km of you.
 
-##Project Architecture
+## Project Architecture
 
 The goEat API itself is written in [Go](https://golang.org/) using the [Macaron Framework](https://go-macaron.com/).
 It has been built and packaged for deployment to the [Heroku PaaS](https://www.heroku.com/), which relies on [GoDep](https://github.com/tools/godep) for package management.
